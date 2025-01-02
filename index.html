@@ -20,9 +20,11 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 80%;
-            max-width: 400px;
+            width: 90%; /* Aumentar el ancho del contenedor */
+            max-width: 600px; /* Aumentar el ancho máximo del contenedor */
             padding: 20px;
+            overflow-y: auto; /* Permitir desplazamiento si es necesario */
+            max-height: 80vh; /* Limitar la altura del contenedor */
         }
         h1 {
             font-size: 2.5em;
@@ -38,11 +40,11 @@
             display: block;
             background-color: #000000;
             color: white;
-            padding: 15px;
-            margin: 10px 0;
+            padding: 10px; /* Reducir el padding */
+            margin: 5px 0; /* Reducir el margen */
             text-decoration: none;
             border-radius: 5px;
-            font-size: 1.1em;
+            font-size: 1em; /* Reducir el tamaño de fuente */
             transition: background-color 0.3s;
         }
         .buttons a:hover {
