@@ -82,6 +82,22 @@
         button:hover {
             background-color: #333333;
         }
+        table {
+            width: 100%;
+            margin-top: 30px;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #ccc;
+        }
+        th {
+            background-color: #f4f4f4;
+        }
+        td {
+            background-color: #fafafa;
+        }
     </style>
 </head>
 <body>
@@ -120,8 +136,43 @@
             <button type="submit">Enviar</button>
         </form>
 
+        <!-- Contactos -->
+        <h2>Contactos</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Cuenta</th>
+                    <th>Categoría</th>
+                    <th>Dirección</th>
+                    <th>Teléfono 1</th>
+                    <th>Teléfono 2</th>
+                    <th>Email</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>@williamparra</td>
+                    <td>Bienes y raíces en Armenia</td>
+                    <td>-</td>
+                    <td>+573105938658</td>
+                    <td>-</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>Ejemplo 2</td>
+                    <td>Muebles</td>
+                    <td>Calle 456</td>
+                    <td>+573151234569</td>
+                    <td>+573151234570</td>
+                    <td>ejemplo2@email.com</td>
+                </tr>
+                <!-- Puedes añadir más filas aquí según sea necesario -->
+            </tbody>
+        </table>
+
         <div class="footer">
-            <p>&copy;  Contraentrega</p>
+            <p>&copy;  <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" style="color: #777; text-decoration: none;">Contraentrega Armenia Quindío, Colombia</a>
+</p>
         </div>
     </div>
 
