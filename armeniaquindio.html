@@ -3,7 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@armeniaquindio</title>
+    <meta name="description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
+    <meta name="keywords" content="armenia quindio, compra, venta, clasificados, productos, Colombia, Contraentrega">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Contraentrega">
+    <meta property="og:title" content="@armeniaquindio - Compra y venta en Armenia Quindío">
+    <meta property="og:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
+    <meta property="og:image" content="URL-de-tu-imagen">
+    <meta property="og:url" content="https://www.tusitio.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@armeniaquindio - Compra y venta en Armenia Quindío">
+    <meta name="twitter:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
+    <meta name="twitter:image" content="URL-de-tu-imagen">
+    <meta name="twitter:url" content="https://www.tusitio.com">
+    
+    <title>@armeniaquindio - Compra y venta en Armenia Quindío</title>
+
+    <!-- Datos estructurados con Schema.org -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "url": "https://www.tusitio.com",
+        "name": "@armeniaquindio",
+        "description": "Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.",
+        "publisher": {
+            "@type": "Organization",
+            "name": "Contraentrega Armenia Quindío"
+        }
+    }
+    </script>
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -20,14 +51,14 @@
             background-color: #ffffff;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 90%; /* Aumentar el ancho del contenedor */
-            max-width: 600px; /* Aumentar el ancho máximo del contenedor */
+            width: 90%; 
+            max-width: 600px; 
             padding: 20px;
-            overflow-y: auto; /* Permitir desplazamiento si es necesario */
-            max-height: 80vh; /* Limitar la altura del contenedor */
-            height: 100%; /* Asegurarse de que ocupe todo el espacio disponible */
+            overflow-y: auto; 
+            max-height: 80vh; 
+            height: 100%; 
         }
-        h1 {
+        h1, h2 {
             font-size: 2.5em;
             color: #333;
             margin-bottom: 10px;
@@ -106,81 +137,111 @@
             color: #333;
             margin-top: 20px;
         }
+
+        .clickable {
+            color: #007BFF;
+            text-decoration: underline;
+            cursor: pointer;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .clickable:hover {
+            color: #0056b3;
+            text-decoration: none;
+        }
+
+        /* Lazy loading de imágenes */
+        img[loading="lazy"] {
+            opacity: 0;
+            transition: opacity 0.3s ease-in;
+        }
+        img[loading="lazy"]:not([src=""]) {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h1>@armeniaquindio</h1>
-        <p>Contraentrega Armenia Quindío, Colombia</p>
+        <header>
+            <h1>@armeniaquindio</h1>
+            <p>Compra y venta en Armenia Quindío, Colombia</p>
+        </header>
 
+        <!-- Enlaces -->
         <div class="buttons">
-            <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank">Clasificados</a>
-            <a href="https://wa.me/573215970535" target="_blank">Whatsapp</a>
-            <a href="https://www.facebook.com/groups/912495177441287/?ref=share&mibextid=NSMWBT" target="_blank">Facebook</a>
+            <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" rel="noopener noreferrer">Clasificados</a>
+            <a href="https://wa.me/573215970535" target="_blank" rel="noopener noreferrer">Whatsapp</a>
+            <a href="https://www.facebook.com/groups/912495177441287/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer">Facebook</a>
         </div>
 
-        <p>¿Qué vendes?</p>
+        <section>
+            <p>¿Qué vendes?</p>
 
-        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data">
-            <label for="titulo">Título:</label>
-            <input type="text" id="titulo" name="titulo" required>
+            <!-- Formulario -->
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data" id="product-form">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
 
-            <label for="precio">Precio:</label>
-            <input type="number" id="precio" name="precio" required>
-            
-            <label for="celular">Celular:</label>
-            <input type="number" id="celular" name="celular" required>
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio" required>
+                
+                <label for="celular">Celular:</label>
+                <input type="number" id="celular" name="celular" required>
 
-            <label for="ubicacion">Ubicación:</label>
-            <input type="text" id="ubicacion" name="ubicacion" required>
+                <label for="ubicacion">Ubicación:</label>
+                <input type="text" id="ubicacion" name="ubicacion" required>
 
-            <label for="descripcion">Descripción:</label>
-            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
 
-            <label for="archivo">Agregar foto:</label>
-            <input type="file" id="archivo" name="archivo" required>
+                <label for="archivo">Agregar foto:</label>
+                <input type="file" id="archivo" name="archivo" required>
 
-            <button type="submit">Enviar</button>
-        </form>
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
 
         <!-- Contactos -->
-        <h2>Contactos</h2>
-        <table>
-            <thead>
-                <tr>
-                    <th>Cuenta</th>
-                    <th>Categoría</th>
-                    <th>Dirección</th>
-                    <th>Teléfono 1</th>
-                    <th>Teléfono 2</th>
-                    <th>Email</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>@williamparra</td>
-                    <td>Bienes y raíces en Armenia</td>
-                    <td>-</td>
-                    <td>+573105938658</td>
-                    <td>-</td>
-                    <td>-</td>
-                </tr>
-                <tr>
-                    <td>Ejemplo 2</td>
-                    <td>Muebles</td>
-                    <td>Calle 456</td>
-                    <td>+573151234569</td>
-                    <td>+573151234570</td>
-                    <td>ejemplo2@email.com</td>
-                </tr>
-                <!-- Puedes añadir más filas aquí según sea necesario -->
-            </tbody>
-        </table>
+        <section>
+            <h2>Contactos</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Cuenta</th>
+                        <th>Categoría</th>
+                        <th>Dirección</th>
+                        <th>Teléfono 1</th>
+                        <th>Teléfono 2</th>
+                        <th>Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://www.instagram.com/williamparra" class="clickable" target="_blank" rel="noopener noreferrer">@williamparra</a></td>
+                        <td>Bienes y raíces en Armenia</td>
+                        <td>-</td>
+                        <td>+573105938658</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://www.instagram.com/ejemplo2" class="clickable" target="_blank" rel="noopener noreferrer">Ejemplo 2</a></td>
+                        <td>Muebles</td>
+                        <td>Armenia, Quindío</td>
+                        <td>+573007836912</td>
+                        <td>-</td>
+                        <td>ejemplo@correo.com</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
 
-        <div class="footer">
-            <p>&copy;  <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" style="color: #777; text-decoration: none;">Contraentrega Armenia Quindío, Colombia</a></p>
-        </div>
+                <!-- Footer -->
+        <footer class="footer">
+            <p>&copy; 2025 <strong>Contraentrega</strong> - Todos los derechos reservados.</p>
+            <p>Visita nuestro sitio web: <a href="https://co.contraentregaco.com" target="_blank" rel="noopener noreferrer">https://co.contraentregaco.com</a></p>
+        </footer>
     </div>
 
 </body>
