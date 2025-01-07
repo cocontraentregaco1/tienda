@@ -25,6 +25,7 @@
             padding: 20px;
             overflow-y: auto; /* Permitir desplazamiento si es necesario */
             max-height: 80vh; /* Limitar la altura del contenedor */
+            height: 100%; /* Asegurarse de que ocupe todo el espacio disponible */
         }
         h1 {
             font-size: 2.5em;
@@ -40,11 +41,11 @@
             display: block;
             background-color: #000000;
             color: white;
-            padding: 10px; /* Reducir el padding */
-            margin: 5px 0; /* Reducir el margen */
+            padding: 10px;
+            margin: 5px 0;
             text-decoration: none;
             border-radius: 5px;
-            font-size: 1em; /* Reducir el tamaño de fuente */
+            font-size: 1em;
             transition: background-color 0.3s;
         }
         .buttons a:hover {
@@ -58,6 +59,7 @@
         form {
             margin-top: 20px;
             text-align: left;
+            margin-bottom: 20px;
         }
         input[type="text"], input[type="number"], textarea {
             width: 100%;
@@ -86,6 +88,7 @@
             width: 100%;
             margin-top: 30px;
             border-collapse: collapse;
+            overflow-x: auto;
         }
         th, td {
             padding: 10px;
@@ -98,13 +101,18 @@
         td {
             background-color: #fafafa;
         }
+        h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
 
     <div class="container">
         <h1>@armeniaquindio</h1>
-        </p>Contraentrega Armenia Quindío, Colombia</p>
+        <p>Contraentrega Armenia Quindío, Colombia</p>
 
         <div class="buttons">
             <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank">Clasificados</a>
@@ -171,8 +179,7 @@
         </table>
 
         <div class="footer">
-            <p>&copy;  <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" style="color: #777; text-decoration: none;">Contraentrega Armenia Quindío, Colombia</a>
-</p>
+            <p>&copy;  <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" style="color: #777; text-decoration: none;">Contraentrega Armenia Quindío, Colombia</a></p>
         </div>
     </div>
 
