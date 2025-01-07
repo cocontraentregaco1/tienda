@@ -19,46 +19,6 @@
     <meta name="twitter:url" content="https://www.tusitio.com">
     <meta name="google-site-verification" content="your-verification-code" />
 
-<!-- Facebook Pixel -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'your-pixel-id');
-    fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=your-pixel-id&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- End Facebook Pixel -->
-</head>
-
-    
-    <title>@armeniaquindio - Compra y venta en Armenia Quindío</title>
-
-    <!-- Datos estructurados con Schema.org -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "url": "https://www.tusitio.com",
-        "name": "@armeniaquindio",
-        "description": "Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.",
-        "publisher": {
-            "@type": "Organization",
-            "name": "Contraentrega Armenia Quindío"
-        }
-    }
-
-    <!-- Favicon -->
-    <link rel="icon" href="URL-del-favicon" type="image/png">
-
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
     <script>
@@ -115,136 +75,96 @@
         .buttons a:hover {
             background-color: #333333;
         }
+
         .footer {
             font-size: 0.9em;
             color: #777;
             margin-top: 20px;
+            text-align: center;
         }
-        form {
-            margin-top: 20px;
-            text-align: left;
-            margin-bottom: 20px;
+
+        .social-buttons {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
         }
-        input[type="text"], input[type="number"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        input[type="file"] {
-            margin: 10px 0;
-        }
-        button {
-            background-color: #000000;
+
+        .social-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #333;
             color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #333333;
-        }
-        table {
-            width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
-            overflow-x: auto;
-        }
-        th, td {
-            padding: 10px;
-            text-align: left;
-            border: 1px solid #ccc;
-        }
-        th {
-            background-color: #f4f4f4;
-        }
-        td {
-            background-color: #fafafa;
-        }
-        h2 {
-            font-size: 1.8em;
-            color: #333;
-            margin-top: 20px;
-        }
-
-        .clickable {
-            color: #007BFF;
-            text-decoration: underline;
-            cursor: pointer;
-            transition: color 0.3s ease-in-out;
-        }
-
-        .clickable:hover {
-            color: #0056b3;
+            padding: 10px 20px;
+            border-radius: 30px;
             text-decoration: none;
+            font-size: 14px;
+            transition: background-color 0.3s, transform 0.2s;
         }
 
-        /* Lazy loading de imágenes */
-        img[loading="lazy"] {
-            opacity: 0;
-            transition: opacity 0.3s ease-in;
+        .social-button img {
+            width: 20px;
+            margin-right: 10px;
         }
-        img[loading="lazy"]:not([src=""]) {
-            opacity: 1;
+
+        .social-button:hover {
+            background-color: #444;
+            transform: scale(1.1);
         }
+
+        .social-button:active {
+            background-color: #555;
+        }
+
+        .social-button.facebook { background-color: #1877f2; }
+        .social-button.facebook:hover { background-color: #165eae; }
+
+        .social-button.whatsapp { background-color: #25d366; }
+        .social-button.whatsapp:hover { background-color: #128c7e; }
+
+        .social-button.instagram { background-color: #c32aa3; }
+        .social-button.instagram:hover { background-color: #9b1d75; }
+
+        .social-button.twitter { background-color: #1da1f2; }
+        .social-button.twitter:hover { background-color: #1991db; }
+
+        .social-button.telegram { background-color: #0088cc; }
+        .social-button.telegram:hover { background-color: #007bb5; }
     </style>
-
-  <!-- Google Tag Manager -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-XXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GTM-XXXXXX');
-  </script>
-  <!-- End Google Tag Manager -->
 </head>
 
 <body>
-
     <div class="container">
         <header>
             <h1>@armeniaquindio</h1>
             <p>Contraentrega Armenia Quindío, Colombia</p>
         </header>
 
-        <!-- Enlaces -->
-        <div class="buttons">
-            <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" rel="noopener noreferrer">Clasificados</a>
-            <a href="https://wa.me/573215970535" target="_blank" rel="noopener noreferrer">Whatsapp</a>
-            <a href="https://www.facebook.com/groups/912495177441287/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer">Facebook</a>
-        </div>
+        <!-- Formulario -->
+        <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data" id="product-form">
+            <label for="titulo">Título:</label>
+            <input type="text" id="titulo" name="titulo" required>
 
-        <section>
-            <p>¿Qué vendes?</p>
+            <label for="precio">Precio:</label>
+            <input type="number" id="precio" name="precio" required>
+            
+            <label for="celular">Celular:</label>
+            <input type="number"
+            <label for="celular">Celular:</label>
+            <input type="number" id="celular" name="celular" required>
 
-            <!-- Formulario -->
-            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data" id="product-form">
-                <label for="titulo">Título:</label>
-                <input type="text" id="titulo" name="titulo" required>
+            <label for="ubicacion">Ubicación:</label>
+            <input type="text" id="ubicacion" name="ubicacion" required>
 
-                <label for="precio">Precio:</label>
-                <input type="number" id="precio" name="precio" required>
-                
-                <label for="celular">Celular:</label>
-                <input type="number" id="celular" name="celular" required>
+            <label for="descripcion">Descripción:</label>
+            <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
 
-                <label for="ubicacion">Ubicación:</label>
-                <input type="text" id="ubicacion" name="ubicacion" required>
+            <label for="archivo">Agregar foto:</label>
+            <input type="file" id="archivo" name="archivo" required>
 
-                <label for="descripcion">Descripción:</label>
-                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
-
-                <label for="archivo">Agregar foto:</label>
-                <input type="file" id="archivo" name="archivo" required>
-
-                <button type="submit">Enviar</button>
-            </form>
-        </section>
+            <button type="submit">Enviar</button>
+        </form>
 
         <!-- Contactos -->
         <section>
@@ -280,133 +200,61 @@
                 </tbody>
             </table>
         </section>
+    </div>
 
-                        <!-- Footer -->
-        <footer class="footer">
-            <p>&copy;  <strong>Contraentrega</strong> - Todos los derechos reservados.</p>
-            <p>Clasificados Armenia Quindío: <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" rel="noopener noreferrer">https://co.contraentregaco.com</a></p>
-
-<!-- Footer con enlaces para compartir en redes sociales -->
-<footer class="footer">
-    <p>&copy;  <strong>Contraentrega</strong> - Todos los derechos reservados.</p>
+    <footer class="footer">
+    <p>&copy; <strong id="copyright-year"></strong> Contraentrega - Todos los derechos reservados.</p>
     <p>Clasificados Armenia Quindío: <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" rel="noopener noreferrer">https://co.contraentregaco.com</a></p>
     
     <!-- Contenedor de botones de redes sociales -->
     <div class="social-buttons">
-        <!-- Botón de compartir en Facebook -->
+        <!-- Botones de compartir en redes sociales (Facebook, WhatsApp, etc.) -->
         <a href="https://www.facebook.com/sharer/sharer.php?u=https://www.tusitio.com" 
            target="_blank" 
            class="social-button facebook" 
-           title="Compartir en Facebook">
+           title="Compartir en Facebook" aria-label="Compartir en Facebook">
             <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" />
             Facebook
         </a>
         
-        <!-- Botón de compartir en WhatsApp -->
         <a href="https://wa.me/?text=¡Mira%20este%20producto%20en%20@armeniaquindio!%20https://www.tusitio.com" 
            target="_blank" 
            class="social-button whatsapp" 
-           title="Compartir en WhatsApp">
+           title="Compartir en WhatsApp" aria-label="Compartir en WhatsApp">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
             WhatsApp
         </a>
 
-        <!-- Botón de compartir en Instagram -->
         <a href="https://www.instagram.com" 
            target="_blank" 
            class="social-button instagram" 
-           title="Compartir en Instagram">
+           title="Compartir en Instagram" aria-label="Compartir en Instagram">
             <img src="https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg" alt="Instagram" />
             Instagram
         </a>
 
-        <!-- Botón de compartir en Twitter -->
         <a href="https://twitter.com/intent/tweet?url=https://www.tusitio.com&text=¡Mira%20este%20producto!" 
            target="_blank" 
            class="social-button twitter" 
-           title="Compartir en Twitter">
+           title="Compartir en Twitter" aria-label="Compartir en Twitter">
             <img src="https://upload.wikimedia.org/wikipedia/commons/6/60/Twitter_Logo_2021.svg" alt="Twitter" />
             Twitter
         </a>
 
-        <!-- Botón de compartir en Telegram -->
         <a href="https://t.me/share/url?url=https://www.tusitio.com&text=¡Mira%20este%20producto%20en%20@armeniaquindio!" 
            target="_blank" 
            class="social-button telegram" 
-           title="Compartir en Telegram">
+           title="Compartir en Telegram" aria-label="Compartir en Telegram">
             <img src="https://upload.wikimedia.org/wikipedia/commons/8/84/Telegram_logo.svg" alt="Telegram" />
             Telegram
         </a>
     </div>
 </footer>
 
-<!-- Estilos CSS -->
-<style>
-    .footer {
-        font-size: 0.9em;
-        color: #777;
-        margin-top: 20px;
-        text-align: center;
-    }
+<script>
+    document.getElementById("copyright-year").textContent = new Date().getFullYear();
+</script>
 
-    .footer a {
-        color: #777;
-        text-decoration: none;
-    }
-
-    .social-buttons {
-        margin-top: 15px;
-        display: flex;
-        justify-content: center;
-        gap: 15px;
-    }
-
-    .social-button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: #333;
-        color: white;
-        padding: 10px 20px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-size: 14px;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-
-    .social-button img {
-        width: 20px;
-        margin-right: 10px;
-    }
-
-    .social-button:hover {
-        background-color: #444;
-        transform: scale(1.1);
-    }
-
-    .social-button:active {
-        background-color: #555;
-    }
-
-    /* Estilos específicos para cada red social */
-    .social-button.facebook { background-color: #1877f2; }
-    .social-button.facebook:hover { background-color: #165eae; }
-
-    .social-button.whatsapp { background-color: #25d366; }
-    .social-button.whatsapp:hover { background-color: #128c7e; }
-
-    .social-button.instagram { background-color: #c32aa3; }
-    .social-button.instagram:hover { background-color: #9b1d75; }
-
-    .social-button.twitter { background-color: #1da1f2; }
-    .social-button.twitter:hover { background-color: #1991db; }
-
-    .social-button.telegram { background-color: #0088cc; }
-    .social-button.telegram:hover { background-color: #007bb5; }
-</style>
-
-        </footer>
-    </div>
 
 </body>
 </html>
