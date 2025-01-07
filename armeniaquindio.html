@@ -283,10 +283,16 @@
 
                         <!-- Footer -->
         <footer class="footer">
-            <p>&copy;  <strong>Contraentrega</strong> - Todos los derechos reservados.</p>
+            <p>&copy; <span id="year"></span> <strong>Contraentrega</strong></p>
             <p>Clasificados Armenia Quindío: <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" rel="noopener noreferrer">https://co.contraentregaco.com</a></p>
         </footer>
     </div>
 
+<script>
+        // Obtener el año actual
+        const year = new Date().getFullYear();
+        // Actualizar el contenido del elemento con id "year"
+        document.getElementById('year').textContent = year;
+    </script>
 </body>
 </html>
