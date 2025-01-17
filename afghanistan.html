@@ -247,13 +247,57 @@
             </form>
         </section>
 
-        <!-- Contactos -->
+        <!-- Buscador de productos -->
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar productos...">
+        <button onclick="searchProducts()">Buscar</button>
+    </div>
+
+    <!-- Productos -->
+    <div class="product-container" id="productList">
+        <!-- Producto 1 -->
+        <div class="product">
+            <img src="https://live.staticflickr.com/65535/51057435722_d41fe1cda4_c.jpg" alt="Producto 1">
+            <video src="https://www.youtube.com/watch?v=XXXXX" controls></video>
+            <h2>Producto 1</h2>
+            <p class="sku">SKU: 123456</p>
+            <button onclick="window.location.href='https://wa.me/573XXXXXXXXX?text=Me%20interesa%20el%20producto%201'">Comprar ahora</button>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="product">
+            <img src="https://live.staticflickr.com/65535/51057435722_d41fe1cda4_c.jpg" alt="Producto 2">
+            <video src="https://www.youtube.com/watch?v=YYYYY" controls></video>
+            <h2>Producto 2</h2>
+            <p class="sku">SKU: 654321</p>
+            <button onclick="window.location.href='https://wa.me/573XXXXXXXXX?text=Me%20interesa%20el%20producto%202'">Comprar ahora</button>
+        </div>
+    </div>
+</div>
         <section>
                 <tbody>
         </footer>
     </div>
 
 <script>
+// Función de búsqueda
+    function searchProducts() {
+        var input, filter, products, productList, title, i;
+        input = document.getElementById('searchInput');
+        filter = input.value.toLowerCase();
+        productList = document.getElementById('productList');
+        products = productList.getElementsByClassName('product');
+        
+        for (i = 0; i < products.length; i++) {
+            title = products[i].getElementsByTagName('h2')[0];
+            if (title.innerText.toLowerCase().indexOf(filter) > -1) {
+                products[i].style.display = '';
+            } else {
+                products[i].style.display = 'none';
+            }
+        }
+    }
+
         // Obtener el año actual
         const year = new Date().getFullYear();
         // Actualizar el contenido del elemento con id "year"
