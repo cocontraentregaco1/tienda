@@ -247,7 +247,7 @@
             </form>
         </section>
 
-        <!-- Buscador de productos -->
+          <!-- Buscador de productos -->
     <div class="search-bar">
         <input type="text" id="searchInput" placeholder="Buscar productos...">
         <button onclick="searchProducts()">Buscar</button>
@@ -258,7 +258,7 @@
         <!-- Producto 1 -->
         <div class="product">
             <img src="https://live.staticflickr.com/65535/51057435722_d41fe1cda4_c.jpg" alt="Producto 1">
-            <video src="https://www.youtube.com/watch?v=XXXXX" controls></video>
+            <iframe src="https://www.youtube.com/watch?v=XXXXX" controls></iframe>
             <h2>Producto 1</h2>
             <p class="sku">SKU: 123456</p>
             <button onclick="window.location.href='https://wa.me/573XXXXXXXXX?text=Me%20interesa%20el%20producto%201'">Comprar ahora</button>
@@ -274,13 +274,9 @@
         </div>
     </div>
 </div>
-        <section>
-                <tbody>
-        </footer>
-    </div>
 
 <script>
-// Función de búsqueda
+      // Función de búsqueda
     function searchProducts() {
         var input, filter, products, productList, title, i;
         input = document.getElementById('searchInput');
@@ -297,7 +293,7 @@
             }
         }
     }
-
+  
         // Obtener el año actual
         const year = new Date().getFullYear();
         // Actualizar el contenido del elemento con id "year"
