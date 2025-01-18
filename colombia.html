@@ -273,6 +273,32 @@
                 <button type="submit">Enviar</button>
             </form>
         </section>
+
+       <!-- Buscador de productos -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar productos...">
+            <button onclick="searchProducts()">Buscar</button>
+        </div>
+
+        <!-- Producto 1 -->
+        <div class="product">
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/EXyzhaakdVg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h2>Producto 1</h2>
+            <p class="sku">SKU: 123456</p>
+            <button onclick="window.location.href='https://wa.me/573XXXXXXXXX?text=Me%20interesa%20el%20producto%201'">Comprar ahora</button>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="product">
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ygUWdGUgcXVpZXJvIG1hcyBxdWUgYXllcg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h2>Producto 2</h2>
+            <p class="sku">SKU: 654321</p>
+            <button onclick="window.location.href='https://wa.me/573XXXXXXXXX?text=Me%20interesa%20el%20producto%202'">Comprar ahora</button>
+        </div>
         
             <!-- Footer -->
         <footer class="footer">
@@ -282,6 +308,23 @@
     </div>
 
 <script>
+      // Función de búsqueda
+        function searchProducts() {
+            var input, filter, products, title, i;
+            input = document.getElementById('searchInput');
+            filter = input.value.toLowerCase();
+            products = document.getElementsByClassName('product'); 
+            
+            for (i = 0; i < products.length; i++) {
+                title = products[i].getElementsByTagName('h2')[0];
+                if (title.innerText.toLowerCase().indexOf(filter) > -1) {
+                    products[i].style.display = ''; // Mostrar el producto si coincide
+                } else {
+                    products[i].style.display = 'none'; // Ocultar el producto si no coincide
+                }
+            }
+        }
+
         // Obtener el año actual
         const year = new Date().getFullYear();
         // Actualizar el contenido del elemento con id "year"
