@@ -276,10 +276,12 @@
         </section>
 
        <!-- Buscador de productos -->
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="Buscar productos...">
-            <button onclick="searchProducts()">Buscar</button>
-        </div>
+        <form onsubmit="searchProducts(); return false;">
+    <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="Buscar productos...">
+        <button type="submit">Buscar</button>
+    </div>
+</form>
 
         <!-- Producto 1 -->
         <div class="product">
