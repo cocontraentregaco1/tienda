@@ -312,21 +312,24 @@
 
 <script>
       // Función de búsqueda
-        function searchProducts() {
-            var input, filter, products, title, i;
-            input = document.getElementById('searchInput');
-            filter = input.value.toLowerCase();
-            products = document.getElementsByClassName('product'); 
-            
-            for (i = 0; i < products.length; i++) {
-                title = products[i].getElementsByTagName('h2')[0];
-                if (title.innerText.toLowerCase().indexOf(filter) > -1) {
-                    products[i].style.display = ''; // Mostrar el producto si coincide
-                } else {
-                    products[i].style.display = 'none'; // Ocultar el producto si no coincide
-                }
-            }
+function searchProducts() {
+    var input, filter, products, title, i;
+    input = document.getElementById('searchInput'); // Obtener el valor de búsqueda
+    filter = input.value.toLowerCase(); // Convertir a minúsculas
+    products = document.getElementsByClassName('product'); // Obtener los productos
+    
+    // Iterar a través de los productos
+    for (i = 0; i < products.length; i++) {
+        title = products[i].getElementsByTagName('h2')[0]; // Obtener el título de cada producto
+        
+        // Verificar si el título incluye el texto de búsqueda
+        if (title.innerText.toLowerCase().indexOf(filter) > -1) {
+            products[i].style.display = ''; // Mostrar el producto si coincide
+        } else {
+            products[i].style.display = 'none'; // Ocultar el producto si no coincide
         }
+    }
+}
 
         // Obtener el año actual
         const year = new Date().getFullYear();
