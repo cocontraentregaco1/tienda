@@ -1,1 +1,142 @@
-a
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
+    <meta name="keywords" content="armenia quindio, compra, venta, clasificados, productos, Colombia, Contraentrega">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Contraentrega">
+    <meta property="og:title" content="@armeniaquindio - Compra y venta en Armenia Quindío">
+    <meta property="og:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
+    <meta property="og:image" content="URL-de-tu-imagen">
+    <meta property="og:url" content="https://www.tusitio.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@armeniaquindio - Compra y venta en Armenia Quindío">
+    <meta name="twitter:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
+    <meta name="twitter:image" content="URL-de-tu-imagen">
+    <meta name="twitter:url" content="https://www.tusitio.com">
+    <meta name="google-site-verification" content="your-verification-code" />
+
+<!-- Facebook Pixel -->
+  <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', 'your-pixel-id');
+    fbq('track', 'PageView');
+  </script>
+  <noscript>
+    <img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=your-pixel-id&ev=PageView&noscript=1"/>
+  </noscript>
+  <!-- End Facebook Pixel -->
+</head>
+
+<body>
+
+    <div class="container">
+        <header>
+            <h1>@armeniaquindio</h1>
+            <p>Contraentrega Armenia Quindío, Colombia</p>
+        </header>
+
+        <!-- Enlaces -->
+        <div class="buttons">
+            <a href="https://co.contraentregaco.com/collections/armeniaquindio" target="_blank" rel="noopener noreferrer">CLASIFICADOS</a>
+            <a href="https://t.me/+B3aF0Cu0mUJhMDhh" target="_blank" rel="noopener noreferrer">GRUPO TELEGRAM</a>
+            <a href="https://chat.whatsapp.com/IyB25mGYFtSFVnCDOcLfoX" target="_blank" rel="noopener noreferrer">GRUPO WHATSAPP</a>
+            <a href="https://www.facebook.com/groups/912495177441287/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer">GRUPO FACEBOOK</a>
+        </div>
+
+        <section>
+            <p>¿Qué vendes?</p>
+
+            <!-- Formulario -->
+            <form action="https://formspree.io/f/YOUR_FORM_ID" method="POST" enctype="multipart/form-data" id="product-form">
+                <label for="titulo">Título:</label>
+                <input type="text" id="titulo" name="titulo" required>
+
+                <label for="precio">Precio:</label>
+                <input type="number" id="precio" name="precio" required>
+                
+                <label for="celular">Celular:</label>
+                <input type="number" id="celular" name="celular" required>
+
+                <label for="ubicacion">Ubicación:</label>
+                <input type="text" id="ubicacion" name="ubicacion" required>
+
+                <label for="descripcion">Descripción:</label>
+                <textarea id="descripcion" name="descripcion" rows="4" required></textarea>
+
+                <label for="archivo">Agregar foto:</label>
+                <input type="file" id="archivo" name="archivo" required>
+
+                <button type="submit">Enviar</button>
+            </form>
+        </section>
+
+        <!-- Buscador de productos -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder="Buscar productos...">
+            <button onclick="searchProducts()">Buscar</button>
+        </div>
+
+        <!-- Producto 1 -->
+        <div class="product">
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/EXyzhaakdVg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h2>Producto 1</h2>
+            <p class="sku">SKU: 123456</p>
+            <button onclick="window.location.href='https://wa.me/573XXXXXXXXX?text=Me%20interesa%20el%20producto%201'">Comprar ahora</button>
+        </div>
+
+        <!-- Producto 2 -->
+        <div class="product">
+            <div class="video-container">
+                <iframe width="560" height="315" src="https://www.youtube.com/embed/ygUWdGUgcXVpZXJvIG1hcyBxdWUgYXllcg" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h2>Producto 2</h2>
+            <p class="sku">SKU: 654321</p>
+            <button onclick="window.location.href='https://wa.me/573XXXXXXXXX?text=Me%20interesa%20el%20producto%202'">Comprar ahora</button>
+        </div>
+
+        <!-- Pie de página -->
+        <footer class="footer">
+            <p>&copy; <span id="year"></span> Contraentrega. Todos los derechos reservados.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Función de búsqueda
+        function searchProducts() {
+            var input, filter, products, title, i;
+            input = document.getElementById('searchInput');
+            filter = input.value.toLowerCase();
+            products = document.getElementsByClassName('product'); 
+            
+            for (i = 0; i < products.length; i++) {
+                title = products[i].getElementsByTagName('h2')[0];
+                if (title.innerText.toLowerCase().indexOf(filter) > -1) {
+                    products[i].style.display = ''; // Mostrar el producto si coincide
+                } else {
+                    products[i].style.display = 'none'; // Ocultar el producto si no coincide
+                }
+            }
+        }
+
+        // Obtener el año actual
+        const year = new Date().getFullYear();
+        // Actualizar el contenido del elemento con id "year"
+        document.getElementById('year').textContent = year;
+    </script>
+
+</body>
+</html>
