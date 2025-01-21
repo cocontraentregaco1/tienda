@@ -614,3 +614,56 @@ const qrCode = new QRCode(document.getElementById("qrcode"), {
   width: 128,
   height: 128,
 });
+
+
+
+
+<!-- Botón para generar la factura -->
+<button id="payButton">Generar factura Lightning</button>
+
+<!-- Espacio para mostrar el código QR -->
+<div id="qrcode"></div>
+
+
+
+
+
+
+main .js
+document.getElementById("payButton").addEventListener("click", async function() {
+  try {
+    const amount = 1000; // Monto en satoshis
+
+    const response = await fetch('https://tusitio.com/pay', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ amount: amount })
+    });
+
+    if (!response.ok) {
+      throw new Error('Error al generar la factura');
+    }
+
+    const data = await response.json();
+
+    if (data.invoice) {
+      generateQRCode(data.invoice);
+    } else {
+      alert('Error al obtener la factura');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+    alert('Hubo un problema con la solicitud');
+  }
+});
+
+function generateQRCode(invoice) {
+  document.getElementById("qrcode").innerHTML = '';
+  new QRCode(document.getElementById("qrcode"), {
+    text: invoice,
+    width: 128,
+    height: 128
+  });
+}
