@@ -667,3 +667,96 @@ function generateQRCode(invoice) {
     height: 128
   });
 }
+
+
+Claro, lo que agregué al código original fue principalmente el script para manejar la generación de la factura Lightning y la creación del código QR. También modifiqué el botón "Comprar ahora" para que invoque esta función.
+
+1. Modificación del Botón "Comprar ahora":
+
+El botón en cada producto ahora tiene un onclick que llama a la función handlePayment() pasando el nombre del producto y el monto como parámetros.
+
+<!-- Producto 1 -->
+<button onclick="handlePayment('Producto 1', 1000)">Comprar ahora</button>
+
+<!-- Producto 2 -->
+<button onclick="handlePayment('Producto 2', 2000)">Comprar ahora</button>
+
+2. El Script:
+
+Este es el script que maneja la generación de la factura y el código QR.
+
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.4.4/build/qrcode.min.js"></script>
+
+<script>
+    // Función para manejar el pago
+    async function handlePayment(productName, amount) {
+        try {
+            // Mostrar mensaje de "Procesando"
+            alert('Procesando el pago para ' + productName);
+
+            // Llamada al backend para obtener la factura Lightning
+            const response = await fetch('https://tusitio.com/pay', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ amount: amount })
+            });
+
+            if (!response.ok) {
+                throw new Error('Error al generar la factura');
+            }
+
+            const data = await response.json();
+
+            if (data.invoice) {
+                generateQRCode(data.invoice);
+            } else {
+                alert('No se pudo obtener la factura');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Hubo un problema con la solicitud');
+        }
+    }
+
+    // Función para generar el código QR
+    function generateQRCode(invoice) {
+        document.getElementById("paymentQR").style.display = "block";
+        document.getElementById("qrcode").innerHTML = ''; // Limpiar cualquier QR previo
+
+        // Generar el QR
+        new QRCode(document.getElementById("qrcode"), {
+            text: invoice,
+            width: 128,
+            height: 128
+        });
+    }
+
+    // Obtener el año actual
+    const year = new Date().getFullYear();
+    // Actualizar el contenido del elemento con id "year"
+    document.getElementById('year').textContent = year;
+</script>
+
+3. El Contenedor del QR:
+
+El contenedor del código QR debe estar inicialmente oculto. Cuando se genera el QR, este div se hace visible y muestra el código QR correspondiente.
+
+<div id="paymentQR" style="display:none;">
+    <h3>Escanea este código QR para pagar:</h3>
+    <div id="qrcode"></div>
+</div>
+
+Explicación:
+
+1. Botón "Comprar ahora": Cada botón de "Comprar ahora" llama a la función handlePayment() pasando el nombre del producto y el monto correspondiente. Esto hace que cuando el usuario haga clic en el botón, se intente generar una factura para ese producto y luego se muestre el código QR de la factura para que el usuario pueda pagar con Lightning Network.
+
+
+2. Función handlePayment(): Esta función hace una solicitud POST al servidor para generar una factura Lightning. Luego, toma la respuesta (que se espera que contenga la factura) y genera un código QR con la librería QRCode.js.
+
+
+3. Generación del código QR: La función generateQRCode() se encarga de tomar la factura generada y crear el código QR correspondiente, que se muestra en el div con id="qrcode".
+
+
+
