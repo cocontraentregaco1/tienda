@@ -545,3 +545,72 @@ function searchProducts() {
     </script>
 </body>
 </html>
+
+
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request));
+});
+
+async function handleRequest(request) {
+  // Solo aceptar solicitudes POST
+  if (request.method === 'POST') {
+    const { amount } = await request.json(); // El monto de la factura a generar
+
+    // Llamar a la función para crear la factura con Electrum
+    const invoice = await createInvoiceWithElectrum(amount);
+
+    if (invoice) {
+      return new Response(JSON.stringify(invoice), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } else {
+      return new Response('Error al generar la factura', { status: 500 });
+    }
+  }
+
+  return new Response('Método no permitido', { status: 405 });
+}
+
+async function createInvoiceWithElectrum(amount) {
+  const electrumServerUrl = 'http://your-electrum-server:50001'; // Cambia esto por tu URL del servidor Electrum
+  const method = 'invoice.create'; // Método RPC para crear una factura Lightning
+  const params = [amount, 'Pago por un producto']; // Parámeteros: monto y memo
+
+  // Crear la solicitud JSON-RPC para generar la factura
+  const requestBody = JSON.stringify({
+    id: 1,
+    method: method,
+    params: params
+  });
+
+  try {
+    // Realizar la solicitud al servidor Electrum
+    const response = await fetch(electrumServerUrl, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: requestBody
+    });
+
+    // Analizar la respuesta de Electrum
+    const data = await response.json();
+
+    if (data.result) {
+      return data.result; // Devolver la factura generada
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error('Error al generar la factura:', error);
+    return null;
+  }
+}
+
+
+
+
+generador qr front
+const qrCode = new QRCode(document.getElementById("qrcode"), {
+  text: invoiceString, // El string de la factura
+  width: 128,
+  height: 128,
+});
