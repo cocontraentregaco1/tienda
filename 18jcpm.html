@@ -355,5 +355,120 @@ Si te gustaría continuar con más distritos de otras provincias, o si tienes al
 34. Kabul
 
 
+// Cloudflare Worker para obtener datos del ERP
+
+const ERP_API_URL = "https://api.erp.com/getProductDetails";  // Cambia esto a la URL real de la API
+const API_KEY = "your-api-key";  // Tu clave API para autenticarte con la API
+
+async function obtenerDatosERP() {
+    try {
+        // Realizamos una solicitud GET a la API del ERP
+        const response = await fetch(ERP_API_URL, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${API_KEY}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        // Si la respuesta no es exitosa, lanzamos un error
+        if (!response.ok) {
+            throw new Error('Error al obtener los datos del ERP');
+        }
+
+        // Procesamos la respuesta como JSON
+        const data = await response.json();
+
+        // Devolvemos los datos al cliente
+        return new Response(JSON.stringify(data), {
+            headers: { 'Content-Type': 'application/json' }
+        });
+    } catch (error) {
+        return new Response(JSON.stringify({ error: error.message }), {
+            headers: { 'Content-Type': 'application/json' },
+            status: 500
+        });
+    }
+}
+
+addEventListener('fetch', event => {
+    event.respondWith(obtenerDatosERP());
+});
+
+
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Actualizar Precios y Stock</title>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Inventario de Productos</h1>
+        </header>
+
+        <!-- Productos -->
+        <section id="productos-container">
+            <div class="product" id="producto-1">
+                <h2>Producto 1</h2>
+                <p class="precio">Cargando precio...</p>
+                <p class="stock">Cargando stock...</p>
+            </div>
+
+            <div class="product" id="producto-2">
+                <h2>Producto 2</h2>
+                <p class="precio">Cargando precio...</p>
+                <p class="stock">Cargando stock...</p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        const WORKER_URL = "https://mi-worker.workers.dev";  // La URL de tu Worker desplegado en Cloudflare
+
+        async function obtenerDatosDesdeWorker() {
+            try {
+                const response = await fetch(WORKER_URL);
+                const data = await response.json();
+
+                if (data.error) {
+                    throw new Error(data.error);
+                }
+
+                // Actualiza los productos en el frontend
+                data.forEach(producto => {
+                    const productoElement = document.querySelector(`#producto-${producto.id}`);
+                    if (productoElement) {
+                        // Actualizar el precio
+                        const precioElement = productoElement.querySelector(".precio");
+                        if (precioElement) {
+                            precioElement.innerText = `Precio: $${producto.precio}`;
+                        }
+
+                        // Actualizar el stock
+                        const stockElement = productoElement.querySelector(".stock");
+                        if (stockElement) {
+                            stockElement.innerText = `Stock: ${producto.stock}`;
+                        }
+                    }
+                });
+
+            } catch (error) {
+                console.error("Error obteniendo los datos:", error);
+            }
+        }
+
+        // Llamamos a la función cuando la página se carga
+        window.onload = function() {
+            obtenerDatosDesdeWorker(); // Obtener datos desde el Worker
+        };
+    </script>
+</body>
+</html>
 
 
