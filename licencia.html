@@ -218,8 +218,8 @@
             <h2>Licencia Socio</h2>
             <p>Precio total: <strong>$500,000 COP</strong></p>
             <p>Incluye envío de la licencia física a tu dirección. (Descarga la digital al pagar)</p>
-            <button id="checkout-button" style="background-color: #6772E5; color: white; padding: 15px 20px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer;">
-                Pagar con Stripe
+            <button id="wompi-button" style="background-color: #6772E5; color: white; padding: 15px 20px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer;">
+                Pagar con Wompi
             </button>
         </div>
 
@@ -230,25 +230,12 @@
         </footer>
     </div>
 
-    <!-- Script para Stripe -->
-    <script src="https://js.stripe.com/v3/"></script>
+    <!-- Script para redirigir a Wompi -->
     <script>
-        // Configura tu clave pública de Stripe
-        const stripe = Stripe('TU_CLAVE_PUBLICA_DE_STRIPE');
-
-        // Configura el botón de pago
-        const checkoutButton = document.getElementById('checkout-button');
-        checkoutButton.addEventListener('click', function () {
-            stripe.redirectToCheckout({
-                lineItems: [{ price: 'TU_ID_DE_PRECIO_STRIPE', quantity: 1 }],
-                mode: 'payment',
-                successUrl: 'https://www.tusitio.com/success',
-                cancelUrl: 'https://www.tusitio.com/cancel',
-            }).then(function (result) {
-                if (result.error) {
-                    alert(result.error.message);
-                }
-            });
+        // Configura el botón de Wompi
+        const wompiButton = document.getElementById('wompi-button');
+        wompiButton.addEventListener('click', function () {
+            window.location.href = 'https://checkout.wompi.co/l/SNMmKf';
         });
 
         // Actualizar el año en el footer
