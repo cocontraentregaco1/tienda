@@ -19,27 +19,25 @@
     <meta name="twitter:url" content="https://www.cordientrega.com">
     <meta name="google-site-verification" content="your-verification-code" />
 
-<!-- Facebook Pixel -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'your-pixel-id');
-    fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=your-pixel-id&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- End Facebook Pixel -->
-</head>
+    <!-- Facebook Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'your-pixel-id');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=your-pixel-id&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel -->
 
-    
     <title>@cordientrega - Worldwide Logistics Services.</title>
 
     <!-- Datos estructurados con Schema.org -->
@@ -55,7 +53,7 @@
             "name": "Contraentrega Armenia Quindío"
         }
     }
- </script>
+    </script>
 
     <!-- Favicon -->
     <link rel="icon" href="URL-del-favicon" type="image/png">
@@ -63,10 +61,10 @@
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'YOUR_TRACKING_ID');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'YOUR_TRACKING_ID');
     </script>
 
     <style>
@@ -171,19 +169,16 @@
             color: #333;
             margin-top: 20px;
         }
-
         .clickable {
             color: #007BFF;
             text-decoration: underline;
             cursor: pointer;
             transition: color 0.3s ease-in-out;
         }
-
         .clickable:hover {
             color: #0056b3;
             text-decoration: none;
         }
-
         /* Lazy loading de imágenes */
         img[loading="lazy"] {
             opacity: 0;
@@ -194,15 +189,15 @@
         }
     </style>
 
-  <!-- Google Tag Manager -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-XXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GTM-XXXXXX');
-  </script>
-  <!-- End Google Tag Manager -->
+    <!-- Google Tag Manager -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-XXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GTM-XXXXXX');
+    </script>
+    <!-- End Google Tag Manager -->
 </head>
 
 <body>
@@ -213,28 +208,51 @@
             <p>Cali, Valle Del Cauca, Colombia</p>
         </header>
 
-        <!-- Enlaces -->
-        <div class="buttons">
-            <a href="centrocalivalle.html" target="_blank" rel="noopener noreferrer">Centro</a>
-    <a href="nortecalivalle.html" target="_blank" rel="noopener noreferrer">Norte</a>
-    <a href="oestecalivalle.html" target="_blank" rel="noopener noreferrer">Oeste</a>
-    <a href="orientecalivalle.html" target="_blank" rel="noopener noreferrer">Oriente</a>
-    <a href="surcalivalle.html" target="_blank" rel="noopener noreferrer">Sur</a>
+        <!-- Video de YouTube incrustado -->
+        <div style="margin-bottom: 20px;">
+            <iframe width="100%" height="315" src="https://www.youtube.com/embed/TU_ID_DE_VIDEO" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
         </div>
 
-            <!-- Footer -->
+        <!-- Información de la licencia y botón de pago -->
+        <div style="text-align: center;">
+            <h2>Licencia de Servicios</h2>
+            <p>Precio total: <strong>$500,000 COP</strong></p>
+            <p>Incluye envío de la licencia física a tu dirección.</p>
+            <button id="checkout-button" style="background-color: #6772E5; color: white; padding: 15px 20px; border: none; border-radius: 5px; font-size: 1.2em; cursor: pointer;">
+                Pagar con Stripe
+            </button>
+        </div>
+
+        <!-- Footer -->
         <footer class="footer">
             <p>&copy; <span id="year"></span> <strong>Cordientrega</strong></p>
             <p>Bitcoin: <a href="bitcoin:15gdaABbh6oZZG4kfQPXoSdqj9YMsg5RaH" target="_blank" rel="noopener noreferrer">15gdaABbh6oZZG4kfQPXoSdqj9YMsg5RaH</a></p>
         </footer>
     </div>
 
-<script>
+    <!-- Script para Stripe -->
+    <script src="https://js.stripe.com/v3/"></script>
+    <script>
+        // Configura tu clave pública de Stripe
+        const stripe = Stripe('TU_CLAVE_PUBLICA_DE_STRIPE');
 
-// Actualizar el año en el footer
-document.getElementById("year").textContent = new Date().getFullYear();
+        // Configura el botón de pago
+        const checkoutButton = document.getElementById('checkout-button');
+        checkoutButton.addEventListener('click', function () {
+            stripe.redirectToCheckout({
+                lineItems: [{ price: 'TU_ID_DE_PRECIO_STRIPE', quantity: 1 }],
+                mode: 'payment',
+                successUrl: 'https://www.tusitio.com/success',
+                cancelUrl: 'https://www.tusitio.com/cancel',
+            }).then(function (result) {
+                if (result.error) {
+                    alert(result.error.message);
+                }
+            });
+        });
 
-</script>
-
+        // Actualizar el año en el footer
+        document.getElementById("year").textContent = new Date().getFullYear();
+    </script>
 </body>
 </html>
