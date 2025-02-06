@@ -3221,3 +3221,306 @@ document.getElementById('pay-btc').addEventListener('click', pagarConBTC);
       headers: { 'Content-Type': 'text/html' },
     });
   }
+
+
+
+Electrum 
+
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
+
+// ==================== CONFIGURACIÓN CORREGIDA ====================
+const CONFIG = {
+  business: {
+    name: BUSINESS_NAME || "Mi Tienda BTC",
+    currency: CURRENCY || "COP",
+    logo: LOGO_URL || "https://ejemplo.com/logo.png",
+    btcNetwork: BTC_NETWORK || "mainnet"
+  },
+  integrations: {
+    lnbits: {
+      endpoint: LNBITS_API_ENDPOINT,
+      apiKey: LNBITS_API_KEY,
+      webhookSecret: LNBITS_WEBHOOK_SECRET
+    },
+    electrum: {
+      rpcEndpoint: ELECTRUM_RPC_ENDPOINT,
+      rpcUser: ELECTRUM_RPC_USER,
+      rpcPassword: ELECTRUM_RPC_PASSWORD
+    }
+  }
+};
+
+// Acceso directo a KV (Cloudflare Workers service worker syntax)
+const INVENTORY_KV = INVENTORY_KV;
+const TRANSACTIONS_KV = TRANSACTIONS_KV;
+
+// ==================== MANEJADOR PRINCIPAL CORREGIDO ====================
+async function handleRequest(request) {
+  try {
+    const url = new URL(request.url);
+    
+    // Endpoints de API
+    if (url.pathname === '/api/lnbits-payment' && request.method === 'POST') {
+      return handleLNbitsPayment(request);
+    }
+    
+    if (url.pathname === '/api/bitcoin-payment' && request.method === 'POST') {
+      return handleBitcoinPayment(request);
+    }
+    
+    if (url.pathname === '/api/check-payment' && request.method === 'GET') {
+      return handleCheckPayment(request);
+    }
+    
+    if (url.pathname === '/api/webhook/lnbits' && request.method === 'POST') {
+      return handleLNbitsWebhook(request);
+    }
+    
+    // Frontend principal
+    return new Response(await generateHTML(), {
+      headers: { 
+        'Content-Type': 'text/html',
+        'X-Frame-Options': 'DENY',
+        'Content-Security-Policy': "default-src 'self' https://*.lnbits.com"
+      }
+    });
+    
+  } catch (error) {
+    console.error(`Error: ${error.message}`);
+    return new Response(error.message, { status: 500 });
+  }
+}
+
+// ==================== LÓGICA ELECTRUM MEJORADA ====================
+async function electrumRPC(method, params = []) {
+  try {
+    const response = await fetch(CONFIG.integrations.electrum.rpcEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa(
+          CONFIG.integrations.electrum.rpcUser + ':' + 
+          CONFIG.integrations.electrum.rpcPassword
+        )
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: "cloudflare-worker",
+        method: method,
+        params: params
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.error) {
+      throw new Error(`Electrum Error: ${JSON.stringify(data.error)}`);
+    }
+    
+    return data.result;
+    
+  } catch (error) {
+    throw new Error(`Electrum RPC Error: ${error.message}`);
+  }
+}
+
+async function generateNewAddress() {
+  return await electrumRPC("createnewaddress");
+}
+
+async function getAddressDetails(address) {
+  return await electrumRPC("getaddresshistory", [address]);
+}
+
+// ==================== VERIFICACIÓN DE PAGOS MEJORADA ====================
+async function handleCheckPayment(request) {
+  const url = new URL(request.url);
+  const address = url.searchParams.get('address');
+  
+  try {
+    // Obtener historial de transacciones de la dirección
+    const history = await getAddressDetails(address);
+    const transactions = await Promise.all(
+      history.map(async tx => ({
+        ...tx,
+        details: await electrumRPC("gettransaction", [tx.tx_hash])
+      }))
+    );
+
+    // Buscar transacción en KV
+    const allTransactions = await TRANSACTIONS_KV.list({prefix: 'btc-'});
+    let txData = null;
+    
+    for (const key of allTransactions.keys) {
+      const tx = await TRANSACTIONS_KV.get(key.name, 'json');
+      if (tx.address === address) {
+        txData = tx;
+        break;
+      }
+    }
+
+    if (!txData) return Response.json({ error: "Transacción no encontrada" }, { status: 404 });
+
+    // Calcular balance confirmado
+    const confirmedBalance = transactions.reduce((sum, tx) => {
+      return tx.details.confirmations >= 1 ? sum + tx.value : sum;
+    }, 0);
+
+    const requiredConfirmations = CONFIG.business.btcNetwork === "mainnet" ? 3 : 1;
+    const confirmations = transactions[0]?.details.confirmations || 0;
+    const isConfirmed = confirmations >= requiredConfirmations;
+    const paid = confirmedBalance >= txData.btcAmount;
+
+    // Actualizar estado
+    const newStatus = paid ? (isConfirmed ? 'confirmed' : 'pending_confirmations') : 'pending';
+    
+    await TRANSACTIONS_KV.put(txData.txId, JSON.stringify({
+      ...txData,
+      status: newStatus,
+      confirmations,
+      paidAmount: confirmedBalance
+    }));
+
+    return Response.json({
+      status: newStatus,
+      confirmations,
+      requiredConfirmations,
+      paid,
+      paidAmount: confirmedBalance,
+      requiredAmount: txData.btcAmount
+    });
+
+  } catch (error) {
+    return Response.json({ error: "Error verificando pago: " + error.message }, { status: 500 });
+  }
+}
+
+// ==================== MEJORAS EN LIGHTNING (LNBITS) ====================
+async function handleLNbitsPayment(request) {
+  const { amount } = await request.json();
+  
+  try {
+    const response = await fetch(`${CONFIG.integrations.lnbits.endpoint}/api/v1/payments`, {
+      method: 'POST',
+      headers: {
+        'X-Api-Key': CONFIG.integrations.lnbits.apiKey,
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        out: false,
+        amount: parseInt(amount),
+        memo: CONFIG.business.name,
+        webhook: `${new URL(request.url).origin}/api/webhook/lnbits`
+      })
+    });
+
+    const data = await response.json();
+    
+    await TRANSACTIONS_KV.put(`ln-${data.payment_hash}`, JSON.stringify({
+      status: 'pending',
+      amount,
+      invoice: data.payment_request,
+      hash: data.payment_hash,
+      timestamp: Date.now()
+    }));
+
+    return Response.json({ 
+      invoice: data.payment_request,
+      qr: `https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=${data.payment_request}`
+    });
+
+  } catch (error) {
+    return Response.json({ error: "Error LNbits: " + error.message }, { status: 500 });
+  }
+}
+
+// ==================== WEBHOOK LNBITS MEJORADO ====================
+async function handleLNbitsWebhook(request) {
+  try {
+    const data = await request.json();
+    
+    // Verificar firma del webhook
+    const signature = request.headers.get('X-Lnbits-Sig') || '';
+    const signedContent = await crypto.subtle.digest(
+      'SHA-256',
+      new TextEncoder().encode(JSON.stringify(data) + CONFIG.integrations.lnbits.webhookSecret)
+    );
+    const expectedSig = Array.from(new Uint8Array(signedContent))
+      .map(b => b.toString(16).padStart(2, '0'))
+      .join('');
+
+    if (signature !== expectedSig) {
+      return new Response('Unauthorized', { status: 401 });
+    }
+
+    // Actualizar estado del pago
+    if (data.paid) {
+      await TRANSACTIONS_KV.put(`ln-${data.payment_hash}`, JSON.stringify({
+        status: 'paid',
+        amount: data.amount,
+        preimage: data.preimage,
+        timestamp: Date.now()
+      }));
+
+      await sendNotification(`Nuevo pago Lightning recibido: ${data.amount} sats`);
+    }
+
+    return new Response('OK');
+
+  } catch (error) {
+    return new Response('Error', { status: 500 });
+  }
+}
+
+// ==================== CORRECCIONES EN EL FRONTEND ====================
+async function generateHTML() {
+  // ... (código anterior del frontend)
+  
+  // Corregir URL de pago Bitcoin
+  function checkout() {
+    // ...
+    const method = confirm("¿Pagar con Lightning? (OK para Lightning, Cancelar para Bitcoin)") ? 'lnbits' : 'bitcoin';
+    fetch(`/api/${method}-payment`, {
+      // ...
+    });
+  }
+  
+  // ...
+}
+
+// ==================== FUNCIONES AUXILIARES ACTUALIZADAS ====================
+async function convertToBTC(amount, currency) {
+  try {
+    const response = await fetch(`https://api.coinbase.com/v2/prices/BTC-${currency}/buy`);
+    const data = await response.json();
+    const rate = parseFloat(data.data.amount);
+    const btcAmount = (amount / rate).toFixed(8);
+    
+    // Validar montos mínimos
+    if (parseFloat(btcAmount) < 0.00001) {
+      throw new Error('Monto mínimo no alcanzado (0.00001 BTC)');
+    }
+    
+    return btcAmount;
+  } catch (error) {
+    throw new Error(`Error conversión: ${error.message}`);
+  }
+}
+
+async function sendNotification(message) {
+  if (NOTIFICATION_WEBHOOK) {
+    await fetch(NOTIFICATION_WEBHOOK, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ 
+        content: `[${CONFIG.business.name}] ${message}`,
+        embeds: [{
+          color: 16755200, // Color naranja
+          fields: [{ name: 'Notificación', value: message }]
+        }]
+      })
+    });
+  }
+}
