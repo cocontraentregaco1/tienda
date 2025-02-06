@@ -3826,3 +3826,92 @@ async function sendNotification(message) {
     });
   }
 }
+
+
+btc-payment-app/
+├── .cloudflare/                  # Configuración avanzada de Cloudflare
+│   ├── headers.toml              # Reglas de seguridad globales
+│   ├── rate-limiting.json        # Políticas de limitación de peticiones
+│   └── cache-rules.js            # Reglas de caché programáticas
+├── .devcontainer/                # Configuración para GitHub Codespaces
+│   ├── devcontainer.json
+│   ├── Dockerfile
+│   └── post-create.sh
+├── .github/
+│   ├── workflows/                # CI/CD Pipelines
+│   │   ├── deploy-pages.yml
+│   │   ├── deploy-workers.yml
+│   │   └── security-scan.yml
+│   ├── ISSUE_TEMPLATE/           # Plantillas de GitHub
+│   │   ├── bug-report.md
+│   │   └── feature-request.md
+│   └── dependabot.yml            # Actualizaciones automáticas
+├── public/                       # Frontend estático (Cloudflare Pages)
+│   ├── index.html
+│   ├── assets/
+│   │   ├── css/
+│   │   │   └── main.css
+│   │   └── images/
+│   │       ├── logo.png
+│   │       └── favicon.ico
+│   └── robots.txt
+├── src/                          # Aplicación React
+│   ├── app/
+│   │   ├── layout/               # Componentes estructurales
+│   │   │   ├── Header.jsx
+│   │   │   └── Footer.jsx
+│   │   └── payments/             # Lógica de pagos
+│   │       ├── BitcoinCheckout.jsx
+│   │       ├── LightningCheckout.jsx
+│   │       └── PaymentStatus.jsx
+│   ├── core/
+│   │   ├── hooks/                # Hooks personalizados
+│   │   │   ├── useElectrum.js
+│   │   │   ├── useLNbits.js
+│   │   │   └── usePayment.js
+│   │   └── context/              # Estado global
+│   │       └── PaymentProvider.jsx
+│   ├── services/                 # Conexiones externas
+│   │   ├── electrum.client.js
+│   │   └── lnbits.client.js
+│   ├── utils/                    # Funciones utilitarias
+│   │   ├── currency.js
+│   │   ├── security.js
+│   │   └── validation.js
+│   └── main.jsx                  # Punto de entrada de React
+├── worker/                       # Backend (Cloudflare Workers)
+│   ├── api/
+│   │   ├── v1/                  # Versión 1 de la API
+│   │   │   ├── bitcoin.js
+│   │   │   └── lightning.js
+│   │   └── webhooks/            # Manejadores de webhooks
+│   │       └── lnbits.js
+│   ├── lib/                     # Bibliotecas compartidas
+│   │   ├── auth.js
+│   │   ├── crypto.js
+│   │   └── logger.js
+│   ├── models/                  # Modelos de datos
+│   │   ├── Transaction.js
+│   │   └── Invoice.js
+│   └── index.js                 # Router principal
+├── tests/
+│   ├── unit/                    # Pruebas unitarias
+│   │   ├── services.test.js
+│   │   └── utils.test.js
+│   └── load/                    # Pruebas de carga
+│       └── payments.test.js
+├── scripts/                     # Scripts personalizados
+│   ├── setup-environment.js
+│   └── migrate-kv.js
+├── docs/                        # Documentación
+│   ├── API.md
+│   └── ARCHITECTURE.md
+├── .env.example                 # Variables de entorno de ejemplo
+├── .gitignore
+├── wrangler.toml                # Configuración de Cloudflare
+├── package.json
+├── package-lock.json
+├── LICENSE                      # Licencia MIT
+├── SECURITY.md                  # Política de seguridad
+├── CODE_OF_CONDUCT.md           # Código de conducta
+└── README.md                    # Documentación principal
