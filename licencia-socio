@@ -1,1 +1,31 @@
-a
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Iframe Responsivo</title>
+    <style>
+        /* Establecer un contenedor responsivo para el iframe */
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 100vh; /* 100% de la altura del viewport */
+        }
+
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="iframe-container">
+        <iframe src="https://btcpay0.voltageapp.io/apps/2Zgy4uqoVgj739stfkzygsAzZ23w/pos" frameborder="0"></iframe>
+    </div>
+
+</body>
+</html>
