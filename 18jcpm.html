@@ -354,363 +354,423 @@ Si te gustaría continuar con más distritos de otras provincias, o si tienes al
 
 34. Kabul
 
+addEventListener('fetch', event => {
+  event.respondWith(handleRequest(event.request))
+})
 
-// addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request));
-});
+// Variable para almacenar la clave pública de Nostr del usuario
+let nostrPubkey = null;
+
+// Información de la empresa (base de conocimiento)
+const companyInfo = `Contraentrega es una empresa especializada en la compra y venta en línea en Armenia Quindío, Colombia. Ofrecemos servicios de logística, mensajería y asesoría personalizada para facilitar la interacción entre compradores y vendedores. Nuestro compromiso es brindar un servicio seguro, rápido y confiable, impulsando el crecimiento económico en la región.`
 
 async function handleRequest(request) {
+  const url = new URL(request.url);
+
+  // Endpoint operativo para el Chatbot AI
+  if (url.pathname === '/chat' && request.method === 'POST') {
+    try {
+      const { message } = await request.json();
+      // Llamada a la API de OpenAI con contexto incluido en el prompt
+      const apiKey = 'YOUR_OPENAI_API_KEY'; // Reemplaza con tu API Key o usa Secrets
+      const apiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`
+        },
+        body: JSON.stringify({
+          model: 'gpt-3.5-turbo',
+          messages: [
+            { "role": "system", "content": `Eres un asistente AI experto en Contraentrega. ${companyInfo}` },
+            { "role": "user", "content": message }
+          ],
+        }),
+      });
+      const apiResult = await apiResponse.json();
+      const reply = apiResult.choices &&
+                    apiResult.choices[0] &&
+                    apiResult.choices[0].message &&
+                    apiResult.choices[0].message.content
+                    ? apiResult.choices[0].message.content.trim()
+                    : "Lo siento, no pude obtener una respuesta.";
+      return new Response(JSON.stringify({ reply }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    } catch (e) {
+      return new Response(JSON.stringify({ reply: "Error al procesar el mensaje: " + e.toString() }), {
+        headers: { 'Content-Type': 'application/json' },
+      });
+    }
+  }
+
+  // Si no es la ruta /chat, se devuelve el HTML de la página
   const htmlContent = `
   <!DOCTYPE html>
   <html lang="es">
   <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <meta name="description" content="Worldwide Logistics Services.">
-      <meta name="keywords" content="armenia quindio, compra, venta, clasificados, productos, Colombia, Contraentrega">
-      <meta name="robots" content="index, follow">
-      <meta name="author" content="Contraentrega">
-      <meta property="og:title" content="@armeniaquindio - Compra y venta en Armenia Quindío">
-      <meta property="og:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
-      <meta property="og:image" content="URL-de-tu-imagen">
-      <meta property="og:url" content="https://www.tusitio.com">
-      <meta property="og:type" content="website">
-      <meta name="twitter:card" content="summary_large_image">
-      <meta name="twitter:title" content="@armeniaquindio - Compra y venta en Armenia Quindío">
-      <meta name="twitter:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
-      <meta name="twitter:image" content="URL-de-tu-imagen">
-      <meta name="twitter:url" content="https://www.tusitio.com">
-      <meta name="google-site-verification" content="your-verification-code" />
-
-      <!-- Facebook Pixel -->
-      <script>
-          !function(f,b,e,v,n,t,s)
-          {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-          n.queue=[];t=b.createElement(e);t.async=!0;
-          t.src=v;s=b.getElementsByTagName(e)[0];
-          s.parentNode.insertBefore(t,s)}(window, document,'script',
-          'https://connect.facebook.net/en_US/fbevents.js');
-          fbq('init', 'your-pixel-id');
-          fbq('track', 'PageView');
-      </script>
-      <noscript>
-          <img height="1" width="1" style="display:none"
-          src="https://www.facebook.com/tr?id=your-pixel-id&ev=PageView&noscript=1"/>
-      </noscript>
-      <!-- End Facebook Pixel -->
-
-      <title>@armeniaquindio - Compra y venta en Armenia Quindío</title>
-
-      <!-- Datos estructurados con Schema.org -->
-      <script type="application/ld+json">
-      {
-          "@context": "https://schema.org",
-          "@type": "WebSite",
-          "url": "https://www.tusitio.com",
-          "name": "@armeniaquindio",
-          "description": "Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.",
-          "publisher": {
-              "@type": "Organization",
-              "name": "Contraentrega Armenia Quindío"
-          }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Worldwide Logistics Services.">
+    <meta name="keywords" content="armenia quindio, compra, venta, clasificados, productos, Colombia, Contraentrega">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Contraentrega">
+    <meta property="og:title" content="@armeniaquindio - Compra y venta en Armenia Quindío">
+    <meta property="og:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
+    <meta property="og:image" content="URL-de-tu-imagen">
+    <meta property="og:url" content="https://www.tusitio.com">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="@armeniaquindio - Compra y venta en Armenia Quindío">
+    <meta name="twitter:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
+    <meta name="twitter:image" content="URL-de-tu-imagen">
+    <meta name="twitter:url" content="https://www.tusitio.com">
+    <meta name="google-site-verification" content="your-verification-code" />
+    <!-- Facebook Pixel -->
+    <script>
+        !function(f,b,e,v,n,t,s)
+        {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+        n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+        if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+        n.queue=[];t=b.createElement(e);t.async=!0;
+        t.src=v;s=b.getElementsByTagName(e)[0];
+        s.parentNode.insertBefore(t,s)}(window, document,'script',
+        'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', 'your-pixel-id');
+        fbq('track', 'PageView');
+    </script>
+    <noscript>
+        <img height="1" width="1" style="display:none"
+        src="https://www.facebook.com/tr?id=your-pixel-id&ev=PageView&noscript=1"/>
+    </noscript>
+    <!-- End Facebook Pixel -->
+    <title>@armeniaquindio - Compra y venta en Armenia Quindío</title>
+    <!-- Datos estructurados con Schema.org -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://www.tusitio.com",
+      "name": "@armeniaquindio",
+      "description": "Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.",
+      "publisher": {
+          "@type": "Organization",
+          "name": "Contraentrega Armenia Quindío"
       }
-      </script>
-
-      <!-- Favicon -->
-      <link rel="icon" href="URL-del-favicon" type="image/png">
-
-      <!-- Google Analytics -->
-      <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
-      <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'YOUR_TRACKING_ID');
-      </script>
-
-      <style>
-          body {
-              font-family: Arial, sans-serif;
-              background-color: #f1f1f1;
-              margin: 0;
-              padding: 0;
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 100vh;
-              text-align: center;
-          }
-          .container {
-              background-color: #ffffff;
-              border-radius: 8px;
-              box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-              width: 90%; 
-              max-width: 600px; 
-              padding: 20px;
-              overflow-y: auto; 
-              max-height: 80vh; 
-              height: 100%; 
-          }
-          h1, h2 {
-              font-size: 2.5em;
-              color: #333;
-              margin-bottom: 10px;
-          }
-          p {
-              color: #666;
-              font-size: 1.2em;
-              margin-bottom: 20px;
-          }
-          .buttons a {
-              display: block;
-              background-color: #000000;
-              color: white;
-              padding: 10px;
-              margin: 5px 0;
-              text-decoration: none;
-              border-radius: 5px;
-              font-size: 1em;
-              transition: background-color 0.3s;
-          }
-          .buttons a:hover {
-              background-color: #333333;
-          }
-          .footer {
-              font-size: 0.9em;
-              color: #777;
-              margin-top: 20px;
-          }
-          form {
-              margin-top: 20px;
-              text-align: left;
-              margin-bottom: 20px;
-          }
-          input[type="text"], input[type="number"], textarea, select {
-              width: 100%;
-              padding: 10px;
-              margin: 10px 0;
-              border: 1px solid #ccc;
-              border-radius: 5px;
-          }
-          input[type="file"] {
-              margin: 10px 0;
-          }
-          button {
-              background-color: #000000;
-              color: white;
-              padding: 10px;
-              border: none;
-              border-radius: 5px;
-              cursor: pointer;
-              font-size: 1.1em;
-              width: 100%;
-              margin: 5px 0;
-          }
-          button:hover {
-              background-color: #333333;
-          }
-          table {
-              width: 100%;
-              margin-top: 30px;
-              border-collapse: collapse;
-              overflow-x: auto;
-          }
-          th, td {
-              padding: 10px;
-              text-align: left;
-              border: 1px solid #ccc;
-          }
-          th {
-              background-color: #f4f4f4;
-          }
-          td {
-              background-color: #fafafa;
-          }
-          h2 {
-              font-size: 1.8em;
-              color: #333;
-              margin-top: 20px;
-          }
-
-          .clickable {
-              color: #007BFF;
-              text-decoration: underline;
-              cursor: pointer;
-              transition: color 0.3s ease-in-out;
-          }
-
-          .clickable:hover {
-              color: #0056b3;
-              text-decoration: none;
-          }
-
-          /* Lazy loading de imágenes */
-          img[loading="lazy"] {
-              opacity: 0;
-              transition: opacity 0.3s ease-in;
-          }
-          img[loading="lazy"]:not([src=""]) {
-              opacity: 1;
-          }
-
-          /* Estilo para el total */
-          .total {
-              font-size: 1.5em;
-              font-weight: bold;
-              margin: 20px 0;
-              color: #333;
-          }
-
-          /* Estilo para el buscador */
-          .search-container {
-              margin: 20px 0;
-          }
-          .search-container input {
-              width: 100%;
-              padding: 10px;
-              border: 1px solid #ccc;
-              border-radius: 5px;
-          }
-
-          /* Estilo para los radio buttons */
-          .radio-group {
-              display: flex;
-              gap: 10px;
-              margin: 10px 0;
-          }
-          .radio-group label {
-              display: flex;
-              align-items: center;
-              gap: 5px;
-          }
-      </style>
+    }
+    </script>
+    <!-- Favicon -->
+    <link rel="icon" href="URL-del-favicon" type="image/png">
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'YOUR_TRACKING_ID');
+    </script>
+    <style>
+      /* Estilos generales de la página */
+      body {
+          font-family: Arial, sans-serif;
+          background-color: #f1f1f1;
+          margin: 0;
+          padding: 0;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          min-height: 100vh;
+          text-align: center;
+      }
+      .container {
+          background-color: #ffffff;
+          border-radius: 8px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          width: 90%;
+          max-width: 600px;
+          padding: 20px;
+          overflow-y: auto;
+          max-height: 80vh;
+          margin: 20px;
+      }
+      h1, h2 { color: #333; margin-bottom: 10px; }
+      p { color: #666; margin-bottom: 20px; }
+      .buttons a, .buttons button {
+          display: block;
+          background-color: #000;
+          color: white;
+          padding: 10px;
+          margin: 5px 0;
+          text-decoration: none;
+          border: none;
+          border-radius: 5px;
+          font-size: 1em;
+          transition: background-color 0.3s;
+          cursor: pointer;
+      }
+      .buttons a:hover, .buttons button:hover { background-color: #333; }
+      .footer { font-size: 0.9em; color: #777; margin-top: 20px; }
+      form { margin-top: 20px; text-align: left; margin-bottom: 20px; }
+      input[type="text"], input[type="number"], textarea, select {
+          width: 100%; padding: 10px; margin: 10px 0;
+          border: 1px solid #ccc; border-radius: 5px;
+      }
+      button { width: 100%; margin: 5px 0; }
+      table { width: 100%; margin-top: 30px; border-collapse: collapse; }
+      th, td {
+          padding: 10px; text-align: left; border: 1px solid #ccc;
+      }
+      th { background-color: #f4f4f4; }
+      td { background-color: #fafafa; }
+      .total { font-size: 1.5em; font-weight: bold; margin: 20px 0; color: #333; }
+      .search-container { margin: 20px 0; }
+      .search-container input {
+          width: 100%; padding: 10px;
+          border: 1px solid #ccc; border-radius: 5px;
+      }
+      .radio-group {
+          display: flex; gap: 10px; margin: 10px 0;
+      }
+      .radio-group label {
+          display: flex; align-items: center; gap: 5px;
+      }
+      /* Modal para imagen */
+      .modal {
+          display: none;
+          position: fixed;
+          z-index: 1000;
+          left: 0; top: 0;
+          width: 100%; height: 100%;
+          overflow: auto;
+          background-color: rgba(0,0,0,0.7);
+          padding-top: 60px;
+      }
+      .modal-content {
+          margin: auto;
+          display: block;
+          width: 80%;
+          max-width: 700px;
+      }
+      .close {
+          position: absolute;
+          top: 30px; right: 35px;
+          color: #f1f1f1;
+          font-size: 40px;
+          font-weight: bold;
+          transition: 0.3s;
+      }
+      .close:hover, .close:focus {
+          color: #bbb;
+          text-decoration: none;
+          cursor: pointer;
+      }
+      @media screen and (max-width: 700px) {
+          .modal-content { width: 100%; }
+      }
+      /* Estilos para el Chatbot AI dentro del flujo */
+      #chatbot-btn {
+          display: block;
+          background-color: #000;
+          color: #fff;
+          border: none;
+          padding: 10px 15px;
+          border-radius: 5px;
+          cursor: pointer;
+          margin-top: 10px;
+          width: 100%;
+      }
+      #chatbot {
+          display: none;
+          background-color: #fff;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+          margin-top: 10px;
+          padding: 10px;
+          text-align: left;
+          width: 100%;
+          max-width: 600px;
+      }
+      #chatbot-header {
+          background-color: #000;
+          color: #fff;
+          padding: 10px;
+          border-top-left-radius: 5px;
+          border-top-right-radius: 5px;
+      }
+      #chatbot-messages {
+          height: 300px;
+          overflow-y: auto;
+          margin: 10px 0;
+          padding: 10px;
+          background-color: #f9f9f9;
+          border: 1px solid #ccc;
+          border-radius: 3px;
+      }
+      /* Aquí se ajusta el input para que ocupe todo el ancho y el botón quede debajo */
+      #chatbot-input {
+          display: block;
+          padding: 10px;
+          border-top: 1px solid #ccc;
+      }
+      #chatbot-input input {
+          width: 100%;
+          padding: 10px;
+          font-size: 16px;
+          margin-bottom: 10px;
+          box-sizing: border-box;
+      }
+      #chatbot-input button {
+          width: 100%;
+          background-color: #000;
+          color: #fff;
+          border: none;
+          padding: 10px;
+          cursor: pointer;
+          font-size: 16px;
+      }
+    </style>
   </head>
-
   <body>
-
-      <div class="container">
-          <header>
-              <h1>@bodegascali</h1>
-              <p>Punto: Vereda Campoalegre, Oeste Cali, Valle, Colombia</p>
-          </header>
-
-          <!-- Botones de contacto -->
-          <div class="buttons">
-              <a href="tel:+573001234567" id="llamar-btn">📞 Llamar</a>
-              <a href="https://wa.me/573001234567" target="_blank" id="mensaje-btn">💬 Enviar mensaje</a>
+    <div class="container">
+      <header>
+          <h1>Contraentrega</h1>
+          <p>Cali, Valle del Cauca, Colombia</p>
+      </header>
+      <!-- Botones de contacto -->
+      <div class="buttons">
+          <a href="tel:+573215340988" id="llamar-btn">📞 Llamar</a>
+          <a href="https://wa.me/573215340988" target="_blank" id="mensaje-btn">💬 Enviar mensaje</a>
+          <!-- Botón del Chatbot AI ubicado aquí, justo debajo de "Enviar mensaje" -->
+          <button id="chatbot-btn">Chatbot AI</button>
+      </div>
+      <!-- Panel del Chatbot AI (dentro del flujo) -->
+      <div id="chatbot">
+          <div id="chatbot-header">
+              Chatbot AI <span id="chatbot-close" style="float:right; cursor:pointer;">&times;</span>
           </div>
-
+          <div id="chatbot-messages"></div>
+          <div id="chatbot-input">
+              <input type="text" id="chatbot-user-input" placeholder="Escribe un mensaje...">
+              <button id="chatbot-send">Enviar</button>
+          </div>
+      </div>
+      <section>
+          <!-- Video o contenido multimedia -->
+          <div class="video-container">
+              <iframe 
+                  src="https://www.youtube.com/embed/4J59H-M9iBY" 
+                  title="YouTube video player" 
+                  frameborder="0" 
+                  allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                  allowfullscreen>
+              </iframe>
+          </div>
+          <!-- Buscador -->
+          <div class="search-container">
+              <input type="text" id="search-input" placeholder="Buscar socios por nombre, categorías o información...">
+          </div>
+          <!-- Socios (Inventario) -->
           <section>
-              <p>CÓDIGO: 1</p>
-
-              <!-- SKU #1 -->
-              <div class="video-container">
-                  <iframe 
-                      src="https://www.youtube.com/embed/4J59H-M9iBY" 
-                      title="YouTube video player" 
-                      frameborder="0" 
-                      allow="autoplay; encrypted-media; gyroscope; picture-in-picture" 
-                      allowfullscreen>
-                  </iframe>
+              <h2>Socios</h2>
+              <table border="1">
+                  <thead>
+                      <tr>
+                          <th>Imagen</th>
+                          <th>Nombre</th>
+                          <th>Contacto</th>
+                          <th>Ajustar Cantidad</th>
+                          <th>Precio Unitario</th>
+                          <th>Disponibilidad</th>
+                      </tr>
+                  </thead>
+                  <tbody id="inventario">
+                      <!-- Los socios se cargarán dinámicamente -->
+                  </tbody>
+              </table>
+          </section>
+          <!-- Checkout -->
+          <section>
+              <h2>Checkout</h2>
+              <h3>Selecciona el método de entrega</h3>
+              <div class="radio-group">
+                  <label>
+                      <input type="radio" name="delivery-method" value="pickup" checked> Recoger en el punto
+                  </label>
+                  <label>
+                      <input type="radio" name="delivery-method" value="delivery"> Servicio a domicilio
+                  </label>
               </div>
-
-              <!-- Buscador -->
-              <div class="search-container">
-                  <input type="text" id="search-input" placeholder="Buscar productos por nombre, código o precio...">
+              <div class="total">
+                  Total a pagar: <span id="total-pagar">$0 COP</span>
               </div>
-
-              <!-- Inventario -->
-              <section>
-                  <h2>Inventario</h2>
-                  <table border="1">
-                      <thead>
-                          <tr>
-                              <th>Imagen</th>
-                              <th>Código</th>
-                              <th>Nombre</th>
-                              <th>Ajustar Cantidad</th>
-                              <th>Precio Unitario</th>
-                              <th>Disponibilidad</th>
-                          </tr>
-                      </thead>
-                      <tbody id="inventario">
-                          <!-- Los productos se insertarán aquí dinámicamente -->
-                      </tbody>
-                  </table>
-              </section>
-
-              <!-- Checkout -->
-              <section>
-                  <h2>Checkout</h2>
-
-                  <!-- Opciones de entrega -->
-                  <h3>Selecciona el método de entrega</h3>
-                  <div class="radio-group">
-                      <label>
-                          <input type="radio" name="delivery-method" value="pickup" checked> Recoger en el punto
-                      </label>
-                      <label>
-                          <input type="radio" name="delivery-method" value="delivery"> Servicio a domicilio
-                      </label>
-                  </div>
-
-                  <!-- Total a pagar -->
-                  <div class="total">
-                      Total a pagar: <span id="total-pagar">$0 COP</span>
-                  </div>
-
-                  <!-- Métodos de pago -->
-                  <h3>Método de pago</h3>
-                  <div>
-                      <button type="button" id="pay-lightning">Pagar con Lightning</button>
-                      <button type="button" id="pay-btc">Pagar con BTC</button>
-                  </div>
-
-                  <!-- Formulario de envío (oculto por defecto) -->
-                  <form id="checkout-form" style="display: none;">
-                      <h3>Información de envío</h3>
-                      <input type="text" name="name" placeholder="Nombre completo" required>
-                      <input type="email" name="email" placeholder="Correo electrónico" required>
-                      <input type="text" name="address" placeholder="Dirección de envío" required>
-                      <input type="text" name="city" placeholder="Ciudad" required>
-                      <input type="text" name="state" placeholder="Departamento" required>
-                      <input type="text" name="zip" placeholder="Código postal" required>
-                      <select name="shipping-method" required>
-                          <option value="" disabled selected>Selecciona un método de envío</option>
-                          <option value="standard">Envío estándar (5-7 días)</option>
-                          <option value="express">Envío express (1-2 días)</option>
-                      </select>
-                  </form>
-              </section>
-
-              <!-- Footer -->
-              <footer class="footer">
-                  <p>&copy; 2025 Contraentrega - Todos los derechos reservados</p>
-                  <p><a href="https://www.tusitio.com/privacy" class="clickable">Política de privacidad</a> | <a href="https://www.tusitio.com/terms" class="clickable">Términos y condiciones</a></p>
-              </footer>
-          </div>
-
-          <script>
-      let cart = {}; // Objeto para almacenar los productos en el carrito
-      let totalQuantity = 0; // Total de productos en el carrito
-      let totalAmount = 0; // Total a pagar
-
-      // Función para obtener productos de AliExpress
-      async function obtenerProductos() {
-          const response = await fetch('https://api.aliexpress.com/rest/v1/products', {
-              method: 'GET',
-              headers: {
-                  'Authorization': 'Bearer YOUR_ALIEXPRESS_API_KEY',
-                  'Content-Type': 'application/json'
-              }
-          });
-          const data = await response.json();
-          return data.products;
-      }
-
-      // Función para calcular el total a pagar
+              <h3>Método de pago</h3>
+              <div class="buttons">
+                  <button type="button" id="connect-nostr">Conectar con Nostr Wallet Connect</button>
+                  <button type="button" id="pay-lightning">Pagar con Lightning</button>
+              </div>
+              <form id="checkout-form" style="display: none;">
+                  <h3>Información de envío</h3>
+                  <input type="text" name="name" placeholder="Nombre completo" required>
+                  <input type="email" name="email" placeholder="Correo electrónico" required>
+                  <input type="text" name="address" placeholder="Dirección de envío" required>
+                  <input type="text" name="city" placeholder="Ciudad" required>
+                  <input type="text" name="state" placeholder="Departamento" required>
+                  <input type="text" name="zip" placeholder="Código postal" required>
+                  <select name="shipping-method" required>
+                      <option value="" disabled selected>Selecciona un método de envío</option>
+                      <option value="standard">Envío estándar (5-7 días)</option>
+                      <option value="express">Envío express (1-2 días)</option>
+                  </select>
+              </form>
+          </section>
+          <!-- Footer -->
+          <footer class="footer">
+              <p>&copy; 2025 Contraentrega - Todos los derechos reservados</p>
+              <p>
+                  <a href="https://www.tusitio.com/privacy" class="clickable">Política de privacidad</a> | 
+                  <a href="https://www.tusitio.com/terms" class="clickable">Términos y condiciones</a>
+              </p>
+          </footer>
+      </section>
+      <!-- Modal para mostrar la imagen en grande -->
+      <div id="image-modal" class="modal">
+          <span class="close">&times;</span>
+          <img class="modal-content" id="modal-image">
+      </div>
+    </div>
+    <script>
+      let cart = {}; 
+      let totalQuantity = 0; 
+      let totalAmount = 0;
+      const dominioPrincipal = "tusitio.com";
+      const productosAPI = [
+          {
+              id: "@campoalegrecali",
+              nombre: "3215970535",
+              precio: 10000,
+              disponible: true,
+              imagen: "https://via.placeholder.com/300",
+              url: "https://" + "campoalegrecali" + "." + dominioPrincipal
+          },
+          {
+              id: "@ejemplo1",
+              nombre: "Contacto Ejemplo 1",
+              precio: 12000,
+              disponible: true,
+              imagen: "https://via.placeholder.com/300",
+              url: "https://" + "ejemplo1" + "." + dominioPrincipal
+          },
+          {
+              id: "@ejemplo2",
+              nombre: "Contacto Ejemplo 2",
+              precio: 15000,
+              disponible: true,
+              imagen: "https://via.placeholder.com/300",
+              url: "https://" + "ejemplo2" + "." + dominioPrincipal
+          }
+      ];
+      
       function calcularTotal() {
           totalAmount = 0;
           productosAPI.forEach(producto => {
@@ -720,13 +780,11 @@ async function handleRequest(request) {
           });
           document.getElementById('total-pagar').innerText = '$' + totalAmount.toLocaleString() + ' COP';
       }
-
-      // Función para validar el formulario de envío
+      
       function validarFormulario() {
           const form = document.getElementById('checkout-form');
           const inputs = form.querySelectorAll('input, select');
           let valido = true;
-
           inputs.forEach(input => {
               if (!input.value.trim()) {
                   valido = false;
@@ -735,173 +793,102 @@ async function handleRequest(request) {
                   input.style.border = '1px solid #ccc';
               }
           });
-
           return valido;
       }
-
-      // Función para manejar el pago con Lightning (Umbrel)
-      async function pagarConLightning() {
+      
+      function pagarConLightning() {
           if (document.querySelector('input[name="delivery-method"]:checked').value === 'delivery' && !validarFormulario()) {
               alert('Por favor, completa todos los campos del formulario de envío.');
               return;
           }
-
-          // Obtener el monto total a pagar
-          const total = totalAmount; // totalAmount se calcula en la función calcularTotal()
-
-          // Crear una factura Lightning usando la API de LNbits en Umbrel
-          const response = await fetch('http://<IP-de-tu-umbrel>/lnbits/api/v1/payments', {
+          const total = totalAmount;
+          fetch('https://<YOUR_LNBITS_INSTANCE>/api/v1/payments', {
               method: 'POST',
               headers: {
                   'Content-Type': 'application/json',
-                  'X-Api-Key': 'tu-api-key-de-lnbits' // Reemplaza con tu API key de LNbits
+                  'X-Api-Key': 'YOUR_LNBITS_API_KEY'
               },
               body: JSON.stringify({
                   out: false,
                   amount: total,
                   memo: 'Pago desde @bodegascali'
               })
-          });
-          const data = await response.json();
-
-          if (data.payment_request) {
-              // Mostrar la factura Lightning al usuario
-              alert('Escanea este código QR para pagar: ' + data.payment_request);
-              // Redirigir a una página de confirmación de pago
-              window.location.href = 'http://<IP-de-tu-umbrel>/lnbits/invoice/' + data.payment_hash;
-
-              // Realizar la compra en AliExpress
-              await realizarCompraAliExpress();
-              // Notificar al cliente por correo electrónico
-              await notificarCliente();
-          } else {
-              alert('Error al generar la factura Lightning.');
-          }
-      }
-
-      // Función para manejar el pago con Bitcoin (BTC)
-      async function pagarConBTC() {
-          if (document.querySelector('input[name="delivery-method"]:checked').value === 'delivery' && !validarFormulario()) {
-              alert('Por favor, completa todos los campos del formulario de envío.');
-              return;
-          }
-
-          // Obtener el monto total a pagar
-          const total = totalAmount; // totalAmount se calcula en la función calcularTotal()
-
-          // Generar una dirección Bitcoin usando la API de Bitcoin Core en Umbrel
-          const response = await fetch('http://<IP-de-tu-umbrel>/bitcoin/api/v1/getnewaddress', {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': 'Basic ' + btoa('usuario:contraseña') // Reemplaza con tus credenciales de Bitcoin Core
+          })
+          .then(response => response.json())
+          .then(data => {
+              if (data.payment_request) {
+                  alert('Escanea este código QR para pagar: ' + data.payment_request);
+                  if (nostrPubkey) {
+                      signAndPublishPaymentEvent(data.payment_request);
+                  }
+              } else {
+                  alert('Error al generar la factura Lightning.');
               }
+          })
+          .catch(error => {
+              console.error('Error:', error);
+              alert('Error al conectar con el servidor de pagos.');
           });
-          const data = await response.json();
-
-          if (data.address) {
-              // Mostrar la dirección Bitcoin al usuario
-              alert('Envía ' + (total / 100000000) + ' BTC a la siguiente dirección: ' + data.address);
-              // Redirigir a una página de confirmación de pago
-              window.location.href = 'http://<IP-de-tu-umbrel>/bitcoin/address/' + data.address;
-
-              // Realizar la compra en AliExpress
-              await realizarCompraAliExpress();
-              // Notificar al cliente por correo electrónico
-              await notificarCliente();
+      }
+      
+      async function connectNostrWallet() {
+          if (window.nostr) {
+              try {
+                  nostrPubkey = await window.nostr.getPublicKey();
+                  alert("Conectado con Nostr Wallet. Tu clave pública: " + nostrPubkey);
+              } catch (error) {
+                  console.error(error);
+                  alert("Error conectando con Nostr Wallet.");
+              }
           } else {
-              alert('Error al generar la dirección Bitcoin.');
+              alert("Nostr Wallet no encontrada. Instala una extensión compatible.");
           }
       }
-
-      // Función para realizar la compra en AliExpress
-      async function realizarCompraAliExpress() {
-          const productos = Object.keys(cart).map(id => ({
-              productId: id,
-              quantity: cart[id]
-          }));
-
-          const response = await fetch('https://api.aliexpress.com/rest/v1/orders', {
-              method: 'POST',
-              headers: {
-                  'Authorization': 'Bearer YOUR_ALIEXPRESS_API_KEY',
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  products: productos
-              })
-          });
-
-          if (response.ok) {
-              console.log('Compra realizada con éxito en AliExpress');
+      
+      async function signAndPublishPaymentEvent(invoice) {
+          const event = {
+              kind: 30000,
+              pubkey: nostrPubkey,
+              created_at: Math.floor(Date.now() / 1000),
+              tags: [['payment', invoice]],
+              content: 'Pago realizado a través de Lightning Network'
+          };
+          if (window.nostr && window.nostr.signEvent && window.nostr.publish) {
+              try {
+                  const signedEvent = await window.nostr.signEvent(event);
+                  await window.nostr.publish(signedEvent);
+                  alert('Evento de pago publicado en Nostr.');
+              } catch (err) {
+                  console.error('Error al firmar/publicar el evento:', err);
+                  alert('Error al publicar el evento en Nostr.');
+              }
           } else {
-              console.error('Error al realizar la compra en AliExpress');
+              console.log('No se pudieron firmar/publicar eventos con Nostr.');
           }
       }
-
-      // Función para notificar al cliente por correo electrónico
-      async function notificarCliente() {
-          const email = document.querySelector('input[name="email"]').value;
-          const response = await fetch('https://api.sendgrid.com/v3/mail/send', {
-              method: 'POST',
-              headers: {
-                  'Authorization': 'Bearer YOUR_SENDGRID_API_KEY',
-                  'Content-Type': 'application/json'
-              },
-              body: JSON.stringify({
-                  personalizations: [{
-                      to: [{ email: email }],
-                      subject: 'Confirmación de compra'
-                  }],
-                  from: { email: 'no-reply@tusitio.com' },
-                  content: [{
-                      type: 'text/plain',
-                      value: 'Gracias por tu compra. Tu pedido ha sido procesado con éxito.'
-                  }]
-              })
-          });
-
-          if (response.ok) {
-              console.log('Correo electrónico enviado con éxito');
-          } else {
-              console.error('Error al enviar el correo electrónico');
-          }
-      }
-
-      // Asignar eventos a los botones de pago
-      document.getElementById('pay-lightning').addEventListener('click', pagarConLightning);
-      document.getElementById('pay-btc').addEventListener('click', pagarConBTC);
-  
-      // Función para filtrar productos en la tabla
+      
       function filtrarProductos(query) {
           const tbody = document.getElementById("inventario");
           const filas = tbody.getElementsByTagName("tr");
-
           for (let fila of filas) {
-              const nombre = fila.getElementsByTagName("td")[2].innerText.toLowerCase();
-              const codigo = fila.getElementsByTagName("td")[1].innerText.toLowerCase();
-              const precio = fila.getElementsByTagName("td")[4].innerText.toLowerCase();
-
-              if (nombre.includes(query) || codigo.includes(query) || precio.includes(query)) {
+              const nombre = fila.getElementsByTagName("td")[1].innerText.toLowerCase();
+              const contacto = fila.getElementsByTagName("td")[2].innerText.toLowerCase();
+              if (nombre.includes(query) || contacto.includes(query)) {
                   fila.style.display = "";
               } else {
                   fila.style.display = "none";
               }
           }
       }
-
-      // Renderizar productos dinámicamente dentro de la tabla
-      async function cargarInventario() {
+      
+      function cargarInventario() {
           const tbody = document.getElementById("inventario");
-          tbody.innerHTML = ""; // Limpiar la tabla antes de renderizar
-
-          const productosAPI = await obtenerProductos();
-
+          tbody.innerHTML = "";
           productosAPI.forEach(producto => {
               const fila = document.createElement("tr");
               fila.innerHTML = 
-                  '<td><img src="' + producto.imagen + '" alt="' + producto.nombre + '" width="50"></td>' +
-                  '<td>' + producto.id + '</td>' +
+                  '<td><a href="#" class="ver-imagen" data-imagen="' + producto.imagen + '">ver</a></td>' +
+                  '<td><a href="' + producto.url + '" target="_blank">' + producto.id + '</a></td>' +
                   '<td>' + producto.nombre + '</td>' +
                   '<td>' +
                       '<button class="adjust-quantity" data-product="' + producto.id + '" data-action="decrease">-</button>' +
@@ -912,21 +899,17 @@ async function handleRequest(request) {
                   '<td>' + (producto.disponible ? "Disponible" : "Agotado") + '</td>';
               tbody.appendChild(fila);
           });
-
           asignarEventosBotones();
       }
-
-      // Asignar eventos a los botones de ajuste de cantidad
+      
       function asignarEventosBotones() {
           document.querySelectorAll(".adjust-quantity").forEach(button => {
               button.addEventListener("click", (event) => {
                   const productId = event.target.dataset.product;
                   const action = event.target.dataset.action;
-
                   if (!cart[productId]) {
                       cart[productId] = 0;
                   }
-
                   if (action === "increase") {
                       cart[productId]++;
                       totalQuantity++;
@@ -934,48 +917,92 @@ async function handleRequest(request) {
                       cart[productId]--;
                       totalQuantity--;
                   }
-
                   document.getElementById('cantidad-' + productId).innerText = cart[productId];
-                  calcularTotal(); // Actualizar el total a pagar
+                  calcularTotal();
               });
           });
       }
-
-      // Evento para el buscador
+      
       document.getElementById('search-input').addEventListener('input', (event) => {
           const query = event.target.value.toLowerCase();
           filtrarProductos(query);
       });
-
-      // Evento para los radio buttons de entrega
+      
       document.querySelectorAll('input[name="delivery-method"]').forEach(radio => {
           radio.addEventListener('change', (event) => {
               const form = document.getElementById('checkout-form');
-              if (event.target.value === 'delivery') {
-                  form.style.display = 'block';
-              } else {
-                  form.style.display = 'none';
-              }
+              form.style.display = event.target.value === 'delivery' ? 'block' : 'none';
           });
       });
-
-      // Cargar inventario al inicio
+      
+      document.getElementById('pay-lightning').addEventListener('click', pagarConLightning);
+      document.getElementById('connect-nostr').addEventListener('click', connectNostrWallet);
+      
+      document.addEventListener('click', function(e) {
+          if (e.target && e.target.classList.contains('ver-imagen')) {
+              e.preventDefault();
+              const imageUrl = e.target.getAttribute('data-imagen');
+              const modal = document.getElementById('image-modal');
+              const modalImg = document.getElementById('modal-image');
+              modal.style.display = "block";
+              modalImg.src = imageUrl;
+          }
+      });
+      
+      document.getElementById('image-modal').addEventListener('click', function(e) {
+          if (e.target.classList.contains('close') || e.target.id === 'image-modal') {
+              this.style.display = "none";
+          }
+      });
+      
       cargarInventario();
-  </script>
-      </div>
+      
+      // Funcionalidad del Chatbot AI
+      document.getElementById('chatbot-btn').addEventListener('click', function() {
+          var chatbot = document.getElementById('chatbot');
+          chatbot.style.display = (chatbot.style.display === 'none' || chatbot.style.display === '') ? 'block' : 'none';
+      });
+      
+      document.getElementById('chatbot-close').addEventListener('click', function() {
+          document.getElementById('chatbot').style.display = 'none';
+      });
+      
+      document.getElementById('chatbot-send').addEventListener('click', function() {
+          var input = document.getElementById('chatbot-user-input');
+          var message = input.value.trim();
+          if (!message) return;
+          var messagesContainer = document.getElementById('chatbot-messages');
+          var userMessageDiv = document.createElement('div');
+          userMessageDiv.textContent = 'Tú: ' + message;
+          messagesContainer.appendChild(userMessageDiv);
+          input.value = '';
+          fetch('/chat', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ message: message })
+          })
+          .then(response => response.json())
+          .then(data => {
+              var replyDiv = document.createElement('div');
+              replyDiv.textContent = 'Chatbot: ' + data.reply;
+              messagesContainer.appendChild(replyDiv);
+          })
+          .catch(err => {
+              console.error(err);
+              var errorDiv = document.createElement('div');
+              errorDiv.textContent = 'Chatbot: Error al procesar el mensaje.';
+              messagesContainer.appendChild(errorDiv);
+          });
+      });
+    </script>
   </body>
   </html>
   `;
-
-    return new Response(htmlContent, {
-      headers: { 'Content-Type': 'text/html' },
-    });
-  }
-
-
-
-
-
+  
+  return new Response(htmlContent, {
+    headers: { 'Content-Type': 'text/html' },
+  });
+}
 Inventario Manual  Cryptomus:
 
 addEventListener('fetch', event => {
