@@ -40,7 +40,7 @@
 </head>
 
     
-    <title>@cordientrega - Worldwide Logistics Services.</title>
+    <title>Contraentrega Valle del Cauca, Colombia</title>
 
     <!-- Datos estructurados con Schema.org -->
     <script type="application/ld+json">
@@ -192,6 +192,69 @@
         img[loading="lazy"]:not([src=""]) {
             opacity: 1;
         }
+        
+        /* Nuevos estilos agregados */
+        .search-container {
+            margin: 20px 0;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>');
+            background-repeat: no-repeat;
+            background-position: 95% center;
+            background-size: 20px;
+        }
+        
+        #localesTable {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        #localesTable th {
+            background-color: #000;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        #localesTable td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        #localesTable tr:hover td {
+            background-color: #f8f9fa;
+        }
+        
+        .local-link {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .local-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            #localesTable td, #localesTable th {
+                padding: 8px;
+                font-size: 14px;
+            }
+            
+            #searchInput {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
     </style>
 
   <!-- Google Tag Manager -->
@@ -209,17 +272,50 @@
 
     <div class="container">
         <header>
-            <h1>@calivalle</h1>
+            <h1>Contraentrega</h1>
             <p>Cali, Valle Del Cauca, Colombia</p>
         </header>
 
         <!-- Enlaces -->
         <div class="buttons">
-            <a href="https://calivalle.contraetregaco.com/centro" target="_blank" rel="noopener noreferrer">Centro</a>
-    <a href="https://calivalle.contraetregaco.com/norte" target="_blank" rel="noopener noreferrer">Norte</a>
-    <a href="https://calivalle.contraetregaco.com/oeste" target="_blank" rel="noopener noreferrer">Oeste</a>
-    <a href="https://calivalle.contraetregaco.com/oriente" target="_blank" rel="noopener noreferrer">Oriente</a>
-    <a href="https://calivalle.contraetregaco.com/sur" target="_blank" rel="noopener noreferrer">Sur</a>
+            <a href="https://app.contraentregaco.com/collections/calivalle" target="_blank" rel="noopener noreferrer">VER TODO</a>
+        </div>
+        
+        <!-- Sistema de búsqueda y tabla -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar locales por nombre, dirección o teléfono..." aria-label="Buscar locales">
+        
+            <table id="localesTable">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Horario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://app.contraentregaco.com/collections/montebellocali" class="local-link" target="_blank">Montebello</a></td>
+                        <td>Corregimiento Montebello</td>
+                        <td>3215340988</td>
+                        <td>L-S 8:00 AM - 7:00 PM</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://app.contraentregaco.com/collections/campoalegrecali" class="local-link" target="_blank">Cali Central</a></td>
+                        <td>Avenida 5N #15-30</td>
+                        <td>602 654 9873</td>
+                        <td>24/7</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://app.contraentregaco.com/collections/aguacatalcali" class="local-link" target="_blank">Palmira Norte</a></td>
+                        <td>Calle 30 #10-45</td>
+                        <td>315 789 4562</td>
+                        <td>L-V 7:30 AM - 8:00 PM</td>
+                    </tr>
+                    <!-- Agregar más locales aquí -->
+                </tbody>
+            </table>
         </div>
 
             <!-- Footer -->
@@ -233,6 +329,30 @@
 
 // Actualizar el año en el footer
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// Función de búsqueda
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#localesTable tbody tr');
+            
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let matchFound = false;
+                
+                // Buscar en todas las celdas
+                Array.from(cells).forEach((cell, index) => {
+                    const cellText = index === 0 ? 
+                        cell.querySelector('.local-link').textContent.toLowerCase() : 
+                        cell.textContent.toLowerCase();
+                    
+                    if(cellText.includes(searchTerm)) {
+                        matchFound = true;
+                    }
+                });
+                
+                row.style.display = matchFound ? '' : 'none';
+            });
+        });
 
 </script>
 
