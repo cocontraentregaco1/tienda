@@ -40,7 +40,7 @@
 </head>
 
     
-    <title>Contraentrega Antioquia, Colombia</title>
+    <title>Contraentrega Valle del Cauca, Colombia</title>
 
     <!-- Datos estructurados con Schema.org -->
     <script type="application/ld+json">
@@ -192,6 +192,88 @@
         img[loading="lazy"]:not([src=""]) {
             opacity: 1;
         }
+        
+        /* Nuevos estilos agregados */
+        .search-container {
+            margin: 20px 0;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>');
+            background-repeat: no-repeat;
+            background-position: 95% center;
+            background-size: 20px;
+        }
+        
+        #localesTable {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        #localesTable th {
+            background-color: #000;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        #localesTable td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        #localesTable tr:hover td {
+            background-color: #f8f9fa;
+        }
+        
+        .local-link {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .local-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            #localesTable td, #localesTable th {
+                padding: 8px;
+                font-size: 14px;
+            }
+            
+            #searchInput {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+
+<!-- Agrega esto en el CSS dentro de la sección <style> -->
+header a {
+    text-decoration: none;
+    color: #333;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+header a:hover {
+    border-bottom-color: #333;
+}
+
+header a:visited {
+    color: #333;
+}
+
+/* Mantén todos los demás estilos existentes */
     </style>
 
   <!-- Google Tag Manager -->
@@ -208,137 +290,53 @@
 <body>
 
     <div class="container">
-        <header>
-            <h1>Contraentrega</h1>
-            <p>Antioquia, Colombia</p>
-        </header>
+<header>
+    <a href="https://app.contraentregaco.com/collections/calivalle" target="_blank" rel="noopener noreferrer">
+        <h1>Contraentrega CO</h1>
+    </a>
+    <p>Contraentrega Cali, Valle Del Cauca, Colombia</p>
+</header>
 
         <!-- Enlaces -->
         <div class="buttons">
-            <a href="https://caceresantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Cáceres</a>
-    <a href="https://caucasiaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Caucasia</a>
-    <a href="https://elbagreantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">El Bagre</a>
-    <a href="https://nechiantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Nechí</a>
-    <a href="https://tarazaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Tarazá</a>
-<a href="https://zaragozaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Zaragoza</a>
-    <a href="https://caracoliantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Caracolí</a>
-    <a href="https://maceoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Maceo</a>
-    <a href="https://puertoberrioantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Puerto Berrío</a>
-    <a href="https://puertonareantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Puerto Nare</a>
-<a href="https://puertotriunfoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Puerto Triunfo</a>
-<a href="https://yondoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Yondó</a>
-    <a href="https://amalfiantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Amalfi</a>
-    <a href="https://anoriantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Anorí</a>
-    <a href="https://cisnerosantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Cisneros</a>
-    <a href="https://remediosantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Remedios</a>
-<a href="https://sanroqueantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Roque</a>
-    <a href="https://santodomingoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Santo Domingo</a>
-    <a href="https://segoviaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Segovia</a>
-    <a href="https://vegachiantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Vegachí</a>
-    <a href="https://yaliantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Yalí</a>
-<a href="https://yolomboantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Yolombó</a>
-<a href="https://angosturaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Angostura</a>
-    <a href="https://belmiraantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Belmira </a>
-    <a href="https://bricenoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Briceño </a>
-    <a href="https://campamentoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Campamento </a>
-    <a href="https://carolinadelprincipeantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Carolina del Príncipe</a>
-<a href="https://donmatiasantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Donmatías</a>
-    <a href="https://entrerriosantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Entrerríos</a>
-    <a href="https://gomezplataantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Gómez Plata</a>
-    <a href="https://guadalupeantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Guadalupe</a>
-    <a href="https://ituangoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Ituango</a>
-<a href="https://sanandresdecuerquiaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Andrés de Cuerquia</a>
-<a href="https://sanjosedelamontanaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San José de la Montaña</a>
-    <a href="https://sanpedrodelosmilagrosantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Pedro de los Milagros</a>
-    <a href="https://santarosadeososantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Santa Rosa de Osos</a>
-    <a href="https://toledoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Toledo </a>
-    <a href="https://valdiviaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Valdivia</a>
-<a href="https://yarumalantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Yarumal</a>
-    <a href="https://abriaquiantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Abriaquí</a>
-    <a href="https://santafedeantioquiaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Santa Fe de Antioquia</a>
-    <a href="https://anzaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Anzá</a>
-    <a href="https://armeniaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Armenia</a>
-<a href="https://buriticaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Buriticá</a>
-<a href="https://caicedoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Caicedo</a>
-    <a href="https://canasgordasantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Cañasgordas </a>
-    <a href="https://dabeibaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Dabeiba </a>
-    <a href="https://ebejicoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Ebéjico </a>
-    <a href="https://frontinoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Frontino</a>
-<a href="https://giraldoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Giraldo</a>
-    <a href="https://heliconiaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Heliconia</a>
-    <a href="https://liborinaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Liborina</a>
-    <a href="https://olayaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Olaya</a>
-    <a href="https://puertosantanderamazonas.contraentregaco.com" target="_blank" rel="noopener noreferrer">Peque</a>
-<a href="https://sabanalargaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Sabanalarga</a>
-<a href="https://sanjeronimoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Jerónimo </a>
-    <a href="https://sopetranantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Sopetrán </a>
-    <a href="https://uramitaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Uramita </a>
-    <a href="https://abejorralantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Abejorral </a>
-    <a href="https://alejandriaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Alejandría</a>
-<a href="https://argeliaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Argelia</a>
-    <a href="https://elcarmendeviboralantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">El Carmen de Viboral</a>
-    <a href="https://cocornaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Cocorná</a>
-    <a href="https://concepcionantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Concepción</a>
-    <a href="https://elpenolantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">El Peñol</a>
-<a href="https://tarapacaamazonas.contraentregaco.com" target="_blank" rel="noopener noreferrer">El Retiro</a>
-<a href="https://elsantuarioantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">El Santuario </a>
-    <a href="https://granadaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Granada </a>
-    <a href="https://guarneantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Guarne </a>
-    <a href="https://guatapeantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Guatapé </a>
-    <a href="https://lacejaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">La Ceja</a>
-<a href="https://launionantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">La Unión</a>
-    <a href="https://marinillaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Marinilla</a>
-    <a href="https://narinoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Nariño</a>
-    <a href="https://rionegroantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Rionegro</a>
-    <a href="https://sancarlosantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Carlos</a>
-<a href="https://sanfranciscoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Francisco</a>
-<a href="https://sanluisantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Luis </a>
-    <a href="https://sanrafaelantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Rafael </a>
-    <a href="https://sanvicenteferrerantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Vicente Ferrer </a>
-    <a href="https://sonsonantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Sonsón </a>
-    <a href="https://amagaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Amagá</a>
-<a href="https://andesantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Andes</a>
-    <a href="https://angelopolisantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Angelópolis</a>
-    <a href="https://betaniaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Betania</a>
-    <a href="https://betuliaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Betulia</a>
-    <a href="https://caramantaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Caramanta</a>
-<a href="https://ciudadbolivarantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Ciudad Bolívar</a>
-<a href="https://concordiaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Concordia</a>
-    <a href="https://fredoniaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Fredonia </a>
-    <a href="https://hispaniaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Hispania </a>
-    <a href="https://jardinantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Jardín </a>
-    <a href="https://jericoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Jericó</a>
-<a href="https://lapintadaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">La Pintada</a>
-    <a href="https://montebelloantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Montebello</a>
-    <a href="https://pueblorricoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Pueblorrico</a>
-    <a href="https://salgarantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Salgar</a>
-    <a href="https://santabarbaraantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Santa Bárbara</a>
-<a href="https://tamesisantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Támesis</a>
-<a href="https://tarsoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Tarso</a>
-    <a href="https://titiribiantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Titiribí </a>
-    <a href="https://urraoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Urrao </a>
-    <a href="https://valparaisoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Valparaíso </a>
-    <a href="https://veneciaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Venecia</a>
-<a href="https://apartadoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Apartadó</a>
-    <a href="https://arboletesantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Arboletes</a>
-    <a href="https://carepaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Carepa</a>
-    <a href="https://chigorodoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Chigorodó</a>
-    <a href="https://murindoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Murindó</a>
-<a href="https://mutataantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Mutatá</a>
-<a href="https://necocliantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Necoclí</a>
-    <a href="https://sanjuandeurabaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">San Juan de Urabá </a>
-    <a href="https://turboantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Turbo </a>
-    <a href="https://vigiadelfuerteantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Vigía del Fuerte </a>
-    <a href="https://barbosaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Barbosa</a>
-<a href="https://belloantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Bello</a>
-    <a href="https://caldasantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Caldas</a>
-    <a href="https://copacabanaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Copacabana</a>
-    <a href="https://envigadoantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Envigado</a>
-    <a href="https://girardotaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Girardota</a>
-<a href="https://itaguiantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Itagüi</a>
-<a href="https://laestrellaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">La Estrella</a>
-<a href="https://medellinantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Medellín</a>
-<a href="https://sabanetaantioquia.contraentregaco.com" target="_blank" rel="noopener noreferrer">Sabaneta</a>
+            <a href="https://app.contraentregaco.com/collections/calivalle" target="_blank" rel="noopener noreferrer">VER TODO</a>
+        </div>
+        
+        <!-- Sistema de búsqueda y tabla -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar locales por nombre, dirección o teléfono..." aria-label="Buscar locales">
+        
+            <table id="localesTable">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Horario</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><a href="https://app.contraentregaco.com/collections/campoalegrecali" target="_blank">Local Contraentrega sector vereda Campo Alegre</a></td>
+                        <td><a href="https://www.google.com/maps?q=3.4510861,-76.5461445" target="_blank">Ver ubicación</a></td>
+                        <td><a href="https://wa.me/573215340988" target="_blank">+57 3215340988</a></td>
+                        <td>24/7</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://app.contraentregaco.com/collections/montebellocali" target="_blank">Local Contraentrega sector corregimiento Montebello</a></td>
+                        <td><a href="https://www.google.com/maps?q=3.4510861,-76.5461445" target="_blank">Ver ubicación</a></td>
+                        <td><a href="https://wa.me/573215340988" target="_blank">+57 3215340988</a></td>
+                        <td>24/7</td>
+                    </tr>
+                    <tr>
+                        <td><a href="https://app.contraentregaco.com/collections/tertuliacali" target="_blank">Local Contraentrega sector Tertulia el Gato</a></td>
+                        <td><a href="https://www.google.com/maps?q=3.4510861,-76.5461445" target="_blank">Ver ubicación</a></td>
+                        <td><a href="https://wa.me/573215340988" target="_blank">+57 3215340988</a></td>
+                        <td>24/7</td>
+                    </tr>
+                   
+                </tbody>
+            </table>
         </div>
 
             <!-- Footer -->
@@ -352,6 +350,30 @@
 
 // Actualizar el año en el footer
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// Función de búsqueda
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#localesTable tbody tr');
+            
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let matchFound = false;
+                
+                // Buscar en todas las celdas
+                Array.from(cells).forEach((cell, index) => {
+                    const cellText = index === 0 ? 
+                        cell.querySelector('.local-link').textContent.toLowerCase() : 
+                        cell.textContent.toLowerCase();
+                    
+                    if(cellText.includes(searchTerm)) {
+                        matchFound = true;
+                    }
+                });
+                
+                row.style.display = matchFound ? '' : 'none';
+            });
+        });
 
 </script>
 
