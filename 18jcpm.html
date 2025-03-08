@@ -243,6 +243,21 @@
         padding: 10px 15px;
       }
     }
+
+header a {
+    text-decoration: none;
+    color: #333; /* Color original del h1 */
+    display: inline-block; /* Para mejor manejo del hover */
+    border-bottom: 2px solid transparent; /* Preparación para efecto hover */
+  }
+  
+  header a:hover {
+    border-bottom-color: #333; /* Línea negra al hacer hover */
+  }
+  
+  header a:visited {
+    color: #333; /* Mantiene el color negro después de visitado */
+  }
   </style>
 
   <!-- Google Tag Manager -->
@@ -301,12 +316,6 @@
 
         <label for="whatsap">WhatsApp:</label>
         <input type="tel" id="whatsap" name="whatsap" required>
-
-        <label for="contrasena">Contraseña:</label>
-        <input type="password" id="contrasena" name="contrasena" required>
-
-        <label for="confirmar_contrasena">Confirmar Contraseña:</label>
-        <input type="password" id="confirmar_contrasena" name="confirmar_contrasena" required>
 
         <button type="submit">Registrarse</button>
       </form>
