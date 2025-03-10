@@ -192,6 +192,51 @@
         img[loading="lazy"]:not([src=""]) {
             opacity: 1;
         }
+        
+        
+    .promo-products {
+        margin: 25px 0;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 8px;
+    }
+
+    .product {
+        margin: 20px 0;
+        padding: 15px;
+        border: 1px solid #eee;
+        border-radius: 8px;
+    }
+
+    .product img {
+        border-radius: 8px;
+        margin-bottom: 10px;
+    }
+
+    .product-button {
+        display: inline-block;
+        background: #007bff;
+        color: white;
+        padding: 8px 15px;
+        margin-top: 10px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .donate-button {
+        display: block;
+        background: #28a745;
+        color: white;
+        padding: 12px;
+        margin: 15px 0;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .donate-button:hover {
+        background: #218838;
+    }
     </style>
 
   <!-- Google Tag Manager -->
@@ -248,6 +293,41 @@
     <a href="vaupescolombia.html" target="_blank" rel="noopener noreferrer">Vaupés</a>
     <a href="vichadacolombia.html" target="_blank" rel="noopener noreferrer">Vichada</a>
         </div>
+        
+        <!-- Sección de Productos Promocionales -->
+<div class="promo-products">
+    <h2>Productos Destacados</h2>
+    
+    <div class="product">
+        <img src="imagen-producto1.jpg" alt="Producto 1" loading="lazy" style="max-width: 200px;">
+        <h3>Nombre Producto 1</h3>
+        <p>Descripción breve del producto 1. Precio: $XX,XXX</p>
+        <a href="enlace-producto1.html" class="product-button">Ver Detalles</a>
+    </div>
+
+    <div class="product">
+        <img src="imagen-producto2.jpg" alt="Producto 2" loading="lazy" style="max-width: 200px;">
+        <h3>Nombre Producto 2</h3>
+        <p>Descripción breve del producto 2. Precio: $XX,XXX</p>
+        <a href="enlace-producto2.html" class="product-button">Ver Detalles</a>
+    </div>
+
+    <div class="product">
+        <img src="imagen-producto3.jpg" alt="Producto 3" loading="lazy" style="max-width: 200px;">
+        <h3>Nombre Producto 3</h3>
+        <p>Descripción breve del producto 3. Precio: $XX,XXX</p>
+        <a href="enlace-producto3.html" class="product-button">Ver Detalles</a>
+    </div>
+</div>
+
+<!-- Donaciones con Nostr -->
+<div class="nostr-donation">
+    <h2>Apoya nuestro proyecto</h2>
+    <a href="nostr:npub1g8asmdf2urzcyunwuyrxrefvgatkfasau5wpc3rjk7krhxm2902st2gajt?amount=1000sats&relay=wss://relay.damus.io" 
+       class="donate-button">
+       Donar con Nostr Wallet
+    </a>
+</div>
 
             <!-- Footer -->
         <footer class="footer">
