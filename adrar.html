@@ -206,9 +206,7 @@
                 <label><input type="radio" name="delivery" value="pickup" checked> Recoger en local</label>
                 <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
             </div>
-            <!-- Campo de correo electrónico siempre visible -->
             <input type="email" id="email" placeholder="Correo electrónico" required>
-            <!-- Formulario de entrega (solo para "Servicio a domicilio") -->
             <form id="deliveryForm" class="delivery-form">
                 <input type="text" name="name" placeholder="Nombre completo" required>
                 <input type="text" name="address" placeholder="Dirección" required>
@@ -235,7 +233,7 @@
             { id: 2, name: "Servicio 1", description: "Descripción del servicio 1", price: 200, inventory: 5, image: "url-de-imagen-2.jpg", sku: "SKU002" }
         ];
         let selectedProducts = {};
-        const formspreeURL = "https://formspree.io/f/xovareae"; // URL de Formspree
+        const formspreeURL = "https://formspree.io/f/xovareae";
 
         function generateProductTable() {
             const tbody = document.getElementById('productsBody');
@@ -296,7 +294,6 @@
             const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
             const formData = new FormData();
 
-            // Agregar productos seleccionados
             Object.keys(selectedProducts).forEach(id => {
                 const quantity = selectedProducts[id];
                 if (quantity > 0) {
@@ -305,10 +302,8 @@
                 }
             });
 
-            // Agregar correo electrónico (siempre requerido)
             formData.append('email', document.getElementById('email').value);
 
-            // Agregar datos de envío si es "Servicio a domicilio"
             if (deliveryMethod === 'delivery') {
                 formData.append('name', document.querySelector('input[name="name"]').value);
                 formData.append('address', document.querySelector('input[name="address"]').value);
@@ -317,7 +312,6 @@
                 formData.append('notes', document.querySelector('textarea[name="notes"]').value);
             }
 
-            // Enviar datos a Formspree
             try {
                 const response = await fetch(formspreeURL, {
                     method: 'POST',
