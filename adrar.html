@@ -40,7 +40,7 @@
 </head>
 
     
-    <title>@cordientrega - Worldwide Logistics Services.</title>
+    <title>Contraentrega Valle del Cauca, Colombia</title>
 
     <!-- Datos estructurados con Schema.org -->
     <script type="application/ld+json">
@@ -192,6 +192,162 @@
         img[loading="lazy"]:not([src=""]) {
             opacity: 1;
         }
+        
+        /* Nuevos estilos agregados */
+        .search-container {
+            margin: 20px 0;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 12px 20px;
+            margin-bottom: 15px;
+            border: 2px solid #ddd;
+            border-radius: 25px;
+            font-size: 16px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>');
+            background-repeat: no-repeat;
+            background-position: 95% center;
+            background-size: 20px;
+        }
+        
+        #localesTable {
+            width: 100%;
+            margin-top: 15px;
+            border-collapse: collapse;
+            background: white;
+        }
+        
+        #localesTable th {
+            background-color: #000;
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+        
+        #localesTable td {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        #localesTable tr:hover td {
+            background-color: #f8f9fa;
+        }
+        
+        .local-link {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        
+        .local-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 600px) {
+            #localesTable td, #localesTable th {
+                padding: 8px;
+                font-size: 14px;
+            }
+            
+            #searchInput {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+        }
+        
+        /* Añadir este estilo para los enlaces de la tabla */
+        .local-link {
+            color: #007BFF;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .local-link:hover {
+            text-decoration: underline;
+        }
+
+<!-- Agrega esto en el CSS dentro de la sección <style> -->
+header a {
+    text-decoration: none;
+    color: #333;
+    display: inline-block;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+header a:hover {
+    border-bottom-color: #333;
+}
+
+header a:visited {
+    color: #333;
+}
+
+        /* Añadir estos nuevos estilos */
+        .product-table td, .product-table th {
+            padding: 10px;
+            vertical-align: middle;
+        }
+        
+        .quantity-controls button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+        
+        .selected-quantity {
+            font-weight: bold;
+            min-width: 30px;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 80%;
+            max-height: 80%;
+            background: white;
+            padding: 20px;
+            border-radius: 5px;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 24px;
+            color: #333;
+        }
+        
+        .checkout-section {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .delivery-form {
+            display: none;
+            margin-top: 15px;
+        }
+        
+        .delivery-form.active {
+            display: block;
+        }
     </style>
 
   <!-- Google Tag Manager -->
@@ -208,31 +364,234 @@
 <body>
 
     <div class="container">
-        <header>
-            <h1>@calivalle</h1>
-            <p>Cali, Valle Del Cauca, Colombia</p>
-        </header>
+<header>
+    <a href="https://app.contraentregaco.com/collections/calivalle" target="_blank" rel="noopener noreferrer">
+        <h1>Contraentrega CO</h1>
+    </a>
+    <p>Contraentrega Cali, Valle Del Cauca, Colombia</p>
+</header>
 
         <!-- Enlaces -->
         <div class="buttons">
-            <a href="https://centrocalivalle-contraentrega.pages.dev" target="_blank" rel="noopener noreferrer">Centro</a>
-    <a href="https://nortecalivalle-contraentrega.pages.dev" target="_blank" rel="noopener noreferrer">Norte</a>
-    <a href="https://oestecalivalle-contraentrega.pages.dev" target="_blank" rel="noopener noreferrer">Oeste</a>
-    <a href="https://orientecalivalle-contraentrega.pages.dev" target="_blank" rel="noopener noreferrer">Oriente</a>
-    <a href="https://surcalivalle-contraentregaco.com" target="_blank" rel="noopener noreferrer">Sur</a>
+            <a href="https://www.facebook.com/groups/2047811665719344/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer">VER TODO</a>
+        </div>
+        
+        <!-- Sistema de búsqueda y tabla -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="🔍 Buscar locales por nombre, dirección o teléfono..." aria-label="Buscar locales">
+        
+            < <!-- Tabla de Productos -->
+        <table id="productsTable" class="product-table">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Producto/Servicio</th>
+                    <th>Cantidad</th>
+                    <th>Seleccionado</th>
+                    <th>Inventario</th>
+                </tr>
+            </thead>
+            <tbody id="productsBody">
+                <!-- Los productos se generarán dinámicamente con JavaScript -->
+            </tbody>
+        </table>
+
+        <!-- Checkout Section -->
+        <div class="checkout-section">
+            <h3>Resumen del Pedido</h3>
+            <div id="orderSummary"></div>
+            
+            <div class="delivery-options">
+                <label><input type="radio" name="delivery" value="pickup" checked> Recoger en local</label>
+                <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
+            </div>
+            
+            <form id="deliveryForm" class="delivery-form">
+                <input type="text" name="name" placeholder="Nombre completo" required>
+                <input type="text" name="address" placeholder="Dirección" required>
+                <input type="tel" name="phone" placeholder="Teléfono" required>
+                <input type="text" name="city" placeholder="Ciudad" required>
+                <textarea name="notes" placeholder="Instrucciones adicionales"></textarea>
+            </form>
+            
+            <button onclick="submitOrder()">Cotizar</button>
         </div>
 
             <!-- Footer -->
         <footer class="footer">
-            <p>&copy; <span id="year"></span> <strong>Cordientrega</strong></p>
-            <p>Bitcoin: <a href="bitcoin:15gdaABbh6oZZG4kfQPXoSdqj9YMsg5RaH" target="_blank" rel="noopener noreferrer">15gdaABbh6oZZG4kfQPXoSdqj9YMsg5RaH</a></p>
+            <p>&copy; <span id="year"></span> <strong>Contraentrega</strong></p>
+            <p>Nostr: <a href="https://snort.social/p/npub1g8asmdf2urzcyunwuyrxrefvgatkfasau5wpc3rjk7krhxm2902st2gajt" target="_blank" rel="noopener noreferrer">npub1g8asmdf2urzcyunwuyrxrefvgatkfasau5wpc3rjk7krhxm2902st2gajt</a></p>
         </footer>
     </div>
+    
+     <!-- Modal para imágenes -->
+        <div id="imageModal" class="image-modal">
+            <div class="modal-content">
+                <span class="close-modal" onclick="closeImage()">&times;</span>
+                <img id="modalImage" src="" alt="Imagen del producto">
+            </div>
 
 <script>
 
 // Actualizar el año en el footer
 document.getElementById("year").textContent = new Date().getFullYear();
+
+// Función de búsqueda
+        document.getElementById('searchInput').addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            const rows = document.querySelectorAll('#localesTable tbody tr');
+            
+            rows.forEach(row => {
+                const cells = row.getElementsByTagName('td');
+                let matchFound = false;
+                
+                // Buscar en todas las celdas
+                Array.from(cells).forEach((cell, index) => {
+                    const cellText = index === 0 ? 
+                        cell.querySelector('.local-link').textContent.toLowerCase() : 
+                        cell.textContent.toLowerCase();
+                    
+                    if(cellText.includes(searchTerm)) {
+                        matchFound = true;
+                    }
+                });
+                
+                row.style.display = matchFound ? '' : 'none';
+            });
+        });
+        
+            // Datos de productos
+    const products = [
+        {
+            id: 1,
+            name: "Producto 1",
+            description: "Descripción del producto 1",
+            price: 100,
+            inventory: 10,
+            image: "url-de-imagen-1.jpg"
+        },
+        {
+            id: 2,
+            name: "Servicio 1",
+            description: "Descripción del servicio 1",
+            price: 200,
+            inventory: 5,
+            image: "url-de-imagen-2.jpg"
+        }
+    ];
+
+    let selectedProducts = {};
+
+    // Generar tabla de productos
+    function generateProductTable() {
+        const tbody = document.getElementById('productsBody');
+        tbody.innerHTML = '';
+        
+        products.forEach(product => {
+            const row = `
+                <tr>
+                    <td><span class="view-photo" onclick="showImage('${product.image}')">Ver Foto</span></td>
+                    <td>
+                        <strong>${product.name}</strong><br>
+                        ${product.description}<br>
+                        Precio: $${product.price}
+                    </td>
+                    <td>
+                        <button onclick="adjustQuantity(${product.id}, -1)">-</button>
+                        <button onclick="adjustQuantity(${product.id}, 1)">+</button>
+                    </td>
+                    <td class="selected-quantity" id="selected-${product.id}">0</td>
+                    <td>${product.inventory}</td>
+                </tr>
+            `;
+            tbody.innerHTML += row;
+        });
+    }
+
+    // Ajustar cantidad
+    function adjustQuantity(productId, delta) {
+        const product = products.find(p => p.id === productId);
+        const current = selectedProducts[productId] || 0;
+        const newQuantity = Math.max(0, Math.min(current + delta, product.inventory));
+        
+        selectedProducts[productId] = newQuantity;
+        document.getElementById(`selected-${productId}`).textContent = newQuantity;
+        updateOrderSummary();
+    }
+
+    // Mostrar imagen
+    function showImage(imageUrl) {
+        document.getElementById('modalImage').src = imageUrl;
+        document.getElementById('imageModal').style.display = 'flex';
+    }
+
+    // Cerrar imagen
+    function closeImage() {
+        document.getElementById('imageModal').style.display = 'none';
+    }
+
+    // Actualizar resumen del pedido
+    function updateOrderSummary() {
+        let summary = '';
+        let total = 0;
+        
+        Object.keys(selectedProducts).forEach(id => {
+            const quantity = selectedProducts[id];
+            if(quantity > 0) {
+                const product = products.find(p => p.id == id);
+                summary += `${product.name} x${quantity}: $${product.price * quantity}<br>`;
+                total += product.price * quantity;
+            }
+        });
+        
+        document.getElementById('orderSummary').innerHTML = summary + `<strong>Total: $${total}</strong>`;
+    }
+
+    // Manejar envío del formulario
+    function submitOrder() {
+        const formData = {
+            products: [],
+            delivery: document.querySelector('input[name="delivery"]:checked').value,
+            addressInfo: {}
+        };
+
+        // Recopilar productos seleccionados
+        Object.keys(selectedProducts).forEach(id => {
+            if(selectedProducts[id] > 0) {
+                const product = products.find(p => p.id == id);
+                formData.products.push({
+                    name: product.name,
+                    quantity: selectedProducts[id],
+                    price: product.price
+                });
+            }
+        });
+
+        // Recopilar información de envío si es necesario
+        if(formData.delivery === 'delivery') {
+            formData.addressInfo = {
+                name: document.querySelector('input[name="name"]').value,
+                address: document.querySelector('input[name="address"]').value,
+                phone: document.querySelector('input[name="phone"]').value,
+                city: document.querySelector('input[name="city"]').value,
+                notes: document.querySelector('textarea[name="notes"]').value
+            };
+        }
+
+        // Aquí iría la lógica para enviar a Formspree
+        console.log('Datos del pedido:', formData);
+        alert('Pedido enviado correctamente');
+    }
+
+    // Event listeners
+    document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+        radio.addEventListener('change', (e) => {
+            document.getElementById('deliveryForm').classList.toggle('active', e.target.value === 'delivery');
+        });
+    });
+
+    // Inicializar
+    generateProductTable();
 
 </script>
 
