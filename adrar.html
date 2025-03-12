@@ -20,167 +20,7 @@
     <meta name="google-site-verification" content="your-verification-code" />
     <title>Contraentrega Valle del Cauca, Colombia</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
-            margin: 0;
-            padding: 20px;
-            min-height: 100vh;
-        }
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .table-responsive {
-            overflow-x: auto;
-            margin: 2rem 0;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .product-table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            min-width: 600px;
-        }
-        .product-table th,
-        .product-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .product-table th {
-            background-color: #2c3e50;
-            color: white;
-            font-weight: 600;
-        }
-        .product-table tr:hover {
-            background-color: #f8f9fa;
-        }
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .quantity-controls button {
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            background: #f8f9fa;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .quantity-controls button:hover {
-            background: #e9ecef;
-        }
-        .selected-quantity {
-            font-weight: 600;
-            min-width: 2rem;
-            text-align: center;
-        }
-        .view-photo {
-            color: #3498db;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        .image-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            padding: 1rem;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            max-width: 80%;
-            max-height: 80vh;
-            position: relative;
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .modal-content img {
-            max-width: 100%;
-            max-height: 70vh;
-            border-radius: 8px;
-        }
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .close-modal:hover {
-            background: #ff1a1a;
-        }
-        .checkout-section {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 2rem;
-        }
-        .delivery-form input,
-        .delivery-form textarea {
-            width: 100%;
-            padding: 0.8rem;
-            margin: 0.5rem 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .delivery-form.active {
-            display: block;
-        }
-        .delivery-form {
-            display: block; /* Cambiado a block para que siempre esté visible */
-        }
-        .buttons button {
-            background-color: #3498db;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            margin: 5px;
-        }
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            .product-table th,
-            .product-table td {
-                padding: 0.75rem;
-                font-size: 0.9rem;
-            }
-            .product-table td:nth-child(3),
-            .product-table th:nth-child(3) {
-                display: none;
-            }
-        }
-        @media (max-width: 480px) {
-            .quantity-controls button {
-                padding: 0.3rem 0.6rem;
-            }
-            .checkout-section {
-                padding: 1rem;
-            }
-        }
+        /* Estilos anteriores... */
     </style>
 </head>
 <body>
@@ -216,16 +56,13 @@
                 <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
             </div>
             <form id="deliveryForm" class="delivery-form">
-                <div id="addressFields">
-                    <input type="text" name="name" placeholder="Nombre completo" required>
-                    <input type="text" name="address" placeholder="Dirección" required>
-                    <input type="tel" name="phone" placeholder="Teléfono" required>
-                    <input type="text" name="city" placeholder="Ciudad" required>
-                    <textarea name="notes" placeholder="Instrucciones adicionales"></textarea>
-                </div>
-                <button type="button" onclick="submitOrder()">Cotizar</button>
-                <button type="button" onclick="payWithLightning()">Pagar con Lightning</button>
+                <input type="text" name="name" placeholder="Nombre completo" required>
+                <input type="text" name="address" placeholder="Dirección" required>
+                <input type="tel" name="phone" placeholder="Teléfono" required>
+                <input type="text" name="city" placeholder="Ciudad" required>
+                <textarea name="notes" placeholder="Instrucciones adicionales"></textarea>
             </form>
+            <button onclick="submitOrder()">Cotizar</button>
         </div>
         <footer class="footer">
             <p>&copy; <span id="year"></span> <strong>Contraentrega</strong></p>
@@ -244,10 +81,7 @@
             { id: 2, name: "Servicio 1", description: "Descripción del servicio 1", price: 200, inventory: 5, image: "url-de-imagen-2.jpg", sku: "SKU002" }
         ];
         let selectedProducts = {};
-        const lightningAddress = "contraentregaco@bitrefill.me";
-        const exchangeRateCOPtoBTC = 0.00000025;
-        const commission = 0.05;
-        const formspreeURL = "https://formspree.io/f/xovareae";
+        const formspreeURL = "https://formspree.io/f/your-form-id"; // URL de Formspree
 
         function generateProductTable() {
             const tbody = document.getElementById('productsBody');
@@ -304,113 +138,52 @@
             document.getElementById('orderSummary').innerHTML = summary + `<strong>Total: $${total}</strong>`;
         }
 
-        function submitOrder() {
-            const formData = {
-                products: [],
-                delivery: document.querySelector('input[name="delivery"]:checked').value,
-                addressInfo: {}
-            };
-            Object.keys(selectedProducts).forEach(id => {
-                if (selectedProducts[id] > 0) {
-                    const product = products.find(p => p.id == id);
-                    formData.products.push({
-                        name: product.name,
-                        quantity: selectedProducts[id],
-                        price: product.price
-                    });
-                }
-            });
-            if (formData.delivery === 'delivery') {
-                formData.addressInfo = {
-                    name: document.querySelector('input[name="name"]').value,
-                    address: document.querySelector('input[name="address"]').value,
-                    phone: document.querySelector('input[name="phone"]').value,
-                    city: document.querySelector('input[name="city"]').value,
-                    notes: document.querySelector('textarea[name="notes"]').value
-                };
-            } else {
-                formData.addressInfo = {
-                    notes: "Recoger en local"
-                };
-            }
-            console.log('Datos del pedido:', formData);
-            alert('Pedido enviado correctamente');
-        }
+        async function submitOrder() {
+            const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+            const formData = new FormData();
 
-        async function payWithLightning() {
-            let totalCOP = 0;
+            // Agregar productos seleccionados
             Object.keys(selectedProducts).forEach(id => {
                 const quantity = selectedProducts[id];
                 if (quantity > 0) {
                     const product = products.find(p => p.id == id);
-                    totalCOP += product.price * quantity;
+                    formData.append('products[]', `${product.name} x${quantity} - $${product.price * quantity} COP`);
                 }
             });
 
-            if (totalCOP === 0) {
-                alert('No hay productos seleccionados para pagar.');
-                return;
+            // Agregar datos de envío si es "Servicio a domicilio"
+            if (deliveryMethod === 'delivery') {
+                formData.append('name', document.querySelector('input[name="name"]').value);
+                formData.append('address', document.querySelector('input[name="address"]').value);
+                formData.append('phone', document.querySelector('input[name="phone"]').value);
+                formData.append('city', document.querySelector('input[name="city"]').value);
+                formData.append('notes', document.querySelector('textarea[name="notes"]').value);
             }
 
-            const totalBTC = totalCOP * exchangeRateCOPtoBTC * (1 + commission);
-            const totalSats = Math.round(totalBTC * 100000000);
-
-            const formData = {
-                products: [],
-                delivery: document.querySelector('input[name="delivery"]:checked').value,
-                addressInfo: {}
-            };
-            Object.keys(selectedProducts).forEach(id => {
-                if (selectedProducts[id] > 0) {
-                    const product = products.find(p => p.id == id);
-                    formData.products.push({
-                        name: product.name,
-                        quantity: selectedProducts[id],
-                        price: product.price
-                    });
-                }
-            });
-            if (formData.delivery === 'delivery') {
-                formData.addressInfo = {
-                    name: document.querySelector('input[name="name"]').value,
-                    address: document.querySelector('input[name="address"]').value,
-                    phone: document.querySelector('input[name="phone"]').value,
-                    city: document.querySelector('input[name="city"]').value,
-                    notes: document.querySelector('textarea[name="notes"]').value
-                };
-            } else {
-                formData.addressInfo = {
-                    notes: "Recoger en local"
-                };
-            }
-
+            // Enviar datos a Formspree
             try {
                 const response = await fetch(formspreeURL, {
                     method: 'POST',
+                    body: formData,
                     headers: {
-                        'Content-Type': 'application/json',
                         'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
+                    }
                 });
 
                 if (response.ok) {
-                    alert('Formulario enviado correctamente. Redirigiendo a Lightning...');
-                    const lightningURL = `lightning:${lightningAddress}?amount=${totalSats}`;
-                    window.location.href = lightningURL;
+                    alert('Cotización enviada correctamente.');
                 } else {
-                    alert('Error al enviar el formulario.');
+                    alert('Error al enviar la cotización.');
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('Error al enviar el formulario.');
+                alert('Error al enviar la cotización.');
             }
         }
 
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
-                const addressFields = document.getElementById('addressFields');
-                addressFields.style.display = e.target.value === 'delivery' ? 'block' : 'none';
+                document.getElementById('deliveryForm').classList.toggle('active', e.target.value === 'delivery');
             });
         });
 
