@@ -343,25 +343,54 @@
                 return;
             }
 
+            // Convertir COP a satoshis con comisión del 5%
             const totalBTC = totalCOP * exchangeRateCOPtoBTC * (1 + commission);
-            const totalSats = Math.round(totalBTC * 100000000);
+            const totalSats = Math.round(totalBTC * 100000000); // 1 BTC = 100,000,000 satoshis
 
-            const formData = new FormData(document.getElementById('deliveryForm'));
-            formData.append('payment_method', 'Lightning');
-            formData.append('total_cop', totalCOP);
-            formData.append('total_sats', totalSats);
+            // Recopilar datos del formulario
+            const formData = {
+                products: [],
+                delivery: document.querySelector('input[name="delivery"]:checked').value,
+                addressInfo: {}
+            };
+            Object.keys(selectedProducts).forEach(id => {
+                if (selectedProducts[id] > 0) {
+                    const product = products.find(p => p.id == id);
+                    formData.products.push({
+                        name: product.name,
+                        quantity: selectedProducts[id],
+                        price: product.price
+                    });
+                }
+            });
+            if (formData.delivery === 'delivery') {
+                formData.addressInfo = {
+                    name: document.querySelector('input[name="name"]').value,
+                    address: document.querySelector('input[name="address"]').value,
+                    phone: document.querySelector('input[name="phone"]').value,
+                    city: document.querySelector('input[name="city"]').value,
+                    notes: document.querySelector('textarea[name="notes"]').value
+                };
+            } else {
+                formData.addressInfo = {
+                    notes: "Recoger en local"
+                };
+            }
 
+            // Enviar formulario a Formspree
             try {
                 const response = await fetch(formspreeURL, {
                     method: 'POST',
-                    body: formData,
                     headers: {
+                        'Content-Type': 'application/json',
                         'Accept': 'application/json'
-                    }
+                    },
+                    body: JSON.stringify(formData)
                 });
 
                 if (response.ok) {
                     alert('Formulario enviado correctamente. Redirigiendo a Lightning...');
+                    // Redirigir a la dirección Lightning
                     const lightningURL = `lightning:${lightningAddress}?amount=${totalSats}`;
                     window.location.href = lightningURL;
                 } else {
