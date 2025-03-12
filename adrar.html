@@ -148,7 +148,7 @@
             display: block;
         }
         .delivery-form {
-            display: none;
+            display: block; /* Cambiado a block para que siempre esté visible */
         }
         .buttons button {
             background-color: #3498db;
@@ -216,7 +216,7 @@
                 <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
             </div>
             <form id="deliveryForm" class="delivery-form">
-                <div id="addressFields" style="display: none;">
+                <div id="addressFields">
                     <input type="text" name="name" placeholder="Nombre completo" required>
                     <input type="text" name="address" placeholder="Dirección" required>
                     <input type="tel" name="phone" placeholder="Teléfono" required>
