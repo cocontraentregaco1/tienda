@@ -214,6 +214,7 @@
                 <textarea name="notes" placeholder="Instrucciones adicionales"></textarea>
             </form>
             <button onclick="submitOrder()">Cotizar</button>
+            <button onclick="payWithLightning()">Pagar con Lightning</button>
         </div>
         <footer class="footer">
             <p>&copy; <span id="year"></span> <strong>Contraentrega</strong></p>
@@ -232,6 +233,10 @@
             { id: 2, name: "Servicio 1", description: "Descripción del servicio 1", price: 200, inventory: 5, image: "url-de-imagen-2.jpg", sku: "SKU002" }
         ];
         let selectedProducts = {};
+        const lightningAddress = "your-lightning-address@example.com"; // Dirección Lightning fija
+        const exchangeRateCOPtoBTC = 0.00000025; // Tasa de cambio de COP a BTC (1 COP = 0.00000025 BTC)
+        const commission = 0.05; // Comisión del 5%
+
         function generateProductTable() {
             const tbody = document.getElementById('productsBody');
             tbody.innerHTML = '';
@@ -254,6 +259,7 @@
                 tbody.innerHTML += row;
             });
         }
+
         function adjustQuantity(productId, delta) {
             const product = products.find(p => p.id === productId);
             const current = selectedProducts[productId] || 0;
@@ -262,13 +268,16 @@
             document.getElementById(`selected-${productId}`).textContent = newQuantity;
             updateOrderSummary();
         }
+
         function showImage(imageUrl) {
             document.getElementById('modalImage').src = imageUrl;
             document.getElementById('imageModal').style.display = 'flex';
         }
+
         function closeImage() {
             document.getElementById('imageModal').style.display = 'none';
         }
+
         function updateOrderSummary() {
             let summary = '';
             let total = 0;
@@ -282,6 +291,7 @@
             });
             document.getElementById('orderSummary').innerHTML = summary + `<strong>Total: $${total}</strong>`;
         }
+
         function submitOrder() {
             const formData = {
                 products: [],
@@ -310,11 +320,37 @@
             console.log('Datos del pedido:', formData);
             alert('Pedido enviado correctamente');
         }
+
+        function payWithLightning() {
+            let totalCOP = 0;
+            Object.keys(selectedProducts).forEach(id => {
+                const quantity = selectedProducts[id];
+                if (quantity > 0) {
+                    const product = products.find(p => p.id == id);
+                    totalCOP += product.price * quantity;
+                }
+            });
+
+            if (totalCOP === 0) {
+                alert('No hay productos seleccionados para pagar.');
+                return;
+            }
+
+            // Convertir COP a satoshis con comisión del 5%
+            const totalBTC = totalCOP * exchangeRateCOPtoBTC * (1 + commission);
+            const totalSats = Math.round(totalBTC * 100000000); // 1 BTC = 100,000,000 satoshis
+
+            // Redirigir a la dirección Lightning con el monto en satoshis
+            const lightningURL = `lightning:${lightningAddress}?amount=${totalSats}`;
+            window.location.href = lightningURL;
+        }
+
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
                 document.getElementById('deliveryForm').classList.toggle('active', e.target.value === 'delivery');
             });
         });
+
         document.getElementById("year").textContent = new Date().getFullYear();
         generateProductTable();
     </script>
