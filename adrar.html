@@ -119,6 +119,12 @@
             border-radius: 4px;
             box-sizing: border-box;
         }
+        .delivery-form.active {
+            display: block;
+        }
+        .delivery-form {
+            display: none;
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 1rem;
@@ -160,6 +166,7 @@
                     <tr>
                         <th>Foto</th>
                         <th>Producto/Servicio</th>
+                        <th>SKU</th>
                         <th>Cantidad</th>
                         <th>Inventario</th>
                     </tr>
@@ -196,8 +203,8 @@
     </div>
     <script>
         const products = [
-            { id: 1, name: "Producto 1", description: "Descripción del producto 1", price: 100, inventory: 10, image: "url-de-imagen-1.jpg" },
-            { id: 2, name: "Servicio 1", description: "Descripción del servicio 1", price: 200, inventory: 5, image: "url-de-imagen-2.jpg" }
+            { id: 1, name: "Producto 1", description: "Descripción del producto 1", price: 100, inventory: 10, image: "url-de-imagen-1.jpg", sku: "SKU001" },
+            { id: 2, name: "Servicio 1", description: "Descripción del servicio 1", price: 200, inventory: 5, image: "url-de-imagen-2.jpg", sku: "SKU002" }
         ];
         let selectedProducts = {};
         function generateProductTable() {
@@ -208,6 +215,7 @@
                     <tr>
                         <td><span class="view-photo" onclick="showImage('${product.image}')">Ver Foto</span></td>
                         <td><strong>${product.name}</strong><br>${product.description}<br>Precio: $${product.price}</td>
+                        <td>${product.sku}</td>
                         <td>
                             <div class="quantity-controls">
                                 <button onclick="adjustQuantity(${product.id}, -1)">-</button>
