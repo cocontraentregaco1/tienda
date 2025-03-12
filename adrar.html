@@ -207,6 +207,7 @@
                 <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
             </div>
             <form id="deliveryForm" class="delivery-form">
+                <input type="email" name="email" placeholder="Correo electrónico" required>
                 <input type="text" name="name" placeholder="Nombre completo" required>
                 <input type="text" name="address" placeholder="Dirección" required>
                 <input type="tel" name="phone" placeholder="Teléfono" required>
@@ -301,6 +302,9 @@
                     formData.append('products[]', `${product.name} x${quantity} - $${product.price * quantity} COP`);
                 }
             });
+
+            // Agregar correo electrónico
+            formData.append('email', document.querySelector('input[name="email"]').value);
 
             // Agregar datos de envío si es "Servicio a domicilio"
             if (deliveryMethod === 'delivery') {
