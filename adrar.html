@@ -206,8 +206,10 @@
                 <label><input type="radio" name="delivery" value="pickup" checked> Recoger en local</label>
                 <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
             </div>
+            <!-- Campo de correo electrónico siempre visible -->
+            <input type="email" id="email" placeholder="Correo electrónico" required>
+            <!-- Formulario de entrega (solo para "Servicio a domicilio") -->
             <form id="deliveryForm" class="delivery-form">
-                <input type="email" name="email" placeholder="Correo electrónico" required>
                 <input type="text" name="name" placeholder="Nombre completo" required>
                 <input type="text" name="address" placeholder="Dirección" required>
                 <input type="tel" name="phone" placeholder="Teléfono" required>
@@ -303,8 +305,8 @@
                 }
             });
 
-            // Agregar correo electrónico
-            formData.append('email', document.querySelector('input[name="email"]').value);
+            // Agregar correo electrónico (siempre requerido)
+            formData.append('email', document.getElementById('email').value);
 
             // Agregar datos de envío si es "Servicio a domicilio"
             if (deliveryMethod === 'delivery') {
