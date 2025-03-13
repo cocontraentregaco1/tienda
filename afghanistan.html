@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -104,9 +105,9 @@
         let cart = {};
         let currentOrderId = '';
 
-        function renderProducts() {
+        function renderProducts(filteredProducts = products) {
             const tbody = document.getElementById('productsBody');
-            tbody.innerHTML = products.map(product => `
+            tbody.innerHTML = filteredProducts.map(product => `
                 <tr>
                     <td>${product.sku}</td>
                     <td><a href="#" onclick="showImage('${product.image}', event)">Ver Imagen</a></td>
@@ -230,10 +231,15 @@
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const filtered = products.filter(product => 
-                product.name.toLowerCase().includes(searchTerm) ||
-                product.sku.toLowerCase().includes(searchTerm)
-            );
+            const numericSearch = searchTerm.replace(/,/g, '');
+            
+            const filtered = products.filter(product => {
+                return product.sku.toLowerCase().includes(searchTerm) ||
+                       product.name.toLowerCase().includes(searchTerm) ||
+                       product.price.toString().includes(numericSearch) ||
+                       product.inventory.toString().includes(numericSearch);
+            });
+            
             renderProducts(filtered);
         });
 
@@ -241,3 +247,4 @@
     </script>
 </body>
 </html>
+```
