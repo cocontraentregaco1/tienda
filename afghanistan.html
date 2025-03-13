@@ -70,9 +70,10 @@
             </div>
 
             <div id="paymentInstructions" class="payment-instructions" style="display: none;">
-                <p>✅ Total: <strong id="totalCOP"></strong> COP</p>
+                <p>✅ Total sugerido: <strong id="totalCOP"></strong> COP</p>
                 <p>🔗 Enviar a: <strong>montebellocali18@coinos.io</strong></p>
                 <p>📝 Referencia: <strong id="orderRef"></strong></p>
+                <p>⚠️ Copia la referencia y paga desde tu billetera Lightning</p>
             </div>
         </div>
     </div>
@@ -112,7 +113,7 @@
 
         function updateSummary() {
             const total = calculateTotal();
-            document.getElementById('orderSummary').innerHTML = `Total: $${total} COP`;
+            document.getElementById('orderSummary').innerHTML = `Total sugerido: $${total} COP`;
         }
 
         function calculateTotal() {
@@ -135,8 +136,9 @@
             document.getElementById('orderRef').textContent = orderId;
             document.getElementById('paymentInstructions').style.display = 'block';
             
-            const paymentURL = `lightning:${orderId}?amount=${total}`;
-            window.location.href = paymentURL;
+            // Copiar referencia al portapapeles
+            navigator.clipboard.writeText(orderId);
+            alert('Referencia copiada al portapapeles');
         }
 
         function validateForm() {
