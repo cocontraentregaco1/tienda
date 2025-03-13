@@ -84,11 +84,10 @@
         ];
         
         let cart = {};
-        let orderId = '';
 
-        function renderProducts(filteredProducts = products) {
+        function renderProducts() {
             const tbody = document.getElementById('productsBody');
-            tbody.innerHTML = filteredProducts.map(product => `
+            tbody.innerHTML = products.map(product => `
                 <tr>
                     <td>${product.name}</td>
                     <td>$${product.price}</td>
@@ -121,69 +120,35 @@
                 acc + (products.find(p => p.id == id).price * qty), 0);
         }
 
-        async function handleSubmit() {
+        function handleSubmit() {
             if(!validateForm()) return;
-            await submitForm();
-            alert('Cotización enviada con éxito');
+            alert('Cotización enviada');
         }
 
-        async function handlePayment() {
+        function handlePayment() {
             if(!validateForm()) return;
-            await submitForm();
-            await initLightningPayment();
+            
+            const total = calculateTotal();
+            const orderId = `CE-${Date.now()}`;
+            
+            document.getElementById('totalCOP').textContent = `$${total}`;
+            document.getElementById('orderRef').textContent = orderId;
+            document.getElementById('paymentInstructions').style.display = 'block';
+            
+            const paymentURL = `lightning:${orderId}?amount=${total}`;
+            window.location.href = paymentURL;
         }
 
         function validateForm() {
             const total = calculateTotal();
             const email = document.getElementById('email').value;
             
-            if(total === 0) return alertError('Agrega productos al carrito');
-            if(!validateEmail(email)) return alertError('Ingresa un email válido');
+            if(total === 0) return alert('Agrega productos al carrito');
+            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert('Ingresa un email válido');
             
             return true;
         }
 
-        async function submitForm() {
-            const formData = new FormData();
-            orderId = `CE-${Date.now()}`;
-            
-            formData.append('email', document.getElementById('email').value);
-            formData.append('total', calculateTotal());
-            formData.append('orderId', orderId);
-
-            await fetch('https://formspree.io/f/mnnpqrvn', {
-                method: 'POST',
-                body: formData
-            });
-        }
-
-        async function initLightningPayment() {
-            const total = calculateTotal();
-            document.getElementById('totalCOP').textContent = `$${total}`;
-            document.getElementById('orderRef').textContent = orderId;
-            document.getElementById('paymentInstructions').style.display = 'block';
-            
-            // Nueva implementación de redirección
-            const lightningURL = `https://coinos.io/montebellocali18?amount=${total}&label=Contraentrega-${orderId}`;
-            
-            // Abrir en nueva pestaña
-            window.open(lightningURL, '_blank');
-            
-            // Mostrar mensaje de confirmación
-            alert('Redirigiendo a tu billetera Lightning...');
-        }
-
-        // Helpers
-        function validateEmail(email) {
-            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-        }
-
-        function alertError(message) {
-            alert(`Error: ${message}`);
-            return false;
-        }
-
-        // Event Listeners
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
                 document.getElementById('deliveryForm').style.display = 
