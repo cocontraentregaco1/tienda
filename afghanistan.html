@@ -10,7 +10,6 @@
         .product-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
         .product-table th, .product-table td { padding: 12px; border-bottom: 1px solid #ddd; }
         .product-table th { background: #2c3e50; color: white; }
-        .product-image { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; }
         .quantity-controls { display: flex; align-items: center; gap: 8px; }
         .quantity-controls button { padding: 8px 15px; border: 1px solid #ddd; background: #f8f9fa; cursor: pointer; }
         .checkout-section { background: #f8f9fa; padding: 20px; margin-top: 20px; border-radius: 8px; }
@@ -19,6 +18,9 @@
         .delivery-form { display: none; margin-top: 15px; }
         .payment-instructions { background: #e3f2fd; padding: 15px; margin: 15px 0; border-radius: 8px; }
         .qr-code { margin: 15px auto; text-align: center; }
+        .image-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
+        .modal-content { max-width: 90%; max-height: 90%; position: relative; }
+        .close-modal { position: absolute; top: -25px; right: -25px; color: white; font-size: 30px; cursor: pointer; }
         
         @media (max-width: 768px) {
             .quantity-controls button { padding: 6px 12px; }
@@ -88,10 +90,15 @@
         </div>
     </div>
 
+    <div class="image-modal" onclick="closeImageModal()">
+        <span class="close-modal" onclick="closeImageModal(event)">&times;</span>
+        <img class="modal-content" id="expandedImage">
+    </div>
+
     <script>
         const products = [
-            { id: 1, sku: "PROD001", name: "Producto 1", price: 100000, inventory: 10, image: "https://via.placeholder.com/50" },
-            { id: 2, sku: "PROD002", name: "Producto 2", price: 20000, inventory: 5, image: "https://via.placeholder.com/50" }
+            { id: 1, sku: "PROD001", name: "Producto 1", price: 100000, inventory: 10, image: "https://via.placeholder.com/500" },
+            { id: 2, sku: "PROD002", name: "Producto 2", price: 20000, inventory: 5, image: "https://via.placeholder.com/500" }
         ];
         
         let cart = {};
@@ -102,7 +109,7 @@
             tbody.innerHTML = products.map(product => `
                 <tr>
                     <td>${product.sku}</td>
-                    <td><img src="${product.image}" class="product-image" alt="${product.name}"></td>
+                    <td><a href="#" onclick="showImage('${product.image}', event)">Ver Imagen</a></td>
                     <td>${product.name}</td>
                     <td>$${product.price.toLocaleString()}</td>
                     <td>
@@ -167,7 +174,7 @@
             document.getElementById('paymentInstructions').style.display = 'block';
             
             new QRCode(document.getElementById('qrCode'), {
-                text: `lightning:montebellocali18@coinos.io?amount=${calculateTotal()/1000}&label=${currentOrderId}`,
+                text: `lightning:montebellocali18@coinos.io`,
                 width: 200,
                 height: 200
             });
@@ -199,6 +206,19 @@
             if(deliveryForm.style.display === 'block' && !document.getElementById('address').value) return alert('Completa la dirección');
             
             return true;
+        }
+
+        function showImage(src, event) {
+            event.preventDefault();
+            const modal = document.querySelector('.image-modal');
+            const modalImg = document.getElementById('expandedImage');
+            modal.style.display = 'flex';
+            modalImg.src = src;
+        }
+
+        function closeImageModal(event) {
+            if(event) event.stopPropagation();
+            document.querySelector('.image-modal').style.display = 'none';
         }
 
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
