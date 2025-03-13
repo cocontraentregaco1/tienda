@@ -3,29 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Worldwide Logistics Services.">
-    <title>Contraentrega Valle del Cauca, Colombia</title>
+    <title>Contraentrega Valle del Cauca</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; background: #f8f9fa; }
-        .container { background: white; max-width: 1200px; margin: 0 auto; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        .product-table { width: 100%; border-collapse: collapse; }
-        .product-table th, .product-table td { padding: 1rem; border-bottom: 1px solid #dee2e6; text-align: left; }
+        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; background: #f8f9fa; }
+        .container { background: white; max-width: 100%; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .product-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        .product-table th, .product-table td { padding: 12px; border-bottom: 1px solid #ddd; }
         .product-table th { background: #2c3e50; color: white; }
-        .quantity-controls { display: flex; align-items: center; gap: 0.5rem; }
-        .quantity-controls button { padding: 0.5rem 1rem; border: 1px solid #ddd; background: #f8f9fa; cursor: pointer; }
-        .checkout-section { background: #f8f9fa; padding: 1.5rem; margin-top: 2rem; border-radius: 8px; }
-        .payment-instructions { background: #e3f2fd; padding: 1rem; margin: 1rem 0; border-radius: 8px; }
-        .search-container { margin: 1rem 0; position: relative; }
-        #searchInput { width: 100%; padding: 0.8rem 1rem; border: 1px solid #ddd; border-radius: 25px; }
-        .delivery-form { display: none; margin-top: 1rem; }
-        .delivery-form.active { display: block; }
+        .quantity-controls { display: flex; align-items: center; gap: 8px; }
+        .quantity-controls button { padding: 8px 15px; border: 1px solid #ddd; background: #f8f9fa; cursor: pointer; }
+        .checkout-section { background: #f8f9fa; padding: 20px; margin-top: 20px; border-radius: 8px; }
+        .search-container { margin: 15px 0; }
+        #searchInput { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 25px; }
+        .delivery-form { display: none; margin-top: 15px; }
+        .payment-instructions { background: #e3f2fd; padding: 15px; margin: 15px 0; border-radius: 8px; }
+        
+        @media (max-width: 768px) {
+            .product-table td:nth-child(2), .product-table th:nth-child(2) { display: none; }
+            .quantity-controls button { padding: 6px 12px; }
+            .checkout-section button { width: 100%; margin: 5px 0; }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>Contraentrega CO</h1>
-            <p>Contraentrega Cali, Valle Del Cauca, Colombia</p>
+            <p>Contraentrega Cali, Valle Del Cauca</p>
         </header>
 
         <div class="search-container">
@@ -60,13 +64,15 @@
 
             <input type="email" id="email" placeholder="Correo electrónico" required>
             
-            <button onclick="handleSubmit()">Cotizar</button>
-            <button onclick="handlePayment()">Pagar con Lightning</button>
+            <div style="margin-top: 15px;">
+                <button onclick="handleSubmit()">Cotizar</button>
+                <button onclick="handlePayment()" style="background: #4CAF50; color: white;">Pagar con Lightning</button>
+            </div>
 
             <div id="paymentInstructions" class="payment-instructions" style="display: none;">
-                <p>Total: <span id="totalCOP"></span> COP</p>
-                <p>Enviar a: montebellocali18@coinos.io</p>
-                <p>Referencia: <span id="orderRef"></span></p>
+                <p>✅ Total: <strong id="totalCOP"></strong> COP</p>
+                <p>🔗 Enviar a: <strong>montebellocali18@coinos.io</strong></p>
+                <p>📝 Referencia: <strong id="orderRef"></strong></p>
             </div>
         </div>
     </div>
@@ -80,9 +86,9 @@
         let cart = {};
         let orderId = '';
 
-        function renderProducts() {
+        function renderProducts(filteredProducts = products) {
             const tbody = document.getElementById('productsBody');
-            tbody.innerHTML = products.map(product => `
+            tbody.innerHTML = filteredProducts.map(product => `
                 <tr>
                     <td>${product.name}</td>
                     <td>$${product.price}</td>
@@ -115,30 +121,29 @@
                 acc + (products.find(p => p.id == id).price * qty), 0);
         }
 
-        function handleSubmit() {
+        async function handleSubmit() {
             if(!validateForm()) return;
-            submitForm();
+            await submitForm();
+            alert('Cotización enviada con éxito');
         }
 
-        function handlePayment() {
+        async function handlePayment() {
             if(!validateForm()) return;
-            submitForm(true);
+            await submitForm();
+            initLightningPayment();
         }
 
         function validateForm() {
             const total = calculateTotal();
-            if(total === 0) {
-                alert('Agrega productos al carrito');
-                return false;
-            }
-            if(!document.getElementById('email').value) {
-                alert('Ingresa tu email');
-                return false;
-            }
+            const email = document.getElementById('email').value;
+            
+            if(total === 0) return alertError('Agrega productos al carrito');
+            if(!validateEmail(email)) return alertError('Ingresa un email válido');
+            
             return true;
         }
 
-        function submitForm(isPayment = false) {
+        async function submitForm() {
             const formData = new FormData();
             orderId = `CE-${Date.now()}`;
             
@@ -146,12 +151,9 @@
             formData.append('total', calculateTotal());
             formData.append('orderId', orderId);
 
-            fetch('https://formspree.io/f/mnnpqrvn', {
+            await fetch('https://formspree.io/f/mnnpqrvn', {
                 method: 'POST',
                 body: formData
-            }).then(() => {
-                if(isPayment) initLightningPayment();
-                else alert('Cotización enviada');
             });
         }
 
@@ -161,8 +163,19 @@
             document.getElementById('orderRef').textContent = orderId;
             document.getElementById('paymentInstructions').style.display = 'block';
             
-            const message = encodeURIComponent(`Pago Contraentrega ${orderId} - $${total} COP`);
-            window.location.href = `lightning:montebellocali18@coinos.io?message=${message}`;
+            // Redirección directa a billetera Lightning
+            const lightningURL = `lightning:montebellocali18@coinos.io?amount=${total}&label=Contraentrega-${orderId}`;
+            window.location.href = lightningURL;
+        }
+
+        // Helpers
+        function validateEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        function alertError(message) {
+            alert(`Error: ${message}`);
+            return false;
         }
 
         // Event Listeners
