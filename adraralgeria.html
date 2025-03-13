@@ -376,7 +376,7 @@
 
                 const commission = total * 0.05;
                 const totalWithCommission = total + commission;
-                const paymentUrl = `lightning:${lightningAddress}?amount=${Math.round(totalWithCommission * 1000)}`;
+                const paymentUrl = `lightning://${lightningAddress}?amount=${Math.round(totalWithCommission * 1000)}`;
                 window.location.href = paymentUrl;
             } catch (error) {
                 console.error('Error en el proceso de pago:', error);
