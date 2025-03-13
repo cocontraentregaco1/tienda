@@ -19,9 +19,9 @@
         .payment-instructions { background: #e3f2fd; padding: 15px; margin: 15px 0; border-radius: 8px; }
         
         @media (max-width: 768px) {
-            .product-table td:nth-child(2), .product-table th:nth-child(2) { display: none; }
             .quantity-controls button { padding: 6px 12px; }
             .checkout-section button { width: 100%; margin: 5px 0; }
+            .product-table th, .product-table td { padding: 8px; }
         }
     </style>
 </head>
@@ -130,7 +130,7 @@
         async function handlePayment() {
             if(!validateForm()) return;
             await submitForm();
-            initLightningPayment();
+            await initLightningPayment();
         }
 
         function validateForm() {
@@ -157,15 +157,20 @@
             });
         }
 
-        function initLightningPayment() {
+        async function initLightningPayment() {
             const total = calculateTotal();
             document.getElementById('totalCOP').textContent = `$${total}`;
             document.getElementById('orderRef').textContent = orderId;
             document.getElementById('paymentInstructions').style.display = 'block';
             
-            // Redirección directa a billetera Lightning
-            const lightningURL = `lightning:montebellocali18@coinos.io?amount=${total}&label=Contraentrega-${orderId}`;
-            window.location.href = lightningURL;
+            // Nueva implementación de redirección
+            const lightningURL = `https://coinos.io/montebellocali18?amount=${total}&label=Contraentrega-${orderId}`;
+            
+            // Abrir en nueva pestaña
+            window.open(lightningURL, '_blank');
+            
+            // Mostrar mensaje de confirmación
+            alert('Redirigiendo a tu billetera Lightning...');
         }
 
         // Helpers
