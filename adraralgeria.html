@@ -18,223 +18,399 @@
     <meta name="twitter:image" content="URL-de-tu-imagen">
     <meta name="twitter:url" content="https://www.cordientrega.com">
     <meta name="google-site-verification" content="your-verification-code" />
-
-<!-- Facebook Pixel -->
-  <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', 'your-pixel-id');
-    fbq('track', 'PageView');
-  </script>
-  <noscript>
-    <img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=your-pixel-id&ev=PageView&noscript=1"/>
-  </noscript>
-  <!-- End Facebook Pixel -->
-</head>
-
-    
-    <title>@cordientrega - Worldwide Logistics Services.</title>
-
-    <!-- Datos estructurados con Schema.org -->
-    <script type="application/ld+json">
-    {
-        "@context": "https://schema.org",
-        "@type": "WebSite",
-        "url": "https://www.cordientrega.com",
-        "name": "@cordientrega",
-        "description": "Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.",
-        "publisher": {
-            "@type": "Organization",
-            "name": "Contraentrega Armenia Quindío"
-        }
-    }
- </script>
-
-    <!-- Favicon -->
-    <link rel="icon" href="URL-del-favicon" type="image/png">
-
-    <!-- Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_TRACKING_ID"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'YOUR_TRACKING_ID');
-    </script>
-
+    <title>Contraentrega Valle del Cauca, Colombia</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f1f1f1;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
             margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            text-align: center;
+            padding: 20px;
+            min-height: 100vh;
         }
         .container {
-            background-color: #ffffff;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            width: 90%; 
-            max-width: 600px; 
-            padding: 20px;
-            overflow-y: auto; 
-            max-height: 80vh; 
-            height: 100%; 
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
         }
-        h1, h2 {
-            font-size: 2.5em;
-            color: #333;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #666;
-            font-size: 1.2em;
-            margin-bottom: 20px;
-        }
-        .buttons a {
-            display: block;
-            background-color: #000000;
-            color: white;
-            padding: 10px;
-            margin: 5px 0;
-            text-decoration: none;
-            border-radius: 5px;
-            font-size: 1em;
-            transition: background-color 0.3s;
-        }
-        .buttons a:hover {
-            background-color: #333333;
-        }
-        .footer {
-            font-size: 0.9em;
-            color: #777;
-            margin-top: 20px;
-        }
-        form {
-            margin-top: 20px;
-            text-align: left;
-            margin-bottom: 20px;
-        }
-        input[type="text"], input[type="number"], textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-        input[type="file"] {
-            margin: 10px 0;
-        }
-        button {
-            background-color: #000000;
-            color: white;
-            padding: 10px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1.1em;
-            width: 100%;
-        }
-        button:hover {
-            background-color: #333333;
-        }
-        table {
-            width: 100%;
-            margin-top: 30px;
-            border-collapse: collapse;
+        .table-responsive {
             overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
-        th, td {
-            padding: 10px;
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            min-width: 600px;
+        }
+        .product-table th,
+        .product-table td {
+            padding: 1rem;
             text-align: left;
-            border: 1px solid #ccc;
+            border-bottom: 1px solid #dee2e6;
         }
-        th {
-            background-color: #f4f4f4;
+        .product-table th {
+            background-color: #2c3e50;
+            color: white;
+            font-weight: 600;
         }
-        td {
-            background-color: #fafafa;
+        .product-table tr:hover {
+            background-color: #f8f9fa;
         }
-        h2 {
-            font-size: 1.8em;
-            color: #333;
-            margin-top: 20px;
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
-
-        .clickable {
-            color: #007BFF;
-            text-decoration: underline;
+        .quantity-controls button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+            border-radius: 4px;
             cursor: pointer;
-            transition: color 0.3s ease-in-out;
+            transition: all 0.2s;
         }
-
-        .clickable:hover {
-            color: #0056b3;
-            text-decoration: none;
+        .quantity-controls button:hover {
+            background: #e9ecef;
         }
-
-        /* Lazy loading de imágenes */
-        img[loading="lazy"] {
-            opacity: 0;
-            transition: opacity 0.3s ease-in;
+        .selected-quantity {
+            font-weight: 600;
+            min-width: 2rem;
+            text-align: center;
         }
-        img[loading="lazy"]:not([src=""]) {
-            opacity: 1;
+        .view-photo {
+            color: #3498db;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 1000;
+            padding: 1rem;
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            max-width: 80%;
+            max-height: 80vh;
+            position: relative;
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .modal-content img {
+            max-width: 100%;
+            max-height: 70vh;
+            border-radius: 8px;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #ff4d4d;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .close-modal:hover {
+            background: #ff1a1a;
+        }
+        .checkout-section {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+        .delivery-form input,
+        .delivery-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .delivery-form.active {
+            display: block;
+        }
+        .delivery-form {
+            display: none;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .product-table th,
+            .product-table td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+            .product-table td:nth-child(3),
+            .product-table th:nth-child(3) {
+                display: none;
+            }
+        }
+        @media (max-width: 480px) {
+            .quantity-controls button {
+                padding: 0.3rem 0.6rem;
+            }
+            .checkout-section {
+                padding: 1rem;
+            }
+        }
+        .search-container {
+            margin: 1rem 0;
+            position: relative;
+        }
+        #searchInput {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            padding-right: 40px;
+        }
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
         }
     </style>
-
-  <!-- Google Tag Manager -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=GTM-XXXXXX"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'GTM-XXXXXX');
-  </script>
-  <!-- End Google Tag Manager -->
 </head>
-
 <body>
-
     <div class="container">
         <header>
-            <h1>@calivalle</h1>
-            <p>Cali, Valle Del Cauca, Colombia</p>
+            <a href="https://app.contraentregaco.com/collections/calivalle" target="_blank" rel="noopener noreferrer">
+                <h1>Contraentrega CO</h1>
+            </a>
+            <p>Contraentrega Cali, Valle Del Cauca, Colombia</p>
         </header>
-
-        <!-- Enlaces -->
         <div class="buttons">
-            <a href="https://centrocalivalle-contraentrega.pages.dev" target="_blank" rel="noopener noreferrer">Centro</a>
-    <a href="https://nortecalivalle-contraentrega.pages.dev" target="_blank" rel="noopener noreferrer">Norte</a>
-    <a href="https://oestecalivalle-contraentrega.pages.dev" target="_blank" rel="noopener noreferrer">Oeste</a>
-    <a href="https://orientecalivalle-contraentrega.pages.dev" target="_blank" rel="noopener noreferrer">Oriente</a>
-    <a href="https://surcalivalle-contraentregaco.com" target="_blank" rel="noopener noreferrer">Sur</a>
+            <a href="https://www.facebook.com/groups/2047811665719344/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer">VER TODO</a>
         </div>
-
-            <!-- Footer -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar productos, SKU, precios...">
+            <span class="search-icon">🔍</span>
+        </div>
+        <div class="table-responsive">
+            <table id="productsTable" class="product-table">
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Producto/Servicio</th>
+                        <th>SKU</th>
+                        <th>Cantidad</th>
+                        <th>Inventario</th>
+                    </tr>
+                </thead>
+                <tbody id="productsBody"></tbody>
+            </table>
+        </div>
+        <div class="checkout-section">
+            <h3>Resumen del Pedido</h3>
+            <div id="orderSummary"></div>
+            <div class="delivery-options">
+                <label><input type="radio" name="delivery" value="pickup" checked> Recoger en local</label>
+                <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
+            </div>
+            <input type="email" id="email" placeholder="Correo electrónico" required>
+            <form id="deliveryForm" class="delivery-form">
+                <input type="text" name="name" placeholder="Nombre completo" required>
+                <input type="text" name="address" placeholder="Dirección" required>
+                <input type="tel" name="phone" placeholder="Teléfono" required>
+                <input type="text" name="city" placeholder="Ciudad" required>
+                <textarea name="notes" placeholder="Instrucciones adicionales"></textarea>
+            </form>
+            <button onclick="submitOrder()">Cotizar</button>
+            <button onclick="payWithLightning()">Pagar con Lightning</button>
+        </div>
         <footer class="footer">
-            <p>&copy; <span id="year"></span> <strong>Cordientrega</strong></p>
-            <p>Bitcoin: <a href="bitcoin:15gdaABbh6oZZG4kfQPXoSdqj9YMsg5RaH" target="_blank" rel="noopener noreferrer">15gdaABbh6oZZG4kfQPXoSdqj9YMsg5RaH</a></p>
+            <p>&copy; <span id="year"></span> <strong>Contraentrega</strong></p>
+            <p>Nostr: <a href="https://snort.social/p/npub1g8asmdf2urzcyunwuyrxrefvgatkfasau5wpc3rjk7krhxm2902st2gajt" target="_blank" rel="noopener noreferrer">npub1g8asmdf2urzcyunwuyrxrefvgatkfasau5wpc3rjk7krhxm2902st2gajt</a></p>
         </footer>
     </div>
+    <div id="imageModal" class="image-modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeImage()">Cerrar</button>
+            <img id="modalImage" src="" alt="Imagen del producto">
+        </div>
+    </div>
+    <script>
+        const products = [
+            { id: 1, name: "Producto 1", description: "Descripción del producto 1", price: 100, inventory: 10, image: "url-de-imagen-1.jpg", sku: "SKU001" },
+            { id: 2, name: "Servicio 1", description: "Descripción del servicio 1", price: 200, inventory: 5, image: "url-de-imagen-2.jpg", sku: "SKU002" }
+        ];
+        let selectedProducts = {};
+        const formspreeURL = "https://formspree.io/f/mnnpqrvn";
+        const lightningAddress = "tu_direccion_lightning@example.com"; // Cambia esto por tu dirección Lightning
 
-<script>
+        function generateProductTable(productsArray = products) {
+            const tbody = document.getElementById('productsBody');
+            tbody.innerHTML = '';
+            productsArray.forEach(product => {
+                const row = `
+                    <tr>
+                        <td><span class="view-photo" onclick="showImage('${product.image}')">Ver Foto</span></td>
+                        <td><strong>${product.name}</strong><br>${product.description}<br>Precio: $${product.price}</td>
+                        <td>${product.sku}</td>
+                        <td>
+                            <div class="quantity-controls">
+                                <button onclick="adjustQuantity(${product.id}, -1)">-</button>
+                                <span class="selected-quantity" id="selected-${product.id}">0</span>
+                                <button onclick="adjustQuantity(${product.id}, 1)">+</button>
+                            </div>
+                        </td>
+                        <td>${product.inventory}</td>
+                    </tr>
+                `;
+                tbody.innerHTML += row;
+            });
+        }
 
-// Actualizar el año en el footer
-document.getElementById("year").textContent = new Date().getFullYear();
+        function adjustQuantity(productId, delta) {
+            const product = products.find(p => p.id === productId);
+            const current = selectedProducts[productId] || 0;
+            const newQuantity = Math.max(0, Math.min(current + delta, product.inventory));
+            selectedProducts[productId] = newQuantity;
+            document.getElementById(`selected-${productId}`).textContent = newQuantity;
+            updateOrderSummary();
+        }
 
-</script>
+        function showImage(imageUrl) {
+            document.getElementById('modalImage').src = imageUrl;
+            document.getElementById('imageModal').style.display = 'flex';
+        }
 
+        function closeImage() {
+            document.getElementById('imageModal').style.display = 'none';
+        }
+
+        function updateOrderSummary() {
+            let summary = '';
+            let total = 0;
+            Object.keys(selectedProducts).forEach(id => {
+                const quantity = selectedProducts[id];
+                if (quantity > 0) {
+                    const product = products.find(p => p.id == id);
+                    summary += `${product.name} x${quantity}: $${product.price * quantity}<br>`;
+                    total += product.price * quantity;
+                }
+            });
+            document.getElementById('orderSummary').innerHTML = summary + `<strong>Total: $${total}</strong>`;
+        }
+
+        async function submitOrder() {
+            const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+            const formData = new FormData();
+
+            Object.keys(selectedProducts).forEach(id => {
+                const quantity = selectedProducts[id];
+                if (quantity > 0) {
+                    const product = products.find(p => p.id == id);
+                    formData.append('products[]', `${product.name} x${quantity} - $${product.price * quantity} COP`);
+                }
+            });
+
+            formData.append('email', document.getElementById('email').value);
+
+            if (deliveryMethod === 'delivery') {
+                formData.append('name', document.querySelector('input[name="name"]').value);
+                formData.append('address', document.querySelector('input[name="address"]').value);
+                formData.append('phone', document.querySelector('input[name="phone"]').value);
+                formData.append('city', document.querySelector('input[name="city"]').value);
+                formData.append('notes', document.querySelector('textarea[name="notes"]').value);
+            }
+
+            try {
+                const response = await fetch(formspreeURL, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (response.ok) {
+                    return true;
+                } else {
+                    throw new Error('Error al enviar la cotización.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                throw error;
+            }
+        }
+
+        function payWithLightning() {
+            let total = 0;
+            Object.keys(selectedProducts).forEach(id => {
+                const quantity = selectedProducts[id];
+                if (quantity > 0) {
+                    const product = products.find(p => p.id == id);
+                    total += product.price * quantity;
+                }
+            });
+
+            const commission = total * 0.05;
+            const totalWithCommission = total + commission;
+            const paymentUrl = `lightning:${lightningAddress}?amount=${Math.round(totalWithCommission * 1000)}`;
+
+            submitOrder().then(() => {
+                window.location.href = paymentUrl;
+            }).catch(error => {
+                console.error('Error al enviar el formulario:', error);
+                alert('Error al enviar el formulario. Por favor, inténtelo de nuevo.');
+            });
+        }
+
+        document.querySelectorAll('input[name="delivery"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const deliveryForm = document.getElementById('deliveryForm');
+                if (e.target.value === 'delivery') {
+                    deliveryForm.style.display = 'block';
+                } else {
+                    deliveryForm.style.display = 'none';
+                }
+            });
+        });
+
+        document.getElementById("year").textContent = new Date().getFullYear();
+        generateProductTable();
+
+        function filterProducts(searchTerm) {
+            const filtered = products.filter(product => {
+                const searchText = searchTerm.toLowerCase();
+                return (
+                    product.name.toLowerCase().includes(searchText) ||
+                    product.description.toLowerCase().includes(searchText) ||
+                    product.sku.toLowerCase().includes(searchText) ||
+                    product.price.toString().includes(searchTerm) ||
+                    product.inventory.toString().includes(searchTerm)
+                );
+            });
+            generateProductTable(filtered);
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            filterProducts(e.target.value);
+        });
+    </script>
 </body>
 </html>
