@@ -172,6 +172,30 @@
                 padding: 1rem;
             }
         }
+        
+        /* Añadir estos estilos al CSS existente */
+        .search-container {
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        #searchInput {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            box-sizing: border-box;
+            font-size: 1rem;
+            padding-right: 40px;
+        }
+        
+        .search-icon {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #666;
+        }
     </style>
 </head>
 <body>
@@ -185,6 +209,14 @@
         <div class="buttons">
             <a href="https://www.facebook.com/groups/2047811665719344/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer">VER TODO</a>
         </div>
+        
+         <!-- Añadir el buscador debajo de los botones -->
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar productos, SKU, precios...">
+            <span class="search-icon">🔍</span>
+        </div>
+        
+        
         <div class="table-responsive">
             <table id="productsTable" class="product-table">
                 <thead>
@@ -340,6 +372,34 @@
 
         document.getElementById("year").textContent = new Date().getFullYear();
         generateProductTable();
+        
+        // Añadir estas funciones al JavaScript existente
+        function filterProducts(searchTerm) {
+            const filtered = products.filter(product => {
+                const searchText = searchTerm.toLowerCase();
+                return (
+                    product.name.toLowerCase().includes(searchText) ||
+                    product.description.toLowerCase().includes(searchText) ||
+                    product.sku.toLowerCase().includes(searchText) ||
+                    product.price.toString().includes(searchTerm) ||
+                    product.inventory.toString().includes(searchTerm)
+                );
+            });
+            generateProductTable(filtered);
+        }
+
+        function generateProductTable(productsArray = products) {
+            const tbody = document.getElementById('productsBody');
+            tbody.innerHTML = '';
+            productsArray.forEach(product => {
+                // Código existente de generación de filas
+            });
+        }
+
+        // Añadir event listener para el buscador
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            filterProducts(e.target.value);
+        });
     </script>
 </body>
 </html>
