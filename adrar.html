@@ -172,13 +172,10 @@
                 padding: 1rem;
             }
         }
-        
-        /* Añadir estos estilos al CSS existente */
         .search-container {
             margin: 1rem 0;
             position: relative;
         }
-        
         #searchInput {
             width: 100%;
             padding: 0.8rem 1rem;
@@ -188,7 +185,6 @@
             font-size: 1rem;
             padding-right: 40px;
         }
-        
         .search-icon {
             position: absolute;
             right: 15px;
@@ -209,14 +205,10 @@
         <div class="buttons">
             <a href="https://www.facebook.com/groups/2047811665719344/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer">VER TODO</a>
         </div>
-        
-         <!-- Añadir el buscador debajo de los botones -->
         <div class="search-container">
             <input type="text" id="searchInput" placeholder="Buscar productos, SKU, precios...">
             <span class="search-icon">🔍</span>
         </div>
-        
-        
         <div class="table-responsive">
             <table id="productsTable" class="product-table">
                 <thead>
@@ -267,10 +259,10 @@
         let selectedProducts = {};
         const formspreeURL = "https://formspree.io/f/mnnpqrvn";
 
-        function generateProductTable() {
+        function generateProductTable(productsArray = products) {
             const tbody = document.getElementById('productsBody');
             tbody.innerHTML = '';
-            products.forEach(product => {
+            productsArray.forEach(product => {
                 const row = `
                     <tr>
                         <td><span class="view-photo" onclick="showImage('${product.image}')">Ver Foto</span></td>
@@ -366,14 +358,18 @@
 
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
-                document.getElementById('deliveryForm').classList.toggle('active', e.target.value === 'delivery');
+                const deliveryForm = document.getElementById('deliveryForm');
+                if (e.target.value === 'delivery') {
+                    deliveryForm.style.display = 'block';
+                } else {
+                    deliveryForm.style.display = 'none';
+                }
             });
         });
 
         document.getElementById("year").textContent = new Date().getFullYear();
         generateProductTable();
-        
-        // Añadir estas funciones al JavaScript existente
+
         function filterProducts(searchTerm) {
             const filtered = products.filter(product => {
                 const searchText = searchTerm.toLowerCase();
@@ -388,15 +384,6 @@
             generateProductTable(filtered);
         }
 
-        function generateProductTable(productsArray = products) {
-            const tbody = document.getElementById('productsBody');
-            tbody.innerHTML = '';
-            productsArray.forEach(product => {
-                // Código existente de generación de filas
-            });
-        }
-
-        // Añadir event listener para el buscador
         document.getElementById('searchInput').addEventListener('input', (e) => {
             filterProducts(e.target.value);
         });
