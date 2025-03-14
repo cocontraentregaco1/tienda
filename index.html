@@ -5,35 +5,161 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contraentrega Montebello Cali Valle del Cauca</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; background: #f8f9fa; }
-        .container { background: white; max-width: 100%; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .product-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        .product-table th, .product-table td { padding: 12px; border-bottom: 1px solid #ddd; }
-        .product-table th { background: #2c3e50; color: white; }
-        .quantity-controls { display: flex; align-items: center; gap: 8px; }
-        .quantity-controls button { padding: 8px 15px; border: 1px solid #ddd; background: #f8f9fa; cursor: pointer; }
-        .checkout-section { background: #f8f9fa; padding: 20px; margin-top: 20px; border-radius: 8px; }
-        .search-container { margin: 15px 0; }
-        #searchInput { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 25px; }
-        .delivery-form { display: none; margin-top: 15px; }
-        .payment-instructions { background: #e3f2fd; padding: 15px; margin: 15px 0; border-radius: 8px; }
-        .qr-code { margin: 15px auto; text-align: center; }
-        .image-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { max-width: 90%; max-height: 90%; position: relative; }
-        .close-modal { position: absolute; top: -25px; right: -25px; color: white; font-size: 30px; cursor: pointer; }
-        .contact-buttons { display: flex; gap: 10px; margin-top: 10px; }
-        .contact-buttons a { text-decoration: none; color: white; padding: 10px 20px; border-radius: 5px; }
-        .contact-buttons .whatsapp { background: #25D366; }
-        .contact-buttons .call { background: #34B7F1; }
-        .local-name { color: #2c3e50; font-weight: bold; text-decoration: underline; cursor: pointer; }
-        
-        @media (max-width: 768px) {
-            .quantity-controls button { padding: 6px 12px; }
-            .checkout-section button { width: 100%; margin: 5px 0; }
-            .product-table th, .product-table td { padding: 8px; }
-            .container { padding: 10px; }
-            .contact-buttons { flex-direction: column; }
-            .contact-buttons a { width: 100%; text-align: center; }
+        /* Estilos generales */
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Contenedor principal */
+        .container {
+            background: white;
+            width: 1200px; /* Ancho fijo para versión de escritorio */
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            overflow-x: auto; /* Permite desplazamiento horizontal si el contenido es muy ancho */
+        }
+
+        /* Estilos para la tabla */
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        .product-table th, .product-table td {
+            padding: 12px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        .product-table th {
+            background: #2c3e50;
+            color: white;
+        }
+
+        /* Controles de cantidad */
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .quantity-controls button {
+            padding: 8px 15px;
+            border: 1px solid #ddd;
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+
+        /* Sección de pago */
+        .checkout-section {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        /* Barra de búsqueda */
+        .search-container {
+            margin: 15px 0;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+        }
+
+        /* Formulario de entrega */
+        .delivery-form {
+            display: none;
+            margin-top: 15px;
+        }
+
+        .delivery-form input {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        /* Instrucciones de pago */
+        .payment-instructions {
+            background: #e3f2fd;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+        }
+
+        /* Botones de contacto */
+        .contact-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .contact-buttons a {
+            text-decoration: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            flex: 1;
+            text-align: center;
+        }
+
+        .contact-buttons .whatsapp {
+            background: #25D366;
+        }
+
+        .contact-buttons .call {
+            background: #34B7F1;
+        }
+
+        /* Nombre del local resaltado */
+        .local-name {
+            color: #2c3e50;
+            font-weight: bold;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        /* Modal de imagen */
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+            position: relative;
+        }
+
+        .close-modal {
+            position: absolute;
+            top: -25px;
+            right: -25px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
         }
     </style>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
