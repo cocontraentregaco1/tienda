@@ -235,8 +235,8 @@
 
     <script>
         const products = [
-            { id: 1, sku: "@oestecalivalle1", name: "Local Contraentrega sector tertulia oeste cali valle del cauca", price: 10000, inventory: 100000, image: "https://via.placeholder.com/500" },
-            { id: 2, sku: "@campoalegrecali2", name: "Local Contraentrega sector vereda campo alegre Cali Valle del Cauca", price: 10000, inventory: 100000, image: "https://via.placeholder.com/500" }
+            { id: 1, sku: "@oestecalivalle1", name: "Local Contraentrega sector tertulia oeste cali valle del cauca", price: 10000, inventory: 1000, image: "oestecalivalle1.jpg" },
+            { id: 2, sku: "@campoalegrecali2", name: "Local Contraentrega sector vereda campo alegre Cali Valle del Cauca", price: 10000, inventory: 1000, image: "campoalegrecali2.jpg" }
         ];
         
         let cart = {};
@@ -318,7 +318,7 @@
             document.getElementById('paymentInstructions').style.display = 'block';
             
             new QRCode(document.getElementById('qrCode'), {
-                text: `lightning:montebellocali18@coinos.io`,
+                text: `lightning:contraentregaco@coinos.io`,
                 width: 200,
                 height: 200
             });
