@@ -21,11 +21,19 @@
         .image-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
         .modal-content { max-width: 90%; max-height: 90%; position: relative; }
         .close-modal { position: absolute; top: -25px; right: -25px; color: white; font-size: 30px; cursor: pointer; }
+        .contact-buttons { display: flex; gap: 10px; margin-top: 10px; }
+        .contact-buttons a { text-decoration: none; color: white; padding: 10px 20px; border-radius: 5px; }
+        .contact-buttons .whatsapp { background: #25D366; }
+        .contact-buttons .call { background: #34B7F1; }
+        .local-name { color: #2c3e50; font-weight: bold; text-decoration: underline; cursor: pointer; }
         
         @media (max-width: 768px) {
             .quantity-controls button { padding: 6px 12px; }
             .checkout-section button { width: 100%; margin: 5px 0; }
             .product-table th, .product-table td { padding: 8px; }
+            .container { padding: 10px; }
+            .contact-buttons { flex-direction: column; }
+            .contact-buttons a { width: 100%; text-align: center; }
         }
     </style>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
@@ -35,6 +43,10 @@
         <header>
             <h1>Contraentrega CO</h1>
             <p>Contraentrega Colombia</p>
+            <div class="contact-buttons">
+                <a href="https://wa.me/573215340988" class="whatsapp">WhatsApp</a>
+                <a href="tel:+573215340988" class="call">Llamar</a>
+            </div>
         </header>
 
         <div class="search-container">
@@ -113,7 +125,7 @@
                     <td>
                         <a href="https://${product.sku.replace('@', '')}.contraentregaco.com" 
                            target="_blank" 
-                           style="text-decoration: none; color: inherit;">
+                           class="local-name">
                             ${product.name}
                         </a>
                     </td>
