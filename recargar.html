@@ -80,15 +80,18 @@
         <h2>Recarga Lightning Network</h2>
         <div class="rate-info" id="rateStatus">Cargando tasa BTC/COP...</div>
         
-        <form id="recargaForm" onsubmit="return false;">
+        <form id="recargaForm" action="https://formspree.io/f/xjvnyyvd" method="POST">
+            <input type="hidden" name="_subject" value="Nueva solicitud de recarga">
+            <input type="hidden" name="_language" value="es">
+            
             <div class="form-group">
                 <label>Correo electrónico:</label>
-                <input type="email" id="email" required placeholder="tucorreo@ejemplo.com">
+                <input type="email" id="email" name="_replyto" required placeholder="tucorreo@ejemplo.com">
             </div>
 
             <div class="form-group">
                 <label>Banco/Método:</label>
-                <select id="banco" required onchange="mostrarDetallesPago()">
+                <select id="banco" name="banco" required onchange="mostrarDetallesPago()">
                     <option value="">Seleccione...</option>
                     <option>Nequi</option>
                     <option>DaviPlata</option>
@@ -104,10 +107,12 @@
 
             <div class="form-group">
                 <label>Monto a recargar (COP):</label>
-                <input type="number" id="monto" required oninput="calcularTotal()">
+                <input type="number" id="monto" name="monto" required oninput="calcularTotal()">
             </div>
 
             <div class="resultado">
+                <input type="hidden" id="referenciaInput" name="referencia">
+                <input type="hidden" id="satsInput" name="sats">
                 <p>Comisión (5%): $<span id="comision">0</span></p>
                 <p>Total a pagar: $<span id="total">0</span></p>
                 <div class="sats-calculo">
@@ -122,15 +127,15 @@
 
             <div class="loan-section">
                 <label>
-                    <input type="checkbox" id="prestamoCheck" onchange="togglePrestamo()"> ¿Solicitar préstamo?
+                    <input type="checkbox" id="prestamoCheck" name="solicita_prestamo" onchange="togglePrestamo()"> ¿Solicitar préstamo?
                 </label>
                 
                 <div id="prestamoFields" style="display: none;">
                     <label>Monto del préstamo (COP):</label>
-                    <input type="number" id="montoPrestamo">
+                    <input type="number" id="montoPrestamo" name="monto_prestamo">
                     
                     <label>Semanas a pagar:</label>
-                    <input type="number" id="semanasPrestamo" min="1" value="4">
+                    <input type="number" id="semanasPrestamo" name="semanas_prestamo" min="1" value="4">
                     
                     <p>Cuota semanal: $<span id="cuotaSemanal">0</span></p>
                 </div>
@@ -145,7 +150,7 @@
                 </ul>
             </div>
 
-            <button type="submit" onclick="validarFormulario()">Enviar Solicitud</button>
+            <button type="submit" onclick="return validarFormulario(event)">Enviar Solicitud</button>
         </form>
     </div>
 
@@ -193,12 +198,17 @@
             const comision = monto * 0.05;
             const total = monto + comision;
             const sats = (monto / tasaBTC) * 100000000;
+            const referencia = 'REF-' + Math.floor(Math.random() * 1000000);
             
             document.getElementById('comision').textContent = comision.toFixed(2);
             document.getElementById('total').textContent = total.toFixed(2);
             document.getElementById('sats').textContent = Math.floor(sats).toLocaleString();
+            document.getElementById('referencia').textContent = referencia;
             
-            document.getElementById('referencia').textContent = 'REF-' + Math.floor(Math.random() * 1000000);
+            // Campos ocultos para Formspree
+            document.getElementById('referenciaInput').value = referencia;
+            document.getElementById('satsInput').value = Math.floor(sats);
+            
             calcularCuotaPrestamo();
         }
 
@@ -216,14 +226,16 @@
             }
         }
 
-        function validarFormulario() {
+        function validarFormulario(event) {
+            event.preventDefault();
+            
             const email = document.getElementById('email').value;
             const banco = document.getElementById('banco').value;
             const monto = document.getElementById('monto').value;
             
             if(!email || !banco || !monto) {
                 alert('Complete todos los campos requeridos');
-                return;
+                return false;
             }
 
             let mensaje = `Nueva solicitud:\n\nEMAIL: ${email}\nBANCO: ${banco}\nMONTO: $${monto}\nREFERENCIA: ${document.getElementById('referencia').textContent}\nSATS: ${document.getElementById('sats').textContent}\n\nDETALLES PAGO:\n${detallesPago[banco]}`;
@@ -233,8 +245,11 @@
             }
 
             if(confirm('¿Confirmar solicitud?\n\n' + mensaje)) {
-                alert('Solicitud enviada. Envía tu comprobante por WhatsApp');
+                // Enviar formulario a Formspree
+                document.getElementById('recargaForm').submit();
+                return true;
             }
+            return false;
         }
 
         // Event listeners
