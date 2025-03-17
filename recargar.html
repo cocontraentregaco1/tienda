@@ -78,6 +78,11 @@
             background: #f8d7da;
             color: #721c24;
         }
+        .timer {
+            font-weight: bold;
+            color: #d9534f;
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -148,7 +153,8 @@
                 </ul>
             </div>
 
-            <button type="submit">Enviar Solicitud</button>
+            <button type="submit" id="submitButton">Enviar Solicitud</button>
+            <div class="timer" id="timer">Tiempo restante para pagar: 5:00</div>
         </form>
     </div>
 
@@ -161,6 +167,9 @@
             'PSE': 'Seleccione Bancolombia en PSE',
             'Efectivo': 'Acercarse a punto de pago autorizado'
         };
+
+        let timerInterval;
+        let timeLeft = 300; // 5 minutos en segundos
 
         async function actualizarTasaBTC() {
             try {
@@ -214,6 +223,56 @@
                 document.getElementById('cuotaSemanal').textContent = (monto / semanas).toFixed(2);
             }
         }
+
+        function startTimer() {
+            const timerElement = document.getElementById('timer');
+            const submitButton = document.getElementById('submitButton');
+
+            submitButton.disabled = true; // Desactiva el botón de envío
+            timerElement.style.display = 'block'; // Muestra el temporizador
+
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                timerElement.textContent = `Tiempo restante para pagar: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    timerElement.textContent = 'Tiempo agotado. Debes enviar una nueva solicitud.';
+                    submitButton.disabled = false; // Reactiva el botón de envío
+                } else {
+                    timeLeft--;
+                }
+            }, 1000);
+        }
+
+        document.getElementById('recargaForm').addEventListener('submit', function (e) {
+            e.preventDefault(); // Evita el envío por defecto del formulario
+
+            // Muestra el mensaje de éxito
+            document.getElementById('successAlert').style.display = 'block';
+            document.getElementById('errorAlert').style.display = 'none';
+
+            // Inicia el temporizador
+            startTimer();
+
+            // Envía el formulario a Formspree
+            fetch(this.action, {
+                method: this.method,
+                body: new FormData(this),
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (!response.ok) {
+                    throw new Error('Error en el servidor');
+                }
+            }).catch(error => {
+                console.error('Error:', error);
+                document.getElementById('errorAlert').style.display = 'block';
+                document.getElementById('successAlert').style.display = 'none';
+            });
+        });
 
         // Eventos
         document.getElementById('montoPrestamo').addEventListener('input', calcularCuotaPrestamo);
