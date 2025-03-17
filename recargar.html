@@ -88,15 +88,15 @@
         <h2>Recarga Lightning Network</h2>
         <div class="rate-info" id="rateStatus">Cargando tasa BTC/COP...</div>
         
-        <form id="recargaForm">
+        <form id="recargaForm" action="https://formspree.io/f/xjvnyyvd" method="POST">
             <div class="form-group">
                 <label>Correo electrónico:</label>
-                <input type="email" id="email" required placeholder="tucorreo@ejemplo.com">
+                <input type="email" id="email" name="email" required placeholder="tucorreo@ejemplo.com">
             </div>
 
             <div class="form-group">
                 <label>Banco/Método:</label>
-                <select id="banco" required onchange="mostrarDetallesPago()">
+                <select id="banco" name="banco" required onchange="mostrarDetallesPago()">
                     <option value="">Seleccione...</option>
                     <option>Nequi</option>
                     <option>DaviPlata</option>
@@ -110,7 +110,7 @@
 
             <div class="form-group">
                 <label>Monto a recargar (COP):</label>
-                <input type="number" id="monto" required oninput="calcularTotal()">
+                <input type="number" id="monto" name="monto" required oninput="calcularTotal()">
             </div>
 
             <div class="resultado">
@@ -128,13 +128,13 @@
 
             <div class="loan-section">
                 <label>
-                    <input type="checkbox" id="prestamoCheck" onchange="togglePrestamo()"> ¿Solicitar préstamo?
+                    <input type="checkbox" id="prestamoCheck" name="prestamoCheck" onchange="togglePrestamo()"> ¿Solicitar préstamo?
                 </label>
                 <div id="prestamoFields" style="display: none;">
                     <label>Monto del préstamo (COP):</label>
-                    <input type="number" id="montoPrestamo">
+                    <input type="number" id="montoPrestamo" name="montoPrestamo">
                     <label>Semanas a pagar:</label>
-                    <input type="number" id="semanasPrestamo" min="1" value="4">
+                    <input type="number" id="semanasPrestamo" name="semanasPrestamo" min="1" value="4">
                     <p>Cuota semanal: $<span id="cuotaSemanal">0</span></p>
                 </div>
             </div>
@@ -148,7 +148,7 @@
                 </ul>
             </div>
 
-            <button type="button" onclick="enviarFormulario()">Enviar Solicitud</button>
+            <button type="submit">Enviar Solicitud</button>
         </form>
     </div>
 
@@ -212,55 +212,6 @@
                 const monto = parseFloat(document.getElementById('montoPrestamo').value) || 0;
                 const semanas = parseInt(document.getElementById('semanasPrestamo').value) || 1;
                 document.getElementById('cuotaSemanal').textContent = (monto / semanas).toFixed(2);
-            }
-        }
-
-        async function enviarFormulario() {
-            const email = document.getElementById('email').value;
-            const banco = document.getElementById('banco').value;
-            const monto = document.getElementById('monto').value;
-
-            if(!email || !banco || !monto) {
-                alert('Complete todos los campos requeridos');
-                return;
-            }
-
-            const formData = {
-                email: email,
-                banco: banco,
-                monto: monto,
-                referencia: document.getElementById('referencia').textContent,
-                sats: document.getElementById('sats').textContent,
-                comision: document.getElementById('comision').textContent,
-                total: document.getElementById('total').textContent,
-                prestamo: document.getElementById('prestamoCheck').checked ? 'Si' : 'No',
-                montoPrestamo: document.getElementById('montoPrestamo').value || '0',
-                semanasPrestamo: document.getElementById('semanasPrestamo').value || '0',
-                detallesPago: detallesPago[banco]
-            };
-
-            try {
-                const response = await fetch('https://formspree.io/f/xjvnyyvd', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json'
-                    },
-                    body: JSON.stringify(formData)
-                });
-
-                if(response.ok) {
-                    document.getElementById('successAlert').style.display = 'block';
-                    document.getElementById('errorAlert').style.display = 'none';
-                    document.getElementById('recargaForm').reset();
-                    calcularTotal();
-                } else {
-                    throw new Error('Error en el servidor');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                document.getElementById('errorAlert').style.display = 'block';
-                document.getElementById('successAlert').style.display = 'none';
             }
         }
 
