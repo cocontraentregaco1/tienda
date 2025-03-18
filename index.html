@@ -100,7 +100,7 @@
 
         <footer>
             <div id="colombiaTime" style="margin-bottom: 10px;">
-                <span id="currentDate"></span> - <span id="currentTime"></span> (Hora Colombia)
+                <span id="currentDate"></span> - Hora Colombia: <span id="currentTime"></span>
             </div>
             <div style="margin-bottom: 5px;">Contraentrega © Todos los derechos reservados</div>
             <div style="margin-top: 10px;">
@@ -273,19 +273,24 @@
         });
 
         function updateColombiaTime() {
-            const options = {
+            const dateOptions = {
                 timeZone: 'America/Bogota',
                 weekday: 'long',
                 year: 'numeric',
                 month: 'long',
-                day: 'numeric',
+                day: 'numeric'
+            };
+            
+            const timeOptions = {
+                timeZone: 'America/Bogota',
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
             };
+
             const now = new Date();
-            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-CO', options);
-            document.getElementById('currentTime').textContent = now.toLocaleTimeString('es-CO', {timeZone: 'America/Bogota'});
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-CO', dateOptions);
+            document.getElementById('currentTime').textContent = now.toLocaleTimeString('es-CO', timeOptions);
         }
 
         setInterval(updateColombiaTime, 1000);
