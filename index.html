@@ -70,16 +70,17 @@
                 <label><input type="radio" name="delivery" value="pickup" checked> Recoger en local</label>
                 <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
             </div>
-            <form id="deliveryForm" class="delivery-form">
-                <input type="text" id="name" placeholder="Nombre completo" required>
-                <input type="text" id="address" placeholder="Dirección" required>
-                <input type="tel" id="phone" placeholder="Teléfono" required>
+            <form id="deliveryForm" class="delivery-form" action="https://formspree.io/f/{your_form_id}" method="POST">
+                <input type="text" id="name" name="name" placeholder="Nombre completo" required>
+                <input type="text" id="address" name="address" placeholder="Dirección" required>
+                <input type="tel" id="phone" name="phone" placeholder="Teléfono" required>
+                <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+                <input type="hidden" id="orderDetails" name="orderDetails">
+                <div style="margin-top: 15px;">
+                    <button type="submit">Cotizar</button>
+                    <button type="button" onclick="handlePayment()" style="background: #4CAF50; color: white;">Pagar con Lightning</button>
+                </div>
             </form>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <div style="margin-top: 15px;">
-                <button onclick="handleSubmit()">Cotizar</button>
-                <button onclick="handlePayment()" style="background: #4CAF50; color: white;">Pagar con Lightning</button>
-            </div>
             <div id="paymentInstructions" class="payment-instructions" style="display: none;">
                 <p>✅ Total: <strong id="totalCOP"></strong> COP</p>
                 <p>🔗 Dirección Lightning: <strong>contraentregaco@coinos.io</strong></p>
