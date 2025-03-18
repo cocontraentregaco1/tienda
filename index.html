@@ -204,8 +204,10 @@
             document.getElementById('totalCOP').textContent = total.toLocaleString();
             document.getElementById('orderRef').textContent = currentOrderId;
             document.getElementById('paymentInstructions').style.display = 'block';
+            
+            // QR estático con solo la dirección Lightning
             new QRCode(document.getElementById('qrCode'), {
-                text: `lightning:contraentregaco@coinos.io?amount=${total}&label=${currentOrderId}`,
+                text: `lightning:contraentregaco@coinos.io`,
                 width: 128,
                 height: 128
             });
