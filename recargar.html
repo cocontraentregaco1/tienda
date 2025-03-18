@@ -101,16 +101,12 @@
 
             <div class="form-group">
                 <label>Número de WhatsApp:</label>
-                <input type="tel" id="whatsapp" name="whatsapp" required 
-                       pattern="^\+[0-9]{10,15}$" 
-                       placeholder="Ej: +573215340988">
+                <input type="tel" id="whatsapp" name="whatsapp" required placeholder="Ingresa tu número">
             </div>
 
             <div class="form-group">
                 <label>Dirección Lightning:</label>
-                <input type="text" id="lightning" name="lightning" required 
-                       pattern="^lnbc[a-zA-Z0-9]+$" 
-                       placeholder="lnbc1p0... (factura Lightning)">
+                <input type="text" id="lightning" name="lightning" required placeholder="Ingresa tu dirección">
             </div>
 
             <div class="form-group">
@@ -183,7 +179,7 @@
         };
 
         let timerInterval;
-        let timeLeft = 300; // 5 minutos en segundos
+        let timeLeft = 300;
 
         async function actualizarTasaBTC() {
             try {
