@@ -30,6 +30,7 @@
         footer { text-align: center; margin-top: 30px; padding: 20px; color: #666; font-size: 0.9em; }
         footer a { color: #2c3e50; text-decoration: none; margin: 0 10px; }
         footer a:hover { text-decoration: underline; }
+        .success-message { background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-top: 15px; display: none; }
     </style>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
@@ -70,17 +71,20 @@
                 <label><input type="radio" name="delivery" value="pickup" checked> Recoger en local</label>
                 <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
             </div>
-            <form id="deliveryForm" class="delivery-form" action="https://formspree.io/f/meoaovqr" method="POST">
+            <form id="deliveryForm" class="delivery-form">
                 <input type="text" id="name" name="name" placeholder="Nombre completo" required>
-                <input type="text" id="address" name="address" placeholder="Dirección" required>
                 <input type="tel" id="phone" name="phone" placeholder="Teléfono" required>
                 <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
+                <div id="addressField" style="display: none;">
+                    <input type="text" id="address" name="address" placeholder="Dirección">
+                </div>
                 <input type="hidden" id="orderDetails" name="orderDetails">
                 <div style="margin-top: 15px;">
-                    <button type="submit">Cotizar</button>
+                    <button type="button" onclick="handleSubmit()">Cotizar</button>
                     <button type="button" onclick="handlePayment()" style="background: #4CAF50; color: white;">Pagar con Lightning</button>
                 </div>
             </form>
+            <div id="successMessage" class="success-message">¡Formulario enviado correctamente!</div>
             <div id="paymentInstructions" class="payment-instructions" style="display: none;">
                 <p>✅ Total: <strong id="totalCOP"></strong> COP</p>
                 <p>🔗 Dirección Lightning: <strong>contraentregaco@coinos.io</strong></p>
@@ -156,28 +160,64 @@
         }
 
         function handleSubmit() {
-            if(!validateForm()) return;
-            currentOrderId = generateOrderId();
+            if (!validateForm()) return;
             submitForm(false);
+            showSuccessMessage();
         }
 
         function handlePayment() {
-            if(!validateForm()) return;
-            currentOrderId = generateOrderId();
+            if (!validateForm()) return;
             submitForm(true);
+            showPaymentInstructions();
         }
 
-        function generateOrderId() {
-            return `CE-${Date.now().toString().slice(-6)}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
+        function submitForm(isPayment) {
+            const formData = new FormData(document.getElementById('deliveryForm'));
+            formData.append('orderDetails', JSON.stringify(cart));
+            formData.append('total', calculateTotal());
+            formData.append('orderId', currentOrderId);
+
+            fetch('https://formspree.io/f/{your_form_id}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).then(response => {
+                if (response.ok) {
+                    showSuccessMessage();
+                    if (isPayment) showPaymentInstructions();
+                } else {
+                    alert('Error al enviar el formulario');
+                }
+            }).catch(error => {
+                alert('Error al enviar el formulario');
+            });
+        }
+
+        function showSuccessMessage() {
+            document.getElementById('successMessage').style.display = 'block';
+        }
+
+        function showPaymentInstructions() {
+            const total = calculateTotal();
+            document.getElementById('totalCOP').textContent = total.toLocaleString();
+            document.getElementById('orderRef').textContent = currentOrderId;
+            document.getElementById('paymentInstructions').style.display = 'block';
+            new QRCode(document.getElementById('qrCode'), {
+                text: `lightning:contraentregaco@coinos.io?amount=${total}&label=${currentOrderId}`,
+                width: 128,
+                height: 128
+            });
         }
 
         function validateForm() {
             const total = calculateTotal();
             const email = document.getElementById('email').value;
             const deliveryForm = document.getElementById('deliveryForm');
-            if(total === 0) return alert('Agrega productos al carrito');
-            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert('Email inválido');
-            if(deliveryForm.style.display === 'block' && !document.getElementById('address').value) return alert('Completa la dirección');
+            if (total === 0) return alert('Agrega productos al carrito');
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert('Email inválido');
+            if (deliveryForm.style.display === 'block' && !document.getElementById('address').value) return alert('Completa la dirección');
             return true;
         }
 
@@ -190,13 +230,13 @@
         }
 
         function closeImageModal(event) {
-            if(event) event.stopPropagation();
+            if (event) event.stopPropagation();
             document.querySelector('.image-modal').style.display = 'none';
         }
 
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
-                document.getElementById('deliveryForm').style.display = e.target.value === 'delivery' ? 'block' : 'none';
+                document.getElementById('addressField').style.display = e.target.value === 'delivery' ? 'block' : 'none';
             });
         });
 
