@@ -100,6 +100,20 @@
             </div>
 
             <div class="form-group">
+                <label>Número de WhatsApp:</label>
+                <input type="tel" id="whatsapp" name="whatsapp" required 
+                       pattern="^\+[0-9]{10,15}$" 
+                       placeholder="Ej: +573215340988">
+            </div>
+
+            <div class="form-group">
+                <label>Dirección Lightning:</label>
+                <input type="text" id="lightning" name="lightning" required 
+                       pattern="^lnbc[a-zA-Z0-9]+$" 
+                       placeholder="lnbc1p0... (factura Lightning)">
+            </div>
+
+            <div class="form-group">
                 <label>Banco/Método:</label>
                 <select id="banco" name="banco" required onchange="mostrarDetallesPago()">
                     <option value="">Seleccione...</option>
@@ -228,8 +242,8 @@
             const timerElement = document.getElementById('timer');
             const submitButton = document.getElementById('submitButton');
 
-            submitButton.disabled = true; // Desactiva el botón de envío
-            timerElement.style.display = 'block'; // Muestra el temporizador
+            submitButton.disabled = true;
+            timerElement.style.display = 'block';
 
             timerInterval = setInterval(() => {
                 const minutes = Math.floor(timeLeft / 60);
@@ -239,7 +253,7 @@
                 if (timeLeft <= 0) {
                     clearInterval(timerInterval);
                     timerElement.textContent = 'Tiempo agotado. Debes enviar una nueva solicitud.';
-                    submitButton.disabled = false; // Reactiva el botón de envío
+                    submitButton.disabled = false;
                 } else {
                     timeLeft--;
                 }
@@ -247,16 +261,13 @@
         }
 
         document.getElementById('recargaForm').addEventListener('submit', function (e) {
-            e.preventDefault(); // Evita el envío por defecto del formulario
+            e.preventDefault();
 
-            // Muestra el mensaje de éxito
             document.getElementById('successAlert').style.display = 'block';
             document.getElementById('errorAlert').style.display = 'none';
 
-            // Inicia el temporizador
             startTimer();
 
-            // Envía el formulario a Formspree
             fetch(this.action, {
                 method: this.method,
                 body: new FormData(this),
@@ -274,14 +285,12 @@
             });
         });
 
-        // Eventos
         document.getElementById('montoPrestamo').addEventListener('input', calcularCuotaPrestamo);
         document.getElementById('semanasPrestamo').addEventListener('input', calcularCuotaPrestamo);
         document.getElementById('monto').addEventListener('focus', actualizarTasaBTC);
         
-        // Inicialización
         actualizarTasaBTC();
-        setInterval(actualizarTasaBTC, 300000); // Actualizar cada 5 minutos
+        setInterval(actualizarTasaBTC, 300000);
     </script>
 </body>
 </html>
