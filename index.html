@@ -124,6 +124,10 @@
         let cart = {};
         let currentOrderId = '';
 
+        function generateOrderId() {
+            return 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+        }
+
         function renderProducts(filteredProducts = products) {
             const tbody = document.getElementById('productsBody');
             tbody.innerHTML = filteredProducts.map(product => `
@@ -162,16 +166,15 @@
         function handleSubmit() {
             if (!validateForm()) return;
             submitForm(false);
-            showSuccessMessage();
         }
 
         function handlePayment() {
             if (!validateForm()) return;
             submitForm(true);
-            showPaymentInstructions();
         }
 
         function submitForm(isPayment) {
+            currentOrderId = generateOrderId();
             const formData = new FormData(document.getElementById('deliveryForm'));
             formData.append('orderDetails', JSON.stringify(cart));
             formData.append('total', calculateTotal());
@@ -188,15 +191,18 @@
                     showSuccessMessage();
                     if (isPayment) showPaymentInstructions();
                 } else {
-                    alert('Error al enviar el formulario');
+                    alert('Error al enviar: ' + response.status);
                 }
             }).catch(error => {
-                alert('Error al enviar el formulario');
+                alert('Error de conexión: ' + error.message);
             });
         }
 
         function showSuccessMessage() {
             document.getElementById('successMessage').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('successMessage').style.display = 'none';
+            }, 5000);
         }
 
         function showPaymentInstructions() {
@@ -205,21 +211,32 @@
             document.getElementById('orderRef').textContent = currentOrderId;
             document.getElementById('paymentInstructions').style.display = 'block';
             
-            // QR estático con solo la dirección Lightning
-            new QRCode(document.getElementById('qrCode'), {
-                text: `lightning:contraentregaco@coinos.io`,
-                width: 128,
-                height: 128
-            });
+            if (document.getElementById('qrCode').innerHTML === '') {
+                new QRCode(document.getElementById('qrCode'), {
+                    text: 'lightning:contraentregaco@coinos.io',
+                    width: 128,
+                    height: 128
+                });
+            }
         }
 
         function validateForm() {
             const total = calculateTotal();
             const email = document.getElementById('email').value;
-            const deliveryForm = document.getElementById('deliveryForm');
-            if (total === 0) return alert('Agrega productos al carrito');
-            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert('Email inválido');
-            if (deliveryForm.style.display === 'block' && !document.getElementById('address').value) return alert('Completa la dirección');
+            const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
+            
+            if (total === 0) {
+                alert('Agrega productos al carrito');
+                return false;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                alert('Email inválido');
+                return false;
+            }
+            if (deliveryMethod === 'delivery' && !document.getElementById('address').value.trim()) {
+                alert('Completa la dirección');
+                return false;
+            }
             return true;
         }
 
@@ -238,18 +255,19 @@
 
         document.querySelectorAll('input[name="delivery"]').forEach(radio => {
             radio.addEventListener('change', (e) => {
-                document.getElementById('addressField').style.display = e.target.value === 'delivery' ? 'block' : 'none';
+                const showAddress = e.target.value === 'delivery';
+                document.getElementById('addressField').style.display = showAddress ? 'block' : 'none';
+                document.getElementById('address').required = showAddress;
             });
         });
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
             const searchTerm = e.target.value.toLowerCase();
-            const numericSearch = searchTerm.replace(/,/g, '');
             const filtered = products.filter(product => {
                 return product.sku.toLowerCase().includes(searchTerm) ||
                        product.name.toLowerCase().includes(searchTerm) ||
-                       product.price.toString().includes(numericSearch) ||
-                       product.inventory.toString().includes(numericSearch);
+                       product.price.toString().includes(searchTerm) ||
+                       product.inventory.toString().includes(searchTerm);
             });
             renderProducts(filtered);
         });
@@ -266,7 +284,7 @@
                 second: '2-digit'
             };
             const now = new Date();
-            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-CO', {...options, hour: undefined, minute: undefined, second: undefined});
+            document.getElementById('currentDate').textContent = now.toLocaleDateString('es-CO', options);
             document.getElementById('currentTime').textContent = now.toLocaleTimeString('es-CO', {timeZone: 'America/Bogota'});
         }
 
