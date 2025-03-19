@@ -26,15 +26,7 @@
         footer a { color: #2c3e50; text-decoration: none; margin: 0 10px; }
         footer a:hover { text-decoration: underline; }
         .success-message { background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-top: 15px; display: none; }
-        .key-generation { margin-top: 20px; }
-        .key-generation input { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; }
-        .key-generation button { padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
-        .key-generation button:hover { background: #45a049; }
-        .key-generation div { margin-top: 10px; }
-        .progress-bar { width: 100%; background: #ddd; border-radius: 5px; overflow: hidden; margin: 10px 0; }
-        .progress-bar div { height: 20px; background: #4CAF50; width: 0%; transition: width 0.3s; }
     </style>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bitcoinjs-lib/6.1.0/bitcoinjs-lib.min.js"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 <body>
@@ -70,11 +62,11 @@
                 <input type="tel" id="phone" name="phone" placeholder="Teléfono" required>
                 <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
                 <textarea id="description" name="description" placeholder="Descripción de tu negocio o servicio" required></textarea>
-                <button type="button" onclick="handleRegistration()">Registrarse y Pagar <span id="satsAmount"></span> sats</button>
+                <button type="button" onclick="handleRegistration()">Registrarse y Pagar 3000 sats</button>
             </form>
             <div id="successMessage" class="success-message">¡Registro enviado correctamente!</div>
             <div id="paymentInstructions" class="payment-instructions" style="display: none;">
-                <p>✅ Total: <strong id="totalSats"></strong> sats</p>
+                <p>✅ Total: <strong>3000 sats</strong></p>
                 <p>🔗 Dirección Lightning: <strong>contraentregaco@coinos.io</strong></p>
                 <p>📝 Referencia: <strong id="orderRef"></strong></p>
                 <p>⚠️ Al pagar, ingrese manualmente:</p>
@@ -84,17 +76,6 @@
                 </ul>
                 <div class="qr-code" id="qrCode"></div>
             </div>
-        </div>
-
-        <div class="key-generation">
-            <h2>Generar Dirección Bitcoin Legacy</h2>
-            <input type="text" id="seed" placeholder="Escribe aquí para generar claves (mínimo 10 caracteres)" oninput="handleSeedInput()">
-            <div class="progress-bar">
-                <div id="progress"></div>
-            </div>
-            <div id="privateKey"></div>
-            <div id="publicKey"></div>
-            <div id="bitcoinAddress"></div>
         </div>
 
         <footer>
@@ -110,8 +91,11 @@
     </div>
 
     <script>
-        const contacts = []; // Lista de contactos registrados
-        const satsPerUSD = 3000; // 1 USD ≈ 3000 sats (ajusta según el valor actual)
+        // Lista de contactos manual
+        const contacts = [
+            { name: "Juan Perez", phone: "123456789", email: "juan@example.com", description: "Venta de productos electrónicos" },
+            { name: "Maria Gomez", phone: "987654321", email: "maria@example.com", description: "Servicio de reparación de computadoras" }
+        ];
 
         function renderContacts(filteredContacts = contacts) {
             const tbody = document.getElementById('contactsBody');
@@ -134,16 +118,14 @@
             }
 
             // Mostrar instrucciones de pago en sats
-            const totalSats = satsPerUSD; // 1 USD en sats
             const orderId = 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-            document.getElementById('totalSats').textContent = totalSats.toLocaleString();
             document.getElementById('orderRef').textContent = orderId;
             document.getElementById('paymentInstructions').style.display = 'block';
 
             // Generar QR de pago
             if (document.getElementById('qrCode').innerHTML === '') {
                 new QRCode(document.getElementById('qrCode'), {
-                    text: `lightning:contraentregaco@coinos.io?amount=${totalSats * 1000}&message=${orderId}`,
+                    text: `lightning:contraentregaco@coinos.io?amount=3000000&message=${orderId}`,
                     width: 128,
                     height: 128
                 });
@@ -176,33 +158,6 @@
             }).catch(error => {
                 alert('Error de conexión: ' + error.message);
             });
-        }
-
-        function handleSeedInput() {
-            const seed = document.getElementById('seed').value;
-            const progress = document.getElementById('progress');
-            const progressPercentage = Math.min((seed.length / 10) * 100, 100);
-            progress.style.width = `${progressPercentage}%`;
-
-            if (seed.length >= 10) {
-                generateKeys(seed);
-            } else {
-                document.getElementById('privateKey').textContent = '';
-                document.getElementById('publicKey').textContent = '';
-                document.getElementById('bitcoinAddress').textContent = '';
-            }
-        }
-
-        function generateKeys(seed) {
-            const hash = bitcoin.crypto.sha256(Buffer.from(seed));
-            const keyPair = bitcoin.ECPair.fromPrivateKey(hash);
-            const privateKey = keyPair.toWIF();
-            const publicKey = keyPair.publicKey.toString('hex');
-            const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
-
-            document.getElementById('privateKey').textContent = `Clave Privada: ${privateKey}`;
-            document.getElementById('publicKey').textContent = `Clave Pública: ${publicKey}`;
-            document.getElementById('bitcoinAddress').textContent = `Dirección Bitcoin Legacy: ${address}`;
         }
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -244,9 +199,6 @@
             document.getElementById('currentDate').textContent = now.toLocaleDateString('es-CO', dateOptions);
             document.getElementById('currentTime').textContent = now.toLocaleTimeString('es-CO', timeOptions);
         }
-
-        // Mostrar el equivalente en sats en el botón
-        document.getElementById('satsAmount').textContent = satsPerUSD.toLocaleString();
 
         setInterval(updateColombiaTime, 1000);
         updateColombiaTime();
