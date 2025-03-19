@@ -45,26 +45,6 @@
             </div>
         </header>
 
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar locales Contraentrega">
-        </div>
-
-        <div class="table-container">
-            <table class="product-table">
-                <thead>
-                    <tr>
-                        <th>Código</th>
-                        <th>Imagen</th>
-                        <th>Local</th>
-                        <th>Bono</th>
-                        <th>Cantidad</th>
-                        <th>Inventario</th>
-                    </tr>
-                </thead>
-                <tbody id="productsBody"></tbody>
-            </table>
-        </div>
-
         <div class="checkout-section">
             <div id="orderSummary"></div>
             <div class="delivery-options">
@@ -96,6 +76,26 @@
                 </ul>
                 <div class="qr-code" id="qrCode"></div>
             </div>
+        </div>
+
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Buscar locales Contraentrega">
+        </div>
+
+        <div class="table-container">
+            <table class="product-table">
+                <thead>
+                    <tr>
+                        <th>Código</th>
+                        <th>Imagen</th>
+                        <th>Local</th>
+                        <th>Bono</th>
+                        <th>Cantidad</th>
+                        <th>Inventario</th>
+                    </tr>
+                </thead>
+                <tbody id="productsBody"></tbody>
+            </table>
         </div>
 
         <footer>
@@ -134,7 +134,7 @@
                 <tr>
                     <td>${product.sku}</td>
                     <td><a href="#" onclick="showImage('${product.image}', event)">Ver Imagen</a></td>
-                    <td><a href="/${product.sku.replace('@', '')}" target="_blank" class="local-name">${product.name}</a></td>
+                    <td><span class="local-name">${product.name}</span></td>
                     <td>$${product.price.toLocaleString()}</td>
                     <td>
                         <div class="quantity-controls">
