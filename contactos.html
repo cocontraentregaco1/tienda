@@ -27,6 +27,7 @@
         footer a:hover { text-decoration: underline; }
         .success-message { background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-top: 15px; display: none; }
         .key-generation { margin-top: 20px; }
+        .key-generation input { width: 100%; padding: 10px; margin: 5px 0; border: 1px solid #ddd; border-radius: 5px; }
         .key-generation button { padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
         .key-generation button:hover { background: #45a049; }
         .key-generation div { margin-top: 10px; }
@@ -85,6 +86,7 @@
 
         <div class="key-generation">
             <h2>Generar Clave Privada y Pública</h2>
+            <input type="text" id="seed" placeholder="Ingresa una semilla (opcional)">
             <button type="button" onclick="generateKeys()">Generar Claves</button>
             <div id="privateKey"></div>
             <div id="publicKey"></div>
@@ -172,7 +174,9 @@
         }
 
         function generateKeys() {
-            const keyPair = bitcoin.ECPair.makeRandom();
+            const seed = document.getElementById('seed').value || Math.random().toString(36).substring(2);
+            const hash = bitcoin.crypto.sha256(Buffer.from(seed));
+            const keyPair = bitcoin.ECPair.fromPrivateKey(hash);
             const privateKey = keyPair.toWIF();
             const publicKey = keyPair.publicKey.toString('hex');
             document.getElementById('privateKey').textContent = `Clave Privada: ${privateKey}`;
