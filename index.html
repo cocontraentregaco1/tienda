@@ -7,7 +7,7 @@
     <style>
         body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 0; background: #f8f9fa; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
         .container { background: white; width: 90%; max-width: 1200px; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); overflow-x: hidden; }
-        .table-container { width: 100%; overflow-x: auto; margin: 20px 0; }
+        .table-container { width: 100%; overflow-x: auto; margin: 20px 0; display: none; }
         .product-table { width: 100%; min-width: 800px; border-collapse: collapse; }
         .product-table th, .product-table td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
         .product-table th { background: #2c3e50; color: white; }
@@ -269,6 +269,14 @@
                        product.price.toString().includes(searchTerm) ||
                        product.inventory.toString().includes(searchTerm);
             });
+            
+            const tableContainer = document.querySelector('.table-container');
+            if (searchTerm.trim() !== '' && filtered.length > 0) {
+                tableContainer.style.display = 'block';
+            } else {
+                tableContainer.style.display = 'none';
+            }
+            
             renderProducts(filtered);
         });
 
