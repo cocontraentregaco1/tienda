@@ -31,6 +31,8 @@
         .key-generation button { padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
         .key-generation button:hover { background: #45a049; }
         .key-generation div { margin-top: 10px; }
+        .progress-bar { width: 100%; background: #ddd; border-radius: 5px; overflow: hidden; margin: 10px 0; }
+        .progress-bar div { height: 20px; background: #4CAF50; width: 0%; transition: width 0.3s; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bitcoinjs-lib/6.1.0/bitcoinjs-lib.min.js"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
@@ -85,11 +87,14 @@
         </div>
 
         <div class="key-generation">
-            <h2>Generar Clave Privada y Pública</h2>
-            <input type="text" id="seed" placeholder="Ingresa una semilla (opcional)">
-            <button type="button" onclick="generateKeys()">Generar Claves</button>
+            <h2>Generar Dirección Bitcoin Legacy</h2>
+            <input type="text" id="seed" placeholder="Escribe aquí para generar claves (mínimo 10 caracteres)" oninput="handleSeedInput()">
+            <div class="progress-bar">
+                <div id="progress"></div>
+            </div>
             <div id="privateKey"></div>
             <div id="publicKey"></div>
+            <div id="bitcoinAddress"></div>
         </div>
 
         <footer>
@@ -138,7 +143,7 @@
             // Generar QR de pago
             if (document.getElementById('qrCode').innerHTML === '') {
                 new QRCode(document.getElementById('qrCode'), {
-                    text: `lightning:contraentregaco@coinos.io`,
+                    text: `lightning:contraentregaco@coinos.io?amount=${totalSats * 1000}&message=${orderId}`,
                     width: 128,
                     height: 128
                 });
@@ -173,14 +178,31 @@
             });
         }
 
-        function generateKeys() {
-            const seed = document.getElementById('seed').value || Math.random().toString(36).substring(2);
+        function handleSeedInput() {
+            const seed = document.getElementById('seed').value;
+            const progress = document.getElementById('progress');
+            const progressPercentage = Math.min((seed.length / 10) * 100, 100);
+            progress.style.width = `${progressPercentage}%`;
+
+            if (seed.length >= 10) {
+                generateKeys(seed);
+            } else {
+                document.getElementById('privateKey').textContent = '';
+                document.getElementById('publicKey').textContent = '';
+                document.getElementById('bitcoinAddress').textContent = '';
+            }
+        }
+
+        function generateKeys(seed) {
             const hash = bitcoin.crypto.sha256(Buffer.from(seed));
             const keyPair = bitcoin.ECPair.fromPrivateKey(hash);
             const privateKey = keyPair.toWIF();
             const publicKey = keyPair.publicKey.toString('hex');
+            const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
+
             document.getElementById('privateKey').textContent = `Clave Privada: ${privateKey}`;
             document.getElementById('publicKey').textContent = `Clave Pública: ${publicKey}`;
+            document.getElementById('bitcoinAddress').textContent = `Dirección Bitcoin Legacy: ${address}`;
         }
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
