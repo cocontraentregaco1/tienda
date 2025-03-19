@@ -138,7 +138,7 @@
             // Generar QR de pago
             if (document.getElementById('qrCode').innerHTML === '') {
                 new QRCode(document.getElementById('qrCode'), {
-                    text: `lightning:contraentregaco@coinos.io?amount=${totalSats * 1000}&message=${orderId}`,
+                    text: `lightning:contraentregaco@coinos.io`,
                     width: 128,
                     height: 128
                 });
