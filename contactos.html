@@ -26,6 +26,10 @@
         footer a { color: #2c3e50; text-decoration: none; margin: 0 10px; }
         footer a:hover { text-decoration: underline; }
         .success-message { background: #d4edda; color: #155724; padding: 10px; border-radius: 5px; margin-top: 15px; display: none; }
+        .key-generation { margin-top: 20px; }
+        .key-generation button { padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer; }
+        .key-generation button:hover { background: #45a049; }
+        .key-generation div { margin-top: 10px; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bitcoinjs-lib/6.1.0/bitcoinjs-lib.min.js"></script>
     <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
@@ -63,11 +67,11 @@
                 <input type="tel" id="phone" name="phone" placeholder="Teléfono" required>
                 <input type="email" id="email" name="email" placeholder="Correo electrónico" required>
                 <textarea id="description" name="description" placeholder="Descripción de tu negocio o servicio" required></textarea>
-                <button type="button" onclick="handleRegistration()">Registrarse y Pagar $1 USD</button>
+                <button type="button" onclick="handleRegistration()">Registrarse y Pagar <span id="satsAmount"></span> sats</button>
             </form>
             <div id="successMessage" class="success-message">¡Registro enviado correctamente!</div>
             <div id="paymentInstructions" class="payment-instructions" style="display: none;">
-                <p>✅ Total: <strong id="totalCOP"></strong> COP (Aprox. $1 USD)</p>
+                <p>✅ Total: <strong id="totalSats"></strong> sats</p>
                 <p>🔗 Dirección Lightning: <strong>contraentregaco@coinos.io</strong></p>
                 <p>📝 Referencia: <strong id="orderRef"></strong></p>
                 <p>⚠️ Al pagar, ingrese manualmente:</p>
@@ -79,10 +83,11 @@
             </div>
         </div>
 
-        <div class="payment-instructions">
-            <h2>Generar Dirección Bitcoin Legacy</h2>
-            <button type="button" onclick="generateBitcoinAddress()">Generar Dirección</button>
-            <div id="bitcoinAddress"></div>
+        <div class="key-generation">
+            <h2>Generar Clave Privada y Pública</h2>
+            <button type="button" onclick="generateKeys()">Generar Claves</button>
+            <div id="privateKey"></div>
+            <div id="publicKey"></div>
         </div>
 
         <footer>
@@ -99,7 +104,7 @@
 
     <script>
         const contacts = []; // Lista de contactos registrados
-        const exchangeRate = 4000; // Tasa de cambio aproximada COP/USD
+        const satsPerUSD = 3000; // 1 USD ≈ 3000 sats (ajusta según el valor actual)
 
         function renderContacts(filteredContacts = contacts) {
             const tbody = document.getElementById('contactsBody');
@@ -121,17 +126,17 @@
                 return;
             }
 
-            // Mostrar instrucciones de pago
-            const totalCOP = exchangeRate; // $1 USD en COP
+            // Mostrar instrucciones de pago en sats
+            const totalSats = satsPerUSD; // 1 USD en sats
             const orderId = 'ORD-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
-            document.getElementById('totalCOP').textContent = totalCOP.toLocaleString();
+            document.getElementById('totalSats').textContent = totalSats.toLocaleString();
             document.getElementById('orderRef').textContent = orderId;
             document.getElementById('paymentInstructions').style.display = 'block';
 
             // Generar QR de pago
             if (document.getElementById('qrCode').innerHTML === '') {
                 new QRCode(document.getElementById('qrCode'), {
-                    text: `lightning:contraentregaco@coinos.io?amount=${totalCOP * 1000}&message=${orderId}`,
+                    text: `lightning:contraentregaco@coinos.io?amount=${totalSats * 1000}&message=${orderId}`,
                     width: 128,
                     height: 128
                 });
@@ -166,10 +171,12 @@
             });
         }
 
-        function generateBitcoinAddress() {
+        function generateKeys() {
             const keyPair = bitcoin.ECPair.makeRandom();
-            const { address } = bitcoin.payments.p2pkh({ pubkey: keyPair.publicKey });
-            document.getElementById('bitcoinAddress').textContent = address;
+            const privateKey = keyPair.toWIF();
+            const publicKey = keyPair.publicKey.toString('hex');
+            document.getElementById('privateKey').textContent = `Clave Privada: ${privateKey}`;
+            document.getElementById('publicKey').textContent = `Clave Pública: ${publicKey}`;
         }
 
         document.getElementById('searchInput').addEventListener('input', (e) => {
@@ -211,6 +218,9 @@
             document.getElementById('currentDate').textContent = now.toLocaleDateString('es-CO', dateOptions);
             document.getElementById('currentTime').textContent = now.toLocaleTimeString('es-CO', timeOptions);
         }
+
+        // Mostrar el equivalente en sats en el botón
+        document.getElementById('satsAmount').textContent = satsPerUSD.toLocaleString();
 
         setInterval(updateColombiaTime, 1000);
         updateColombiaTime();
