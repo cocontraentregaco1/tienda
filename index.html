@@ -87,7 +87,6 @@
                 <thead>
                     <tr>
                         <th>Código</th>
-                        <th>Imagen</th>
                         <th>Nombre</th>
                         <th>Precio</th>
                         <th>Cantidad</th>
@@ -117,8 +116,9 @@
 
     <script>
         const products = [
-            { id: 1, sku: "@leticiaamazonas1", name: "Local Contraentrega Leticia Amazonas", price: 10000, inventory: 1000, image: "oestecalivalle1.jpg" },
-            { id: 2, sku: "@medellinantioquia2", name: "Local Contraentrega Medellín Antioquia", price: 10000, inventory: 1000, image: "campoalegrecali2.jpg" } , { id: 3, sku: "@medellinantioquia3", name: "Local Contraentrega Medellín Antioquia", price: 10000, inventory: 1000, image: "campoalegrecali2.jpg" }
+            { id: 1, sku: "@leticiaamazonas1", name: "Local Contraentrega Leticia Amazonas", price: 10000, inventory: 1000, url: "https://example.com/leticia" },
+            { id: 2, sku: "@medellinantioquia2", name: "Local Contraentrega Medellín Antioquia", price: 10000, inventory: 1000, url: "https://example.com/medellin" },
+            { id: 3, sku: "@medellinantioquia3", name: "Local Contraentrega Medellín Antioquia", price: 10000, inventory: 1000, url: "https://example.com/medellin2" }
         ];
         
         let cart = {};
@@ -133,8 +133,7 @@
             tbody.innerHTML = filteredProducts.map(product => `
                 <tr>
                     <td>${product.sku}</td>
-                    <td><a href="#" onclick="showImage('${product.image}', event)">Ver Imagen</a></td>
-                    <td><span class="local-name">${product.name}</span></td>
+                    <td><a href="${product.url}" target="_blank" class="local-name">${product.name}</a></td>
                     <td>$${product.price.toLocaleString()}</td>
                     <td>
                         <div class="quantity-controls">
