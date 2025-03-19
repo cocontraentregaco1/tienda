@@ -68,11 +68,10 @@
             <div id="paymentInstructions" class="payment-instructions" style="display: none;">
                 <p>✅ Total: <strong>3000 sats</strong></p>
                 <p>🔗 Dirección Lightning: <strong>contraentregaco@coinos.io</strong></p>
-                <p>📝 Referencia: <strong id="orderRef"></strong></p>
                 <p>⚠️ Al pagar, ingrese manualmente:</p>
                 <ul>
-                    <li>Monto exacto mostrado</li>
-                    <li>Referencia en el campo de mensaje/memo</li>
+                    <li>Monto: <strong>3000 sats</strong></li>
+                    <li>Referencia: <strong id="orderRef"></strong></li>
                 </ul>
                 <div class="qr-code" id="qrCode"></div>
             </div>
@@ -122,10 +121,10 @@
             document.getElementById('orderRef').textContent = orderId;
             document.getElementById('paymentInstructions').style.display = 'block';
 
-            // Generar QR de pago
+            // Generar QR de pago (solo la dirección Lightning)
             if (document.getElementById('qrCode').innerHTML === '') {
                 new QRCode(document.getElementById('qrCode'), {
-                    text: `lightning:contraentregaco@coinos.io?amount=3000000&message=${orderId}`,
+                    text: `lightning:contraentregaco@coinos.io`,
                     width: 128,
                     height: 128
                 });
