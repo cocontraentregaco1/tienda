@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapamundi Interactivo</title>
+    <title>Mapamundi Interactivo con OpenStreetMap</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
         body {
             margin: 0;
@@ -16,32 +18,42 @@
             font-family: Arial, sans-serif;
         }
         #map {
-            width: 80%;
-            max-width: 1200px;
-        }
-        img {
             width: 100%;
-            height: auto;
-            border: 1px solid #ccc;
-        }
-        area {
-            cursor: pointer;
+            height: 100vh;
         }
     </style>
 </head>
 <body>
-    <div id="map">
-        <!-- Imagen del mapamundi -->
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/World_map_blank_black_lines_4500px_monochrome.png" alt="Mapamundi" usemap="#world-map">
+    <!-- Contenedor del mapa -->
+    <div id="map"></div>
 
-        <!-- Mapa de áreas clickeables -->
-        <map name="world-map">
-            <!-- Ejemplo de áreas para algunos países -->
-            <area shape="poly" coords="100,200,150,200,150,250,100,250" href="https://www.example.com/usa" alt="Estados Unidos" title="Estados Unidos">
-            <area shape="poly" coords="200,300,250,300,250,350,200,350" href="https://www.example.com/mexico" alt="México" title="México">
-            <area shape="poly" coords="300,400,350,400,350,450,300,450" href="https://www.example.com/spain" alt="España" title="España">
-            <!-- Añade más áreas aquí -->
-        </map>
-    </div>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Inicializar el mapa
+        const map = L.map('map').setView([0, 0], 2); // Centrado en el mundo, zoom 2
+
+        // Añadir capa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Ejemplo de marcadores para algunos países
+        const countries = [
+            { name: "Estados Unidos", latlng: [37.09, -95.71], url: "https://www.example.com/usa" },
+            { name: "México", latlng: [23.63, -102.55], url: "https://www.example.com/mexico" },
+            { name: "España", latlng: [40.46, -3.75], url: "https://www.example.com/spain" },
+            // Añade más países aquí
+        ];
+
+        // Añadir marcadores y eventos de clic
+        countries.forEach(country => {
+            const marker = L.marker(country.latlng).addTo(map);
+            marker.bindPopup(`<b>${country.name}</b><br><a href="${country.url}" target="_blank">Más información</a>`);
+            marker.on('click', () => {
+                window.open(country.url, '_blank');
+            });
+        });
+    </script>
 </body>
 </html>
