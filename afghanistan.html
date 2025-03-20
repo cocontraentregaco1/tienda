@@ -13,52 +13,35 @@
             align-items: center;
             height: 100vh;
             background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
         }
         #map {
             width: 80%;
-            height: 80%;
+            max-width: 1200px;
         }
-        .country {
-            fill: #ccc;
-            stroke: #333;
-            stroke-width: 0.5;
+        img {
+            width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+        }
+        area {
             cursor: pointer;
-        }
-        .country:hover {
-            fill: #999;
         }
     </style>
 </head>
 <body>
     <div id="map">
-        <svg id="world-map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
-            <!-- Ejemplo de algunos países -->
-            <path class="country" id="US" d="M100,100 L150,100 L150,150 L100,150 Z"></path> <!-- Ejemplo para Estados Unidos -->
-            <path class="country" id="MX" d="M200,200 L250,200 L250,250 L200,250 Z"></path> <!-- Ejemplo para México -->
-            <path class="country" id="ES" d="M300,300 L350,300 L350,350 L300,350 Z"></path> <!-- Ejemplo para España -->
-            <!-- Añade más países aquí -->
-        </svg>
+        <!-- Imagen del mapamundi -->
+        <img src="https://upload.wikimedia.org/wikipedia/commons/8/83/World_map_blank_black_lines_4500px_monochrome.png" alt="Mapamundi" usemap="#world-map">
+
+        <!-- Mapa de áreas clickeables -->
+        <map name="world-map">
+            <!-- Ejemplo de áreas para algunos países -->
+            <area shape="poly" coords="100,200,150,200,150,250,100,250" href="https://www.example.com/usa" alt="Estados Unidos" title="Estados Unidos">
+            <area shape="poly" coords="200,300,250,300,250,350,200,350" href="https://www.example.com/mexico" alt="México" title="México">
+            <area shape="poly" coords="300,400,350,400,350,450,300,450" href="https://www.example.com/spain" alt="España" title="España">
+            <!-- Añade más áreas aquí -->
+        </map>
     </div>
-
-    <script>
-        // Mapeo de países a URLs
-        const countryUrls = {
-            "US": "https://www.example.com/usa",
-            "MX": "https://www.example.com/mexico",
-            "ES": "https://www.example.com/spain",
-            // Añade más países y URLs aquí
-        };
-
-        // Manejar clics en los países
-        document.querySelectorAll('.country').forEach(country => {
-            country.addEventListener('click', () => {
-                const countryId = country.getAttribute('id');
-                const url = countryUrls[countryId];
-                if (url) {
-                    window.location.href = url;
-                }
-            });
-        });
-    </script>
 </body>
 </html>
