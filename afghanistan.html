@@ -36,6 +36,19 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
+        // Definir límites del mapa (latitud y longitud)
+        const southWest = L.latLng(-90, -180); // Esquina inferior izquierda
+        const northEast = L.latLng(90, 180);   // Esquina superior derecha
+        const bounds = L.latLngBounds(southWest, northEast);
+
+        // Establecer límites del mapa
+        map.setMaxBounds(bounds); // Limita el desplazamiento a los límites del mundo
+        map.on('drag', () => {
+            if (!bounds.contains(map.getCenter())) {
+                map.panInsideBounds(bounds, { animate: true });
+            }
+        });
+
         // Ejemplo de marcadores para algunos países
         const countries = [
             { name: "Estados Unidos", latlng: [37.09, -95.71], url: "https://www.example.com/usa" },
