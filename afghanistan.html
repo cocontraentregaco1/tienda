@@ -3,246 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contraentrega Valle del Cauca</title>
+    <title>Mapamundi Interactivo</title>
     <style>
-        body { font-family: 'Segoe UI', sans-serif; margin: 0; padding: 15px; background: #f8f9fa; }
-        .container { background: white; max-width: 100%; padding: 20px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
-        .product-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-        .product-table th, .product-table td { padding: 12px; border-bottom: 1px solid #ddd; }
-        .product-table th { background: #2c3e50; color: white; }
-        .quantity-controls { display: flex; align-items: center; gap: 8px; }
-        .quantity-controls button { padding: 8px 15px; border: 1px solid #ddd; background: #f8f9fa; cursor: pointer; }
-        .checkout-section { background: #f8f9fa; padding: 20px; margin-top: 20px; border-radius: 8px; }
-        .search-container { margin: 15px 0; }
-        #searchInput { width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 25px; }
-        .delivery-form { display: none; margin-top: 15px; }
-        .payment-instructions { background: #e3f2fd; padding: 15px; margin: 15px 0; border-radius: 8px; }
-        .qr-code { margin: 15px auto; text-align: center; }
-        .image-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center; }
-        .modal-content { max-width: 90%; max-height: 90%; position: relative; }
-        .close-modal { position: absolute; top: -25px; right: -25px; color: white; font-size: 30px; cursor: pointer; }
-        
-        @media (max-width: 768px) {
-            .quantity-controls button { padding: 6px 12px; }
-            .checkout-section button { width: 100%; margin: 5px 0; }
-            .product-table th, .product-table td { padding: 8px; }
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #map {
+            width: 80%;
+            height: 80%;
+        }
+        .country {
+            fill: #ccc;
+            stroke: #333;
+            stroke-width: 0.5;
+            cursor: pointer;
+        }
+        .country:hover {
+            fill: #999;
         }
     </style>
-    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Contraentrega CO</h1>
-            <p>Contraentrega Cali, Valle Del Cauca</p>
-        </header>
-
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar productos...">
-        </div>
-
-        <table class="product-table">
-            <thead>
-                <tr>
-                    <th>SKU</th>
-                    <th>Imagen</th>
-                    <th>Producto</th>
-                    <th>Precio</th>
-                    <th>Cantidad</th>
-                    <th>Inventario</th>
-                </tr>
-            </thead>
-            <tbody id="productsBody"></tbody>
-        </table>
-
-        <div class="checkout-section">
-            <div id="orderSummary"></div>
-            
-            <div class="delivery-options">
-                <label><input type="radio" name="delivery" value="pickup" checked> Recoger en local</label>
-                <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
-            </div>
-
-            <form id="deliveryForm" class="delivery-form">
-                <input type="text" id="name" placeholder="Nombre completo" required>
-                <input type="text" id="address" placeholder="Dirección" required>
-                <input type="tel" id="phone" placeholder="Teléfono" required>
-            </form>
-
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            
-            <div style="margin-top: 15px;">
-                <button onclick="handleSubmit()">Cotizar</button>
-                <button onclick="handlePayment()" style="background: #4CAF50; color: white;">Pagar con Lightning</button>
-            </div>
-
-            <div id="paymentInstructions" class="payment-instructions" style="display: none;">
-                <p>✅ Total: <strong id="totalCOP"></strong> COP</p>
-                <p>🔗 Dirección Lightning: <strong>montebellocali18@coinos.io</strong></p>
-                <p>📝 Referencia: <strong id="orderRef"></strong></p>
-                <p>⚠️ Al pagar, ingrese manualmente:</p>
-                <ul>
-                    <li>Monto exacto mostrado</li>
-                    <li>Referencia en el campo de mensaje/memo</li>
-                </ul>
-                <div class="qr-code" id="qrCode"></div>
-            </div>
-        </div>
-    </div>
-
-    <div class="image-modal" onclick="closeImageModal()">
-        <span class="close-modal" onclick="closeImageModal(event)">&times;</span>
-        <img class="modal-content" id="expandedImage">
+    <div id="map">
+        <svg id="world-map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 400">
+            <!-- Aquí se inserta el SVG del mapamundi -->
+            <path class="country" id="US" d="M..."></path> <!-- Ejemplo para Estados Unidos -->
+            <path class="country" id="MX" d="M..."></path> <!-- Ejemplo para México -->
+            <path class="country" id="ES" d="M..."></path> <!-- Ejemplo para España -->
+            <!-- Añade más países aquí -->
+        </svg>
     </div>
 
     <script>
-        const products = [
-            { id: 1, sku: "PROD001", name: "Producto 1", price: 100000, inventory: 10, image: "https://via.placeholder.com/500" },
-            { id: 2, sku: "PROD002", name: "Producto 2", price: 20000, inventory: 5, image: "https://via.placeholder.com/500" }
-        ];
-        
-        let cart = {};
-        let currentOrderId = '';
+        // Mapeo de países a URLs
+        const countryUrls = {
+            "US": "https://www.example.com/usa",
+            "MX": "https://www.example.com/mexico",
+            "ES": "https://www.example.com/spain",
+            // Añade más países y URLs aquí
+        };
 
-        function renderProducts(filteredProducts = products) {
-            const tbody = document.getElementById('productsBody');
-            tbody.innerHTML = filteredProducts.map(product => `
-                <tr>
-                    <td>${product.sku}</td>
-                    <td><a href="#" onclick="showImage('${product.image}', event)">Ver Imagen</a></td>
-                    <td>${product.name}</td>
-                    <td>$${product.price.toLocaleString()}</td>
-                    <td>
-                        <div class="quantity-controls">
-                            <button onclick="adjustQuantity(${product.id}, -1)">-</button>
-                            <span>${cart[product.id] || 0}</span>
-                            <button onclick="adjustQuantity(${product.id}, 1)">+</button>
-                        </div>
-                    </td>
-                    <td>${product.inventory}</td>
-                </tr>
-            `).join('');
-        }
-
-        function adjustQuantity(id, delta) {
-            const product = products.find(p => p.id === id);
-            cart[id] = Math.max(0, Math.min((cart[id] || 0) + delta, product.inventory));
-            renderProducts();
-            updateSummary();
-        }
-
-        function updateSummary() {
-            document.getElementById('orderSummary').innerHTML = `Total: $${calculateTotal().toLocaleString()} COP`;
-        }
-
-        function calculateTotal() {
-            return Object.entries(cart).reduce((acc, [id, qty]) => 
-                acc + (products.find(p => p.id == id).price * qty), 0);
-        }
-
-        async function submitForm(isPayment = false) {
-            const formData = {
-                email: document.getElementById('email').value,
-                delivery: document.querySelector('input[name="delivery"]:checked').value,
-                name: document.getElementById('name').value,
-                address: document.getElementById('address').value,
-                phone: document.getElementById('phone').value,
-                products: Object.entries(cart).filter(([_, qty]) => qty > 0),
-                total: calculateTotal(),
-                orderId: currentOrderId
-            };
-
-            try {
-                const response = await fetch('https://formspree.io/f/mnnpqrvn', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(formData)
-                });
-
-                if(response.ok) {
-                    if(isPayment) showPaymentInstructions();
-                    alert(isPayment ? 'Pago iniciado' : 'Cotización enviada');
+        // Manejar clics en los países
+        document.querySelectorAll('.country').forEach(country => {
+            country.addEventListener('click', () => {
+                const countryId = country.getAttribute('id');
+                const url = countryUrls[countryId];
+                if (url) {
+                    window.location.href = url;
                 }
-            } catch(error) {
-                alert('Error al enviar el formulario');
-            }
-        }
-
-        function showPaymentInstructions() {
-            document.getElementById('totalCOP').textContent = calculateTotal().toLocaleString();
-            document.getElementById('orderRef').textContent = currentOrderId;
-            document.getElementById('paymentInstructions').style.display = 'block';
-            
-            new QRCode(document.getElementById('qrCode'), {
-                text: `lightning:montebellocali18@coinos.io`,
-                width: 200,
-                height: 200
-            });
-        }
-
-        function generateOrderId() {
-            return `CE-${Date.now().toString().slice(-6)}-${Math.random().toString(36).substring(2, 6).toUpperCase()}`;
-        }
-
-        function handleSubmit() {
-            if(!validateForm()) return;
-            currentOrderId = generateOrderId();
-            submitForm(false);
-        }
-
-        function handlePayment() {
-            if(!validateForm()) return;
-            currentOrderId = generateOrderId();
-            submitForm(true);
-        }
-
-        function validateForm() {
-            const total = calculateTotal();
-            const email = document.getElementById('email').value;
-            const deliveryForm = document.getElementById('deliveryForm');
-            
-            if(total === 0) return alert('Agrega productos al carrito');
-            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return alert('Email inválido');
-            if(deliveryForm.style.display === 'block' && !document.getElementById('address').value) return alert('Completa la dirección');
-            
-            return true;
-        }
-
-        function showImage(src, event) {
-            event.preventDefault();
-            const modal = document.querySelector('.image-modal');
-            const modalImg = document.getElementById('expandedImage');
-            modal.style.display = 'flex';
-            modalImg.src = src;
-        }
-
-        function closeImageModal(event) {
-            if(event) event.stopPropagation();
-            document.querySelector('.image-modal').style.display = 'none';
-        }
-
-        document.querySelectorAll('input[name="delivery"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                document.getElementById('deliveryForm').style.display = 
-                    e.target.value === 'delivery' ? 'block' : 'none';
             });
         });
-
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            const numericSearch = searchTerm.replace(/,/g, '');
-            
-            const filtered = products.filter(product => {
-                return product.sku.toLowerCase().includes(searchTerm) ||
-                       product.name.toLowerCase().includes(searchTerm) ||
-                       product.price.toString().includes(numericSearch) ||
-                       product.inventory.toString().includes(numericSearch);
-            });
-            
-            renderProducts(filtered);
-        });
-
-        renderProducts();
     </script>
 </body>
 </html>
