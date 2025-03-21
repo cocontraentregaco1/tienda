@@ -3,389 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Worldwide Logistics Services.">
-    <meta name="keywords" content="armenia quindio, compra, venta, clasificados, productos, Colombia, Contraentrega">
-    <meta name="robots" content="index, follow">
-    <meta name="author" content="Contraentrega">
-    <meta property="og:title" content="@cordientrega - Worldwide Logistics Services.">
-    <meta property="og:description" content="Worldwide Logistics Services..">
-    <meta property="og:image" content="URL-de-tu-imagen">
-    <meta property="og:url" content="https://www.cordientrega.com">
-    <meta property="og:type" content="website">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="@cordientrega - Worldwide Logistics Services.">
-    <meta name="twitter:description" content="Compra y venta en Armenia Quindío, Colombia. Publica tus productos en Contraentrega.">
-    <meta name="twitter:image" content="URL-de-tu-imagen">
-    <meta name="twitter:url" content="https://www.cordientrega.com">
-    <meta name="google-site-verification" content="your-verification-code" />
-    <title>Contraentrega Valle del Cauca, Colombia</title>
+    <title>Mapa Interactivo de Colombia</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8f9fa;
+        /* Reset básico */
+        body, html {
             margin: 0;
-            padding: 20px;
-            min-height: 100vh;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
         }
-        .container {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 2rem;
-        }
-        .table-responsive {
-            overflow-x: auto;
-            margin: 2rem 0;
-            border-radius: 8px;
-            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-        .product-table {
+        /* Contenedor del mapa */
+        #map {
             width: 100%;
-            border-collapse: collapse;
-            background: white;
-            min-width: 600px;
-        }
-        .product-table th,
-        .product-table td {
-            padding: 1rem;
-            text-align: left;
-            border-bottom: 1px solid #dee2e6;
-        }
-        .product-table th {
-            background-color: #2c3e50;
-            color: white;
-            font-weight: 600;
-        }
-        .product-table tr:hover {
-            background-color: #f8f9fa;
-        }
-        .quantity-controls {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .quantity-controls button {
-            padding: 0.5rem 1rem;
-            border: 1px solid #ddd;
-            background: #f8f9fa;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-        .quantity-controls button:hover {
-            background: #e9ecef;
-        }
-        .selected-quantity {
-            font-weight: 600;
-            min-width: 2rem;
-            text-align: center;
-        }
-        .view-photo {
-            color: #3498db;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        .image-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.9);
-            z-index: 1000;
-            padding: 1rem;
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            max-width: 80%;
-            max-height: 80vh;
-            position: relative;
-            background: white;
-            padding: 1rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .modal-content img {
-            max-width: 100%;
-            max-height: 70vh;
-            border-radius: 8px;
-        }
-        .close-modal {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #ff4d4d;
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-        .close-modal:hover {
-            background: #ff1a1a;
-        }
-        .checkout-section {
-            background: #f8f9fa;
-            border-radius: 8px;
-            padding: 1.5rem;
-            margin-top: 2rem;
-        }
-        .delivery-form input,
-        .delivery-form textarea {
-            width: 100%;
-            padding: 0.8rem;
-            margin: 0.5rem 0;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .delivery-form.active {
-            display: block;
-        }
-        .delivery-form {
-            display: none;
-        }
-        @media (max-width: 768px) {
-            .container {
-                padding: 1rem;
-            }
-            .product-table th,
-            .product-table td {
-                padding: 0.75rem;
-                font-size: 0.9rem;
-            }
-            .product-table td:nth-child(3),
-            .product-table th:nth-child(3) {
-                display: none;
-            }
-        }
-        @media (max-width: 480px) {
-            .quantity-controls button {
-                padding: 0.3rem 0.6rem;
-            }
-            .checkout-section {
-                padding: 1rem;
-            }
-        }
-        .search-container {
-            margin: 1rem 0;
-            position: relative;
-        }
-        #searchInput {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            border: 1px solid #ddd;
-            border-radius: 25px;
-            box-sizing: border-box;
-            font-size: 1rem;
-            padding-right: 40px;
-        }
-        .search-icon {
-            position: absolute;
-            right: 15px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #666;
+            height: 100vh; /* Ocupa toda la altura de la pantalla */
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <a href="https://app.contraentregaco.com/collections/calivalle" target="_blank" rel="noopener noreferrer">
-                <h1>Contraentrega CO</h1>
-            </a>
-            <p>Contraentrega Cali, Valle Del Cauca, Colombia</p>
-        </header>
-        <div class="buttons">
-            <a href="https://www.facebook.com/groups/2047811665719344/?ref=share&mibextid=NSMWBT" target="_blank" rel="noopener noreferrer">VER TODO</a>
-        </div>
-        <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Buscar productos, SKU, precios...">
-            <span class="search-icon">🔍</span>
-        </div>
-        <div class="table-responsive">
-            <table id="productsTable" class="product-table">
-                <thead>
-                    <tr>
-                        <th>Foto</th>
-                        <th>Producto/Servicio</th>
-                        <th>SKU</th>
-                        <th>Cantidad</th>
-                        <th>Inventario</th>
-                    </tr>
-                </thead>
-                <tbody id="productsBody"></tbody>
-            </table>
-        </div>
-        <div class="checkout-section">
-            <h3>Resumen del Pedido</h3>
-            <div id="orderSummary"></div>
-            <div class="delivery-options">
-                <label><input type="radio" name="delivery" value="pickup" checked> Recoger en local</label>
-                <label><input type="radio" name="delivery" value="delivery"> Servicio a domicilio</label>
-            </div>
-            <input type="email" id="email" placeholder="Correo electrónico" required>
-            <form id="deliveryForm" class="delivery-form">
-                <input type="text" name="name" placeholder="Nombre completo" required>
-                <input type="text" name="address" placeholder="Dirección" required>
-                <input type="tel" name="phone" placeholder="Teléfono" required>
-                <input type="text" name="city" placeholder="Ciudad" required>
-                <textarea name="notes" placeholder="Instrucciones adicionales"></textarea>
-            </form>
-            <button onclick="submitOrder()">Cotizar</button>
-        </div>
-        <footer class="footer">
-            <p>&copy; <span id="year"></span> <strong>Contraentrega</strong></p>
-            <p>Nostr: <a href="https://snort.social/p/npub1g8asmdf2urzcyunwuyrxrefvgatkfasau5wpc3rjk7krhxm2902st2gajt" target="_blank" rel="noopener noreferrer">npub1g8asmdf2urzcyunwuyrxrefvgatkfasau5wpc3rjk7krhxm2902st2gajt</a></p>
-        </footer>
-    </div>
-    <div id="imageModal" class="image-modal">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeImage()">Cerrar</button>
-            <img id="modalImage" src="" alt="Imagen del producto">
-        </div>
-    </div>
+    <!-- Contenedor del mapa -->
+    <div id="map"></div>
+
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        const products = [
-            { id: 1, name: "Producto 1", description: "Descripción del producto 1", price: 100, inventory: 10, image: "url-de-imagen-1.jpg", sku: "SKU001" },
-            { id: 2, name: "Servicio 1", description: "Descripción del servicio 1", price: 200, inventory: 5, image: "url-de-imagen-2.jpg", sku: "SKU002" }
-        ];
-        let selectedProducts = {};
-        const formspreeURL = "https://formspree.io/f/mnnpqrvn";
+        // Coordenadas de Colombia
+        const colombiaCenter = [4.5709, -74.2973]; // Centro de Colombia (Bogotá)
+        const colombiaBounds = L.latLngBounds(
+            L.latLng(-4.23, -81.85), // Esquina inferior izquierda (límite sur y oeste)
+            L.latLng(13.38, -66.85)  // Esquina superior derecha (límite norte y este)
+        );
 
-        function generateProductTable(productsArray = products) {
-            const tbody = document.getElementById('productsBody');
-            tbody.innerHTML = '';
-            productsArray.forEach(product => {
-                const row = `
-                    <tr>
-                        <td><span class="view-photo" onclick="showImage('${product.image}')">Ver Foto</span></td>
-                        <td><strong>${product.name}</strong><br>${product.description}<br>Precio: $${product.price}</td>
-                        <td>${product.sku}</td>
-                        <td>
-                            <div class="quantity-controls">
-                                <button onclick="adjustQuantity(${product.id}, -1)">-</button>
-                                <span class="selected-quantity" id="selected-${product.id}">0</span>
-                                <button onclick="adjustQuantity(${product.id}, 1)">+</button>
-                            </div>
-                        </td>
-                        <td>${product.inventory}</td>
-                    </tr>
-                `;
-                tbody.innerHTML += row;
-            });
-        }
+        // Inicializar el mapa centrado en Colombia
+        const map = L.map('map').setView(colombiaCenter, 6); // Zoom inicial 6
 
-        function adjustQuantity(productId, delta) {
-            const product = products.find(p => p.id === productId);
-            const current = selectedProducts[productId] || 0;
-            const newQuantity = Math.max(0, Math.min(current + delta, product.inventory));
-            selectedProducts[productId] = newQuantity;
-            document.getElementById(`selected-${productId}`).textContent = newQuantity;
-            updateOrderSummary();
-        }
+        // Añadir capa de OpenStreetMap
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-        function showImage(imageUrl) {
-            document.getElementById('modalImage').src = imageUrl;
-            document.getElementById('imageModal').style.display = 'flex';
-        }
-
-        function closeImage() {
-            document.getElementById('imageModal').style.display = 'none';
-        }
-
-        function updateOrderSummary() {
-            let summary = '';
-            let total = 0;
-            Object.keys(selectedProducts).forEach(id => {
-                const quantity = selectedProducts[id];
-                if (quantity > 0) {
-                    const product = products.find(p => p.id == id);
-                    summary += `${product.name} x${quantity}: $${product.price * quantity}<br>`;
-                    total += product.price * quantity;
-                }
-            });
-            document.getElementById('orderSummary').innerHTML = summary + `<strong>Total: $${total}</strong>`;
-        }
-
-        async function submitOrder() {
-            const deliveryMethod = document.querySelector('input[name="delivery"]:checked').value;
-            const formData = new FormData();
-
-            Object.keys(selectedProducts).forEach(id => {
-                const quantity = selectedProducts[id];
-                if (quantity > 0) {
-                    const product = products.find(p => p.id == id);
-                    formData.append('products[]', `${product.name} x${quantity} - $${product.price * quantity} COP`);
-                }
-            });
-
-            formData.append('email', document.getElementById('email').value);
-
-            if (deliveryMethod === 'delivery') {
-                formData.append('name', document.querySelector('input[name="name"]').value);
-                formData.append('address', document.querySelector('input[name="address"]').value);
-                formData.append('phone', document.querySelector('input[name="phone"]').value);
-                formData.append('city', document.querySelector('input[name="city"]').value);
-                formData.append('notes', document.querySelector('textarea[name="notes"]').value);
+        // Establecer límites del mapa para Colombia
+        map.setMaxBounds(colombiaBounds); // Limita el desplazamiento a Colombia
+        map.on('drag', () => {
+            if (!colombiaBounds.contains(map.getCenter())) {
+                map.panInsideBounds(colombiaBounds, { animate: true });
             }
-
-            try {
-                const response = await fetch(formspreeURL, {
-                    method: 'POST',
-                    body: formData,
-                    headers: {
-                        'Accept': 'application/json'
-                    }
-                });
-
-                if (response.ok) {
-                    alert('Cotización enviada correctamente.');
-                } else {
-                    alert('Error al enviar la cotización.');
-                }
-            } catch (error) {
-                console.error('Error:', error);
-                alert('Error al enviar la cotización.');
-            }
-        }
-
-        document.querySelectorAll('input[name="delivery"]').forEach(radio => {
-            radio.addEventListener('change', (e) => {
-                const deliveryForm = document.getElementById('deliveryForm');
-                if (e.target.value === 'delivery') {
-                    deliveryForm.style.display = 'block';
-                } else {
-                    deliveryForm.style.display = 'none';
-                }
-            });
         });
 
-        document.getElementById("year").textContent = new Date().getFullYear();
-        generateProductTable();
+        // Ejemplo de marcadores en Colombia
+        const markers = [
+            {
+                name: "Bogotá",
+                latlng: [4.7110, -74.0721], // Coordenadas de Bogotá
+                url: "https://www.example.com/bogota" // Enlace de redirección
+            },
+            {
+                name: "Medellín",
+                latlng: [6.2442, -75.5812], // Coordenadas de Medellín
+                url: "https://www.example.com/medellin" // Enlace de redirección
+            },
+            {
+                name: "Cali",
+                latlng: [3.4516, -76.5320], // Coordenadas de Cali
+                url: "https://www.example.com/cali" // Enlace de redirección
+            },
+            {
+                name: "San Andrés",
+                latlng: [12.5847, -81.7006], // Coordenadas de San Andrés
+                url: "https://www.example.com/sanandres" // Enlace de redirección
+            },
+            {
+                name: "Leticia",
+                latlng: [-4.2153, -69.9406], // Coordenadas de Leticia
+                url: "https://www.example.com/leticia" // Enlace de redirección
+            },
+            {
+                name: "Amazonas",
+                latlng: [-1.4429, -71.5724], // Coordenadas de Amazonas
+                url: "https://www.example.com/amazonas" // Enlace de redirección
+            }
+            // Añade más marcadores aquí
+        ];
 
-        function filterProducts(searchTerm) {
-            const filtered = products.filter(product => {
-                const searchText = searchTerm.toLowerCase();
-                return (
-                    product.name.toLowerCase().includes(searchText) ||
-                    product.description.toLowerCase().includes(searchText) ||
-                    product.sku.toLowerCase().includes(searchText) ||
-                    product.price.toString().includes(searchTerm) ||
-                    product.inventory.toString().includes(searchTerm)
-                );
-            });
-            generateProductTable(filtered);
-        }
+        // Añadir marcadores al mapa
+        markers.forEach(marker => {
+            const { name, latlng, url } = marker;
+            L.marker(latlng)
+                .addTo(map)
+                .bindPopup(`<b>${name}</b><br><a href="${url}" target="_blank">Más información</a>`)
+                .on('click', () => {
+                    window.open(url, '_blank'); // Abrir enlace en una nueva pestaña
+                });
+        });
 
-        document.getElementById('searchInput').addEventListener('input', (e) => {
-            filterProducts(e.target.value);
+        // Asegurar que el mapa se redimensione correctamente
+        window.addEventListener('resize', () => {
+            map.invalidateSize();
         });
     </script>
 </body>
