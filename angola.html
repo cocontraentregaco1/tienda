@@ -51,6 +51,31 @@
             }
         });
 
+        // Coordenadas del polígono de Colombia (simplificado)
+        const colombiaCoords = [
+            [-4.23, -81.85], // Esquina inferior izquierda
+            [13.38, -81.85], // Esquina superior izquierda
+            [13.38, -66.85], // Esquina superior derecha
+            [-4.23, -66.85],  // Esquina inferior derecha
+            [-4.23, -81.85]   // Cierra el polígono
+        ];
+
+        // Crear un polígono que cubra Colombia
+        const colombiaPolygon = L.polygon(colombiaCoords, {
+            color: 'transparent', // Sin borde
+            fillColor: 'transparent', // Sin relleno
+            fillOpacity: 0, // Totalmente transparente
+            interactive: false // No interactivo
+        }).addTo(map);
+
+        // Aplicar máscara para ocultar el resto del mundo
+        const mask = L.polygon(colombiaCoords, {
+            color: '#fff', // Color del borde (blanco)
+            fillColor: '#fff', // Color de relleno (blanco)
+            fillOpacity: 1, // Totalmente opaco
+            interactive: false // No interactivo
+        }).addTo(map);
+
         // Ejemplo de marcadores en Colombia
         const markers = [
             {
