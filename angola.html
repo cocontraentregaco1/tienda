@@ -64,8 +64,17 @@
             [-4.23, -81.85]   // Cierra el polígono
         ];
 
-        // Crear un polígono que cubra Colombia
-        const colombiaPolygon = L.polygon(colombiaCoords, {
+        // Crear un polígono que cubra el área fuera de Colombia
+        const worldCoords = [
+            [-90, -180], // Esquina inferior izquierda del mundo
+            [90, -180],  // Esquina superior izquierda del mundo
+            [90, 180],   // Esquina superior derecha del mundo
+            [-90, 180],  // Esquina inferior derecha del mundo
+            [-90, -180]  // Cierra el polígono
+        ];
+
+        // Crear una máscara para ocultar el resto del mundo
+        const mask = L.polygon([worldCoords, colombiaCoords], {
             color: '#fff', // Color del borde (blanco)
             fillColor: '#fff', // Color de relleno (blanco)
             fillOpacity: 1, // Totalmente opaco
