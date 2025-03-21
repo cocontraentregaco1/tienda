@@ -3,73 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapamundi Interactivo con OpenStreetMap</title>
-    <!-- Leaflet CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <title>Capitales del Mundo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
-        /* Reset básico */
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-        }
-        /* Contenedor del mapa */
-        #map {
-            width: 100%;
-            height: 100vh; /* Ocupa toda la altura de la pantalla */
-        }
+        body, html { margin:0; padding:0; height:100%; font-family:Arial; }
+        #map { width:100%; height:100vh; }
+        .leaflet-popup-content a { color:#0078A8; font-weight:bold; }
     </style>
 </head>
 <body>
-    <!-- Contenedor del mapa -->
     <div id="map"></div>
 
-    <!-- Leaflet JS -->
-    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        // Inicializar el mapa
-        const map = L.map('map').setView([0, 0], 2); // Centrado en el mundo, zoom 2
-
-        // Añadir capa de OpenStreetMap
+        const map = L.map('map').setView([20, 0], 2);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Definir límites del mapa (latitud y longitud)
-        const southWest = L.latLng(-90, -180); // Esquina inferior izquierda
-        const northEast = L.latLng(90, 180);   // Esquina superior derecha
-        const bounds = L.latLngBounds(southWest, northEast);
-
-        // Establecer límites del mapa
-        map.setMaxBounds(bounds); // Limita el desplazamiento a los límites del mundo
-        map.on('drag', () => {
-            if (!bounds.contains(map.getCenter())) {
-                map.panInsideBounds(bounds, { animate: true });
-            }
-        });
-
-        // Ejemplo de marcadores para algunos países
-        const countries = [
-            { name: "Estados Unidos", latlng: [37.09, -95.71], url: "https://www.example.com/usa" },
-            { name: "México", latlng: [23.63, -102.55], url: "https://www.example.com/mexico" },
-            { name: "España", latlng: [40.46, -3.75], url: "https://www.example.com/spain" },
-            // Añade más países aquí
+        // LISTA COMPLETA DE CAPITALES (Añade más según necesites)
+        const capitales = [
+            { pais: "España", capital: "Madrid", latlng: [40.416775, -3.703790], url: "https://es.wikipedia.org/wiki/Madrid" },
+            { pais: "México", capital: "Ciudad de México", latlng: [19.432608, -99.133209], url: "https://es.wikipedia.org/wiki/Ciudad_de_M%C3%A9xico" },
+            { pais: "Argentina", capital: "Buenos Aires", latlng: [-34.603722, -58.381592], url: "https://es.wikipedia.org/wiki/Buenos_Aires" },
+            { pais: "Estados Unidos", capital: "Washington D.C.", latlng: [38.907192, -77.036873], url: "https://es.wikipedia.org/wiki/Washington_D._C." },
+            { pais: "Japón", capital: "Tokio", latlng: [35.689487, 139.691711], url: "https://es.wikipedia.org/wiki/Tokio" },
+            { pais: "Francia", capital: "París", latlng: [48.856614, 2.352222], url: "https://es.wikipedia.org/wiki/Par%C3%ADs" },
+            { pais: "Italia", capital: "Roma", latlng: [41.902782, 12.496366], url: "https://es.wikipedia.org/wiki/Roma" },
+            { pais: "Alemania", capital: "Berlín", latlng: [52.520008, 13.404954], url: "https://es.wikipedia.org/wiki/Berl%C3%ADn" },
+            { pais: "China", capital: "Pekín", latlng: [39.904202, 116.407394], url: "https://es.wikipedia.org/wiki/Pek%C3%ADn" },
+            { pais: "Rusia", capital: "Moscú", latlng: [55.755825, 37.617298], url: "https://es.wikipedia.org/wiki/Mosc%C3%BA" },
+            { pais: "Canadá", capital: "Ottawa", latlng: [45.421532, -75.697189], url: "https://es.wikipedia.org/wiki/Ottawa" },
+            { pais: "Brasil", capital: "Brasilia", latlng: [-15.797500, -47.891670], url: "https://es.wikipedia.org/wiki/Brasilia" },
+            { pais: "India", capital: "Nueva Delhi", latlng: [28.613939, 77.209023], url: "https://es.wikipedia.org/wiki/Nueva_Delhi" },
+            { pais: "Sudáfrica", capital: "Pretoria", latlng: [-25.747868, 28.229271], url: "https://es.wikipedia.org/wiki/Pretoria" },
+            { pais: "Australia", capital: "Canberra", latlng: [-35.280937, 149.130005], url: "https://es.wikipedia.org/wiki/Canberra" },
+            { pais: "Egipto", capital: "El Cairo", latlng: [30.044420, 31.235712], url: "https://es.wikipedia.org/wiki/El_Cairo" },
+            { pais: "Colombia", capital: "Bogotá", latlng: [4.710989, -74.072090], url: "https://es.wikipedia.org/wiki/Bogot%C3%A1" },
+            { pais: "Chile", capital: "Santiago", latlng: [-33.448891, -70.669266], url: "https://es.wikipedia.org/wiki/Santiago_de_Chile" },
+            { pais: "Perú", capital: "Lima", latlng: [-12.046374, -77.042793], url: "https://es.wikipedia.org/wiki/Lima" },
+            { pais: "Nueva Zelanda", capital: "Wellington", latlng: [-41.286461, 174.776230], url: "https://es.wikipedia.org/wiki/Wellington" }
+            // Añade aquí más países con este formato:
+            // ,{ pais: "", capital: "", latlng: [, ], url: "" }
         ];
 
-        // Añadir marcadores y eventos de clic
-        countries.forEach(country => {
-            const marker = L.marker(country.latlng).addTo(map);
-            marker.bindPopup(`<b>${country.name}</b><br><a href="${country.url}" target="_blank">Más información</a>`);
-            marker.on('click', () => {
-                window.open(country.url, '_blank');
-            });
+        // Generar marcadores
+        capitales.forEach((c) => {
+            L.marker(c.latlng)
+            .bindPopup(`<b>${c.pais}</b><br>Capital: ${c.capital}<br><a href="${c.url}" target="_blank">📖 Wikipedia</a>`)
+            .addTo(map);
         });
 
-        // Asegurar que el mapa se redimensione correctamente
-        window.addEventListener('resize', () => {
-            map.invalidateSize();
-        });
+        // Configuraciones adicionales
+        map.setMaxBounds([[-90, -180], [90, 180]]);
+        window.addEventListener('resize', () => map.invalidateSize());
     </script>
 </body>
 </html>
