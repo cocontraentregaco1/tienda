@@ -13,17 +13,11 @@
             padding: 0;
             height: 100%;
             font-family: Arial, sans-serif;
-            overflow: hidden; /* Evita el desplazamiento fuera del mapa */
         }
         /* Contenedor del mapa */
         #map {
             width: 100%;
             height: 100vh; /* Ocupa toda la altura de la pantalla */
-            background-color: #fff; /* Fondo blanco para evitar el gris */
-        }
-        /* Estilo para la máscara */
-        .leaflet-overlay-pane svg path {
-            pointer-events: none; /* Evita interacción con la máscara */
         }
     </style>
 </head>
@@ -42,44 +36,20 @@
         );
 
         // Inicializar el mapa centrado en Colombia
-        const map = L.map('map', {
-            center: colombiaCenter,
-            zoom: 6,
-            maxBounds: colombiaBounds, // Limita el desplazamiento a Colombia
-            maxBoundsViscosity: 1.0, // Fuerza los límites
-            zoomControl: false // Desactiva el control de zoom
-        });
+        const map = L.map('map').setView(colombiaCenter, 6); // Zoom inicial 6
 
         // Añadir capa de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Coordenadas del polígono de Colombia (simplificado)
-        const colombiaCoords = [
-            [-4.23, -81.85], // Esquina inferior izquierda
-            [13.38, -81.85], // Esquina superior izquierda
-            [13.38, -66.85], // Esquina superior derecha
-            [-4.23, -66.85],  // Esquina inferior derecha
-            [-4.23, -81.85]   // Cierra el polígono
-        ];
-
-        // Crear un polígono que cubra el área fuera de Colombia
-        const worldCoords = [
-            [-90, -180], // Esquina inferior izquierda del mundo
-            [90, -180],  // Esquina superior izquierda del mundo
-            [90, 180],   // Esquina superior derecha del mundo
-            [-90, 180],  // Esquina inferior derecha del mundo
-            [-90, -180]  // Cierra el polígono
-        ];
-
-        // Crear una máscara para ocultar el resto del mundo
-        const mask = L.polygon([worldCoords, colombiaCoords], {
-            color: '#fff', // Color del borde (blanco)
-            fillColor: '#fff', // Color de relleno (blanco)
-            fillOpacity: 1, // Totalmente opaco
-            interactive: false // No interactivo
-        }).addTo(map);
+        // Establecer límites del mapa para Colombia
+        map.setMaxBounds(colombiaBounds); // Limita el desplazamiento a Colombia
+        map.on('drag', () => {
+            if (!colombiaBounds.contains(map.getCenter())) {
+                map.panInsideBounds(colombiaBounds, { animate: true });
+            }
+        });
 
         // Ejemplo de marcadores en Colombia
         const markers = [
