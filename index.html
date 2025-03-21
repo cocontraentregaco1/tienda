@@ -38,7 +38,7 @@
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Lista de puertos y aeropuertos
+        // Lista de puertos y aeropuertos con coordenadas fijas
         const locations = [
             { pais: "China", nombre: "Puerto de Shanghai", tipo: "marítimo", latlng: [31.2304, 121.4737], url: "https://es.wikipedia.org/wiki/Puerto_de_Shanghai" },
             { pais: "Singapur", nombre: "Puerto de Singapur", tipo: "marítimo", latlng: [1.2625, 103.8200], url: "https://es.wikipedia.org/wiki/Puerto_de_Singapur" },
@@ -68,7 +68,7 @@
             iconAnchor: [12, 41]
         });
 
-        // Añadir marcadores
+        // Añadir marcadores fijos en las coordenadas
         locations.forEach((loc) => {
             const icono = loc.tipo === 'marítimo' ? iconoMaritimo : iconoAereo;
             L.marker(loc.latlng, { icon: icono })
