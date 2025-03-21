@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mapa Interactivo de Colombia</title>
+    <title>Mapamundi Interactivo con OpenStreetMap</title>
     <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
@@ -28,73 +28,42 @@
     <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        // Coordenadas de Colombia
-        const colombiaCenter = [4.5709, -74.2973]; // Centro de Colombia (Bogotá)
-        const colombiaBounds = L.latLngBounds(
-            L.latLng(-4.23, -81.85), // Esquina inferior izquierda (límite sur y oeste)
-            L.latLng(13.38, -66.85)  // Esquina superior derecha (límite norte y este)
-        );
-
-        // Inicializar el mapa centrado en Colombia
-        const map = L.map('map').setView(colombiaCenter, 6); // Zoom inicial 6
+        // Inicializar el mapa
+        const map = L.map('map').setView([0, 0], 2); // Centrado en el mundo, zoom 2
 
         // Añadir capa de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Establecer límites del mapa para Colombia
-        map.setMaxBounds(colombiaBounds); // Limita el desplazamiento a Colombia
+        // Definir límites del mapa (latitud y longitud)
+        const southWest = L.latLng(-90, -180); // Esquina inferior izquierda
+        const northEast = L.latLng(90, 180);   // Esquina superior derecha
+        const bounds = L.latLngBounds(southWest, northEast);
+
+        // Establecer límites del mapa
+        map.setMaxBounds(bounds); // Limita el desplazamiento a los límites del mundo
         map.on('drag', () => {
-            if (!colombiaBounds.contains(map.getCenter())) {
-                map.panInsideBounds(colombiaBounds, { animate: true });
+            if (!bounds.contains(map.getCenter())) {
+                map.panInsideBounds(bounds, { animate: true });
             }
         });
 
-        // Ejemplo de marcadores en Colombia
-        const markers = [
-            {
-                name: "Bogotá",
-                latlng: [4.7110, -74.0721], // Coordenadas de Bogotá
-                url: "https://www.example.com/bogota" // Enlace de redirección
-            },
-            {
-                name: "Medellín",
-                latlng: [6.2442, -75.5812], // Coordenadas de Medellín
-                url: "https://www.example.com/medellin" // Enlace de redirección
-            },
-            {
-                name: "Cali",
-                latlng: [3.4516, -76.5320], // Coordenadas de Cali
-                url: "https://www.example.com/cali" // Enlace de redirección
-            },
-            {
-                name: "San Andrés",
-                latlng: [12.5847, -81.7006], // Coordenadas de San Andrés
-                url: "https://www.example.com/sanandres" // Enlace de redirección
-            },
-            {
-                name: "Leticia",
-                latlng: [-4.2153, -69.9406], // Coordenadas de Leticia
-                url: "https://www.example.com/leticia" // Enlace de redirección
-            },
-            {
-                name: "Amazonas",
-                latlng: [-1.4429, -71.5724], // Coordenadas de Amazonas
-                url: "https://www.example.com/amazonas" // Enlace de redirección
-            }
-            // Añade más marcadores aquí
+        // Ejemplo de marcadores para algunos países
+        const countries = [
+            { name: "Estados Unidos", latlng: [37.09, -95.71], url: "https://www.example.com/usa" },
+            { name: "México", latlng: [23.63, -102.55], url: "https://www.example.com/mexico" },
+            { name: "España", latlng: [40.46, -3.75], url: "https://www.example.com/spain" },
+            // Añade más países aquí
         ];
 
-        // Añadir marcadores al mapa
-        markers.forEach(marker => {
-            const { name, latlng, url } = marker;
-            L.marker(latlng)
-                .addTo(map)
-                .bindPopup(`<b>${name}</b><br><a href="${url}" target="_blank">Más información</a>`)
-                .on('click', () => {
-                    window.open(url, '_blank'); // Abrir enlace en una nueva pestaña
-                });
+        // Añadir marcadores y eventos de clic
+        countries.forEach(country => {
+            const marker = L.marker(country.latlng).addTo(map);
+            marker.bindPopup(`<b>${country.name}</b><br><a href="${country.url}" target="_blank">Más información</a>`);
+            marker.on('click', () => {
+                window.open(country.url, '_blank');
+            });
         });
 
         // Asegurar que el mapa se redimensione correctamente
