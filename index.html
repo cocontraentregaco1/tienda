@@ -3,138 +3,91 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puertos Principales del Mundo</title>
+    <title>Puertos y Aeropuertos Principales</title>
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
-        body, html { margin:0; padding:0; height:100%; font-family:Arial; }
-        #map { width:100%; height:100vh; }
-        .leaflet-popup-content a { color:#0078A8; font-weight:bold; }
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        #map {
+            width: 100%;
+            height: 100vh;
+        }
+        .leaflet-popup-content a {
+            color: #0078A8;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+    <!-- Contenedor del mapa -->
     <div id="map"></div>
 
+    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
+        // Inicializar el mapa
         const map = L.map('map').setView([20, 0], 2);
+
+        // Añadir capa de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // LISTA DE PUERTOS/AEROPUERTOS
+        // Lista de puertos y aeropuertos
         const locations = [
-            {   // Asia
-                pais: "China",
-                nombre: "Puerto de Shanghai",
-                tipo: "marítimo",
-                latlng: [31.2304, 121.4737],
-                url: "https://es.wikipedia.org/wiki/Puerto_de_Shanghai"
-            },
-            {
-                pais: "Singapur",
-                nombre: "Puerto de Singapur",
-                tipo: "marítimo",
-                latlng: [1.2625, 103.8200],
-                url: "https://es.wikipedia.org/wiki/Puerto_de_Singapur"
-            },
-            {   // Europa
-                pais: "Países Bajos",
-                nombre: "Puerto de Róterdam",
-                tipo: "marítimo",
-                latlng: [51.9225, 4.47917],
-                url: "https://es.wikipedia.org/wiki/Puerto_de_R%C3%B3terdam"
-            },
-            {
-                pais: "Suiza",
-                nombre: "Aeropuerto de Zúrich",
-                tipo: "aéreo",
-                latlng: [47.4647, 8.5492],
-                url: "https://es.wikipedia.org/wiki/Aeropuerto_de_Z%C3%BArich"
-            },
-            {   // América
-                pais: "Panamá",
-                nombre: "Canal de Panamá",
-                tipo: "marítimo",
-                latlng: [9.0811, -79.5939],
-                url: "https://es.wikipedia.org/wiki/Canal_de_Panam%C3%A1"
-            },
-            {
-                pais: "EE.UU.",
-                nombre: "Puerto de Los Ángeles",
-                tipo: "marítimo",
-                latlng: [33.7167, -118.2667],
-                url: "https://es.wikipedia.org/wiki/Puerto_de_Los_%C3%81ngeles"
-            },
-            {   // África
-                pais: "Egipto",
-                nombre: "Puerto de Alejandría",
-                tipo: "marítimo",
-                latlng: [31.2000, 29.8833],
-                url: "https://es.wikipedia.org/wiki/Puerto_de_Alejandr%C3%ADa"
-            },
-            {
-                pais: "Etiopía",
-                nombre: "Aeropuerto de Addis Abeba",
-                tipo: "aéreo",
-                latlng: [8.9779, 38.7993],
-                url: "https://es.wikipedia.org/wiki/Aeropuerto_Internacional_Bole"
-            },
-            {   // Oriente Medio
-                pais: "Emiratos Árabes",
-                nombre: "Puerto de Jebel Ali",
-                tipo: "marítimo",
-                latlng: [25.0144, 55.0569],
-                url: "https://es.wikipedia.org/wiki/Jebel_Ali"
-            },
-            {
-                pais: "Bolivia",
-                nombre: "Aeropuerto de Viru Viru",
-                tipo: "aéreo",
-                latlng: [-17.6411, -63.1353],
-                url: "https://es.wikipedia.org/wiki/Aeropuerto_Internacional_Viru_Viru"
-            },
-            // Añade más ubicaciones aquí...
-            {
-                pais: "Japón",
-                nombre: "Puerto de Yokohama",
-                tipo: "marítimo",
-                latlng: [35.4442, 139.6381],
-                url: "https://es.wikipedia.org/wiki/Puerto_de_Yokohama"
-            },
-            {
-                pais: "Brasil",
-                nombre: "Puerto de Santos",
-                tipo: "marítimo",
-                latlng: [-23.9608, -46.3339],
-                url: "https://es.wikipedia.org/wiki/Puerto_de_Santos"
-            },
-            {
-                pais: "Sudáfrica",
-                nombre: "Puerto de Ciudad del Cabo",
-                tipo: "marítimo",
-                latlng: [-33.9042, 18.4256],
-                url: "https://es.wikipedia.org/wiki/Puerto_de_Ciudad_del_Cabo"
-            }
+            { pais: "China", nombre: "Puerto de Shanghai", tipo: "marítimo", latlng: [31.2304, 121.4737], url: "https://es.wikipedia.org/wiki/Puerto_de_Shanghai" },
+            { pais: "Singapur", nombre: "Puerto de Singapur", tipo: "marítimo", latlng: [1.2625, 103.8200], url: "https://es.wikipedia.org/wiki/Puerto_de_Singapur" },
+            { pais: "Países Bajos", nombre: "Puerto de Róterdam", tipo: "marítimo", latlng: [51.9225, 4.47917], url: "https://es.wikipedia.org/wiki/Puerto_de_R%C3%B3terdam" },
+            { pais: "Suiza", nombre: "Aeropuerto de Zúrich", tipo: "aéreo", latlng: [47.4647, 8.5492], url: "https://es.wikipedia.org/wiki/Aeropuerto_de_Z%C3%BArich" },
+            { pais: "Panamá", nombre: "Canal de Panamá", tipo: "marítimo", latlng: [9.0811, -79.5939], url: "https://es.wikipedia.org/wiki/Canal_de_Panam%C3%A1" },
+            { pais: "EE.UU.", nombre: "Puerto de Los Ángeles", tipo: "marítimo", latlng: [33.7167, -118.2667], url: "https://es.wikipedia.org/wiki/Puerto_de_Los_%C3%81ngeles" },
+            { pais: "Egipto", nombre: "Puerto de Alejandría", tipo: "marítimo", latlng: [31.2000, 29.8833], url: "https://es.wikipedia.org/wiki/Puerto_de_Alejandr%C3%ADa" },
+            { pais: "Etiopía", nombre: "Aeropuerto de Addis Abeba", tipo: "aéreo", latlng: [8.9779, 38.7993], url: "https://es.wikipedia.org/wiki/Aeropuerto_Internacional_Bole" },
+            { pais: "Emiratos Árabes", nombre: "Puerto de Jebel Ali", tipo: "marítimo", latlng: [25.0144, 55.0569], url: "https://es.wikipedia.org/wiki/Jebel_Ali" },
+            { pais: "Bolivia", nombre: "Aeropuerto de Viru Viru", tipo: "aéreo", latlng: [-17.6411, -63.1353], url: "https://es.wikipedia.org/wiki/Aeropuerto_Internacional_Viru_Viru" },
+            { pais: "Japón", nombre: "Puerto de Yokohama", tipo: "marítimo", latlng: [35.4442, 139.6381], url: "https://es.wikipedia.org/wiki/Puerto_de_Yokohama" },
+            { pais: "Brasil", nombre: "Puerto de Santos", tipo: "marítimo", latlng: [-23.9608, -46.3339], url: "https://es.wikipedia.org/wiki/Puerto_de_Santos" },
+            { pais: "Sudáfrica", nombre: "Puerto de Ciudad del Cabo", tipo: "marítimo", latlng: [-33.9042, 18.4256], url: "https://es.wikipedia.org/wiki/Puerto_de_Ciudad_del_Cabo" }
         ];
 
-        // Crear marcadores con iconos personalizados
-        locations.forEach((loc) => {
-            const icono = loc.tipo === 'marítimo' 
-                ? L.icon({iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png'})
-                : L.icon({iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png'});
-
-            L.marker(loc.latlng, {icon: icono})
-            .bindPopup(`
-                <b>${loc.pais}</b><br>
-                ${loc.nombre}<br>
-                Tipo: ${loc.tipo.toUpperCase()}<br>
-                <a href="${loc.url}" target="_blank">Más información</a>
-            `).addTo(map);
+        // Iconos personalizados
+        const iconoMaritimo = L.icon({
+            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-blue.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41]
         });
 
-        // Configuración del mapa
+        const iconoAereo = L.icon({
+            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41]
+        });
+
+        // Añadir marcadores
+        locations.forEach((loc) => {
+            const icono = loc.tipo === 'marítimo' ? iconoMaritimo : iconoAereo;
+            L.marker(loc.latlng, { icon: icono })
+                .bindPopup(`
+                    <b>${loc.pais}</b><br>
+                    ${loc.nombre}<br>
+                    Tipo: ${loc.tipo.toUpperCase()}<br>
+                    <a href="${loc.url}" target="_blank">Más información</a>
+                `)
+                .addTo(map);
+        });
+
+        // Limitar el área de desplazamiento
         map.setMaxBounds([[-90, -180], [90, 180]]);
-        window.addEventListener('resize', () => map.invalidateSize());
+
+        // Ajustar tamaño al cambiar ventana
+        window.addEventListener('resize', () => {
+            map.invalidateSize();
+        });
     </script>
 </body>
 </html>
