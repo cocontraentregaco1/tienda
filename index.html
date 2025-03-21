@@ -3,91 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Puertos y Aeropuertos Principales</title>
-    <!-- Leaflet CSS -->
+    <title>Capitales del Mundo</title>
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            font-family: Arial, sans-serif;
-        }
-        #map {
-            width: 100%;
-            height: 100vh;
-        }
-        .leaflet-popup-content a {
-            color: #0078A8;
-            font-weight: bold;
-        }
+        body, html { margin:0; padding:0; height:100%; font-family:Arial; }
+        #map { width:100%; height:100vh; }
+        .leaflet-popup-content a { color:#0078A8; font-weight:bold; }
     </style>
 </head>
 <body>
-    <!-- Contenedor del mapa -->
     <div id="map"></div>
 
-    <!-- Leaflet JS -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>
-        // Inicializar el mapa
         const map = L.map('map').setView([20, 0], 2);
-
-        // Añadir capa de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // Lista de puertos y aeropuertos con coordenadas fijas
-        const locations = [
-            { pais: "China", nombre: "Puerto de Shanghai", tipo: "marítimo", latlng: [31.2304, 121.4737], url: "https://es.wikipedia.org/wiki/Puerto_de_Shanghai" },
-            { pais: "Singapur", nombre: "Puerto de Singapur", tipo: "marítimo", latlng: [1.2625, 103.8200], url: "https://es.wikipedia.org/wiki/Puerto_de_Singapur" },
-            { pais: "Países Bajos", nombre: "Puerto de Róterdam", tipo: "marítimo", latlng: [51.9225, 4.47917], url: "https://es.wikipedia.org/wiki/Puerto_de_R%C3%B3terdam" },
-            { pais: "Suiza", nombre: "Aeropuerto de Zúrich", tipo: "aéreo", latlng: [47.4647, 8.5492], url: "https://es.wikipedia.org/wiki/Aeropuerto_de_Z%C3%BArich" },
-            { pais: "Panamá", nombre: "Canal de Panamá", tipo: "marítimo", latlng: [9.0811, -79.5939], url: "https://es.wikipedia.org/wiki/Canal_de_Panam%C3%A1" },
-            { pais: "EE.UU.", nombre: "Puerto de Los Ángeles", tipo: "marítimo", latlng: [33.7167, -118.2667], url: "https://es.wikipedia.org/wiki/Puerto_de_Los_%C3%81ngeles" },
-            { pais: "Egipto", nombre: "Puerto de Alejandría", tipo: "marítimo", latlng: [31.2000, 29.8833], url: "https://es.wikipedia.org/wiki/Puerto_de_Alejandr%C3%ADa" },
-            { pais: "Etiopía", nombre: "Aeropuerto de Addis Abeba", tipo: "aéreo", latlng: [8.9779, 38.7993], url: "https://es.wikipedia.org/wiki/Aeropuerto_Internacional_Bole" },
-            { pais: "Emiratos Árabes", nombre: "Puerto de Jebel Ali", tipo: "marítimo", latlng: [25.0144, 55.0569], url: "https://es.wikipedia.org/wiki/Jebel_Ali" },
-            { pais: "Bolivia", nombre: "Aeropuerto de Viru Viru", tipo: "aéreo", latlng: [-17.6411, -63.1353], url: "https://es.wikipedia.org/wiki/Aeropuerto_Internacional_Viru_Viru" },
-            { pais: "Japón", nombre: "Puerto de Yokohama", tipo: "marítimo", latlng: [35.4442, 139.6381], url: "https://es.wikipedia.org/wiki/Puerto_de_Yokohama" },
-            { pais: "Brasil", nombre: "Puerto de Santos", tipo: "marítimo", latlng: [-23.9608, -46.3339], url: "https://es.wikipedia.org/wiki/Puerto_de_Santos" },
-            { pais: "Sudáfrica", nombre: "Puerto de Ciudad del Cabo", tipo: "marítimo", latlng: [-33.9042, 18.4256], url: "https://es.wikipedia.org/wiki/Puerto_de_Ciudad_del_Cabo" }
+        // LISTA COMPLETA DE CAPITALES (Añade más según necesites)
+        const capitales = [
+            { pais: "España", capital: "Madrid", latlng: [40.416775, -3.703790], url: "https://es.wikipedia.org/wiki/Madrid" },
+            { pais: "México", capital: "Ciudad de México", latlng: [19.432608, -99.133209], url: "https://es.wikipedia.org/wiki/Ciudad_de_M%C3%A9xico" },
+            { pais: "Argentina", capital: "Buenos Aires", latlng: [-34.603722, -58.381592], url: "https://es.wikipedia.org/wiki/Buenos_Aires" },
+            { pais: "Estados Unidos", capital: "Washington D.C.", latlng: [38.907192, -77.036873], url: "https://es.wikipedia.org/wiki/Washington_D._C." },
+            { pais: "Japón", capital: "Tokio", latlng: [35.689487, 139.691711], url: "https://es.wikipedia.org/wiki/Tokio" },
+            { pais: "Francia", capital: "París", latlng: [48.856614, 2.352222], url: "https://es.wikipedia.org/wiki/Par%C3%ADs" },
+            { pais: "Italia", capital: "Roma", latlng: [41.902782, 12.496366], url: "https://es.wikipedia.org/wiki/Roma" },
+            { pais: "Alemania", capital: "Berlín", latlng: [52.520008, 13.404954], url: "https://es.wikipedia.org/wiki/Berl%C3%ADn" },
+            { pais: "China", capital: "Pekín", latlng: [39.904202, 116.407394], url: "https://es.wikipedia.org/wiki/Pek%C3%ADn" },
+            { pais: "Rusia", capital: "Moscú", latlng: [55.755825, 37.617298], url: "https://es.wikipedia.org/wiki/Mosc%C3%BA" },
+            { pais: "Canadá", capital: "Ottawa", latlng: [45.421532, -75.697189], url: "https://es.wikipedia.org/wiki/Ottawa" },
+            { pais: "Brasil", capital: "Brasilia", latlng: [-15.797500, -47.891670], url: "https://es.wikipedia.org/wiki/Brasilia" },
+            { pais: "India", capital: "Nueva Delhi", latlng: [28.613939, 77.209023], url: "https://es.wikipedia.org/wiki/Nueva_Delhi" },
+            { pais: "Sudáfrica", capital: "Pretoria", latlng: [-25.747868, 28.229271], url: "https://es.wikipedia.org/wiki/Pretoria" },
+            { pais: "Australia", capital: "Canberra", latlng: [-35.280937, 149.130005], url: "https://es.wikipedia.org/wiki/Canberra" },
+            { pais: "Egipto", capital: "El Cairo", latlng: [30.044420, 31.235712], url: "https://es.wikipedia.org/wiki/El_Cairo" },
+            { pais: "Colombia", capital: "Bogotá", latlng: [4.710989, -74.072090], url: "https://es.wikipedia.org/wiki/Bogot%C3%A1" },
+            { pais: "Chile", capital: "Santiago", latlng: [-33.448891, -70.669266], url: "https://es.wikipedia.org/wiki/Santiago_de_Chile" },
+            { pais: "Perú", capital: "Lima", latlng: [-12.046374, -77.042793], url: "https://es.wikipedia.org/wiki/Lima" },
+            { pais: "Nueva Zelanda", capital: "Wellington", latlng: [-41.286461, 174.776230], url: "https://es.wikipedia.org/wiki/Wellington" }
+            // Añade aquí más países con este formato:
+            // ,{ pais: "", capital: "", latlng: [, ], url: "" }
         ];
 
-        // Iconos personalizados
-        const iconoMaritimo = L.icon({
-            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-blue.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41]
+        // Generar marcadores
+        capitales.forEach((c) => {
+            L.marker(c.latlng)
+            .bindPopup(`<b>${c.pais}</b><br>Capital: ${c.capital}<br><a href="${c.url}" target="_blank">📖 Wikipedia</a>`)
+            .addTo(map);
         });
 
-        const iconoAereo = L.icon({
-            iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-red.png',
-            iconSize: [25, 41],
-            iconAnchor: [12, 41]
-        });
-
-        // Añadir marcadores fijos en las coordenadas
-        locations.forEach((loc) => {
-            const icono = loc.tipo === 'marítimo' ? iconoMaritimo : iconoAereo;
-            L.marker(loc.latlng, { icon: icono })
-                .bindPopup(`
-                    <b>${loc.pais}</b><br>
-                    ${loc.nombre}<br>
-                    Tipo: ${loc.tipo.toUpperCase()}<br>
-                    <a href="${loc.url}" target="_blank">Más información</a>
-                `)
-                .addTo(map);
-        });
-
-        // Limitar el área de desplazamiento
+        // Configuraciones adicionales
         map.setMaxBounds([[-90, -180], [90, 180]]);
-
-        // Ajustar tamaño al cambiar ventana
-        window.addEventListener('resize', () => {
-            map.invalidateSize();
-        });
+        window.addEventListener('resize', () => map.invalidateSize());
     </script>
 </body>
 </html>
