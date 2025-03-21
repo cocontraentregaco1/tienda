@@ -3,233 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Capitales del Mundo</title>
-    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <title>Mapa Interactivo de Colombia</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <style>
-        body, html { margin:0; padding:0; height:100%; font-family:Arial; }
-        #map { width:100%; height:100vh; }
-        .leaflet-popup-content a { color:#0078A8; font-weight:bold; }
+        /* Reset básico */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+        /* Contenedor del mapa */
+        #map {
+            width: 100%;
+            height: 100vh; /* Ocupa toda la altura de la pantalla */
+        }
     </style>
 </head>
 <body>
+    <!-- Contenedor del mapa -->
     <div id="map"></div>
 
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <!-- Leaflet JS -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        const map = L.map('map').setView([20, 0], 2);
+        // Coordenadas de Colombia
+        const colombiaCenter = [4.5709, -74.2973]; // Centro de Colombia (Bogotá)
+        const colombiaBounds = L.latLngBounds(
+            L.latLng(-4.23, -81.85), // Esquina inferior izquierda (límite sur y oeste)
+            L.latLng(13.38, -66.85)  // Esquina superior derecha (límite norte y este)
+        );
+
+        // Inicializar el mapa centrado en Colombia
+        const map = L.map('map').setView(colombiaCenter, 6); // Zoom inicial 6
+
+        // Añadir capa de OpenStreetMap
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '© OpenStreetMap contributors'
         }).addTo(map);
 
-        // LISTA COMPLETA DE CAPITALES (Añade más según necesites)
-        const capitales = [
-    { "pais": "Afganistán", "capital": "Kabul", "latlng": [34.5553, 69.2075], "url": "https://af.contraentregaco.com" },
-    { "pais": "Albania", "capital": "Tirana", "latlng": [41.3275, 19.8187], "url": "https://al.contraentregaco.com" },
-    { "pais": "Alemania", "capital": "Berlín", "latlng": [52.5200, 13.4050], "url": "https://de.contraentregaco.com" },
-    { "pais": "Andorra", "capital": "Andorra la Vieja", "latlng": [42.5063, 1.5218], "url": "https://ad.contraentregaco.com" },
-    { "pais": "Angola", "capital": "Luanda", "latlng": [-8.8383, 13.2344], "url": "https://ao.contraentregaco.com" },
-    { "pais": "Antigua y Barbuda", "capital": "Saint John's", "latlng": [17.1175, -61.8456], "url": "https://ag.contraentregaco.com" },
-    { "pais": "Arabia Saudita", "capital": "Riad", "latlng": [24.7136, 46.6753], "url": "https://sa.contraentregaco.com" },
-    { "pais": "Argelia", "capital": "Argel", "latlng": [36.7538, 3.0588], "url": "https://dz.contraentregaco.com" },
-    { "pais": "Argentina", "capital": "Buenos Aires", "latlng": [-34.6037, -58.3816], "url": "https://ar.contraentregaco.com" },
-    { "pais": "Armenia", "capital": "Ereván", "latlng": [40.1792, 44.4991], "url": "https://am.contraentregaco.com" },
-    { "pais": "Australia", "capital": "Canberra", "latlng": [-35.2809, 149.1300], "url": "https://au.contraentregaco.com" },
-    { "pais": "Austria", "capital": "Viena", "latlng": [48.2082, 16.3738], "url": "https://at.contraentregaco.com" },
-    { "pais": "Azerbaiyán", "capital": "Bakú", "latlng": [40.4093, 49.8671], "url": "https://az.contraentregaco.com" },
-    { "pais": "Bahamas", "capital": "Nasáu", "latlng": [25.0478, -77.3554], "url": "https://bs.contraentregaco.com" },
-    { "pais": "Bangladés", "capital": "Daca", "latlng": [23.8103, 90.4125], "url": "https://bd.contraentregaco.com" },
-    { "pais": "Barbados", "capital": "Bridgetown", "latlng": [13.1132, -59.5988], "url": "https://bb.contraentregaco.com" },
-    { "pais": "Baréin", "capital": "Manama", "latlng": [26.2235, 50.5876], "url": "https://bh.contraentregaco.com" },
-    { "pais": "Bélgica", "capital": "Bruselas", "latlng": [50.8503, 4.3517], "url": "https://be.contraentregaco.com" },
-    { "pais": "Belice", "capital": "Belmopán", "latlng": [17.2514, -88.7669], "url": "https://bz.contraentregaco.com" },
-    { "pais": "Benín", "capital": "Porto-Novo", "latlng": [6.4969, 2.6283], "url": "https://bj.contraentregaco.com" },
-    { "pais": "Bielorrusia", "capital": "Minsk", "latlng": [53.9045, 27.5615], "url": "https://by.contraentregaco.com" },
-    { "pais": "Birmania", "capital": "Naipyidó", "latlng": [19.7633, 96.0785], "url": "https://mm.contraentregaco.com" },
-    { "pais": "Bolivia", "capital": "Sucre", "latlng": [-19.0196, -65.2620], "url": "https://bo.contraentregaco.com" },
-    { "pais": "Bosnia y Herzegovina", "capital": "Sarajevo", "latlng": [43.8563, 18.4131], "url": "https://ba.contraentregaco.com" },
-    { "pais": "Botsuana", "capital": "Gaborone", "latlng": [-24.6282, 25.9231], "url": "https://bw.contraentregaco.com" },
-    { "pais": "Brasil", "capital": "Brasilia", "latlng": [-15.7975, -47.8917], "url": "https://br.contraentregaco.com" },
-    { "pais": "Brunéi", "capital": "Bandar Seri Begawan", "latlng": [4.9031, 114.9398], "url": "https://bn.contraentregaco.com" },
-    { "pais": "Bulgaria", "capital": "Sofía", "latlng": [42.6977, 23.3219], "url": "https://bg.contraentregaco.com" },
-    { "pais": "Burkina Faso", "capital": "Uagadugú", "latlng": [12.3714, -1.5197], "url": "https://bf.contraentregaco.com" },
-    { "pais": "Burundi", "capital": "Gitega", "latlng": [-3.4264, 29.9308], "url": "https://bi.contraentregaco.com" },
-    { "pais": "Bután", "capital": "Timbu", "latlng": [27.4728, 89.6390], "url": "https://bt.contraentregaco.com" },
-    { "pais": "Cabo Verde", "capital": "Praia", "latlng": [14.9330, -23.5133], "url": "https://cv.contraentregaco.com" },
-    { "pais": "Camboya", "capital": "Nom Pen", "latlng": [11.5564, 104.9282], "url": "https://kh.contraentregaco.com" },
-    { "pais": "Camerún", "capital": "Yaundé", "latlng": [3.8480, 11.5021], "url": "https://cm.contraentregaco.com" },
-    { "pais": "Canadá", "capital": "Ottawa", "latlng": [45.4215, -75.6972], "url": "https://ca.contraentregaco.com" },
-    { "pais": "Catar", "capital": "Doha", "latlng": [25.2854, 51.5310], "url": "https://qa.contraentregaco.com" },
-    { "pais": "Chad", "capital": "Yamena", "latlng": [12.1348, 15.0557], "url": "https://td.contraentregaco.com" },
-    { "pais": "Chile", "capital": "Santiago", "latlng": [-33.4489, -70.6693], "url": "https://cl.contraentregaco.com" },
-    { "pais": "China", "capital": "Pekín", "latlng": [39.9042, 116.4074], "url": "https://cn.contraentregaco.com" },
-    { "pais": "Chipre", "capital": "Nicosia", "latlng": [35.1856, 33.3823], "url": "https://cy.contraentregaco.com" },
-    { "pais": "Colombia", "capital": "Bogotá", "latlng": [4.7110, -74.0721], "url": "https://co.contraentregaco.com" },
-    { "pais": "Comoras", "capital": "Moroni", "latlng": [-11.7172, 43.2473], "url": "https://km.contraentregaco.com" },
-    { "pais": "Corea del Norte", "capital": "Pionyang", "latlng": [39.0392, 125.7625], "url": "https://kp.contraentregaco.com" },
-    { "pais": "Corea del Sur", "capital": "Seúl", "latlng": [37.5665, 126.9780], "url": "https://kr.contraentregaco.com" },
-    { "pais": "Costa de Marfil", "capital": "Yamusukro", "latlng": [6.8276, -5.2893], "url": "https://ci.contraentregaco.com" },
-    { "pais": "Costa Rica", "capital": "San José", "latlng": [9.9281, -84.0907], "url": "https://cr.contraentregaco.com" },
-    { "pais": "Croacia", "capital": "Zagreb", "latlng": [45.8150, 15.9819], "url": "https://hr.contraentregaco.com" },
-    { "pais": "Cuba", "capital": "La Habana", "latlng": [23.1136, -82.3666], "url": "https://cu.contraentregaco.com" },
-    { "pais": "Dinamarca", "capital": "Copenhague", "latlng": [55.6761, 12.5683], "url": "https://dk.contraentregaco.com" },
-    { "pais": "Dominica", "capital": "Roseau", "latlng": [15.3092, -61.3790], "url": "https://dm.contraentregaco.com" },
-    { "pais": "Ecuador", "capital": "Quito", "latlng": [-0.1807, -78.4678], "url": "https://ec.contraentregaco.com" },
-    { "pais": "Egipto", "capital": "El Cairo", "latlng": [30.0444, 31.2357], "url": "https://eg.contraentregaco.com" },
-    { "pais": "El Salvador", "capital": "San Salvador", "latlng": [13.6929, -89.2182], "url": "https://sv.contraentregaco.com" },
-    { "pais": "Emiratos Árabes Unidos", "capital": "Abu Dabi", "latlng": [24.4539, 54.3773], "url": "https://ae.contraentregaco.com" },
-    { "pais": "Eritrea", "capital": "Asmara", "latlng": [15.3229, 38.9251], "url": "https://er.contraentregaco.com" },
-    { "pais": "Eslovaquia", "capital": "Bratislava", "latlng": [48.1486, 17.1077], "url": "https://sk.contraentregaco.com" },
-    { "pais": "Eslovenia", "capital": "Liubliana", "latlng": [46.0569, 14.5058], "url": "https://si.contraentregaco.com" },
-    { "pais": "España", "capital": "Madrid", "latlng": [40.4168, -3.7038], "url": "https://es.contraentregaco.com" },
-    { "pais": "Estados Unidos", "capital": "Washington D.C.", "latlng": [38.9072, -77.0369], "url": "https://us.contraentregaco.com" },
-    { "pais": "Estonia", "capital": "Tallin", "latlng": [59.4370, 24.7536], "url": "https://ee.contraentregaco.com" },
-    { "pais": "Esuatini", "capital": "Mbabane", "latlng": [-26.3054, 31.1367], "url": "https://sz.contraentregaco.com" },
-    { "pais": "Etiopía", "capital": "Adís Abeba", "latlng": [9.0227, 38.7468], "url": "https://et.contraentregaco.com" },
-    { "pais": "Filipinas", "capital": "Manila", "latlng": [14.5995, 120.9842], "url": "https://ph.contraentregaco.com" },
-    { "pais": "Finlandia", "capital": "Helsinki", "latlng": [60.1699, 24.9384], "url": "https://fi.contraentregaco.com" },
-    { "pais": "Fiyi", "capital": "Suva", "latlng": [-18.1416, 178.4419], "url": "https://fj.contraentregaco.com" },
-    { "pais": "Francia", "capital": "París", "latlng": [48.8566, 2.3522], "url": "https://fr.contraentregaco.com" },
-    { "pais": "Gabón", "capital": "Libreville", "latlng": [0.4162, 9.4673], "url": "https://ga.contraentregaco.com" },
-    { "pais": "Gambia", "capital": "Banjul", "latlng": [13.4549, -16.5790], "url": "https://gm.contraentregaco.com" },
-    { "pais": "Georgia", "capital": "Tiflis", "latlng": [41.7151, 44.8271], "url": "https://ge.contraentregaco.com" },
-    { "pais": "Ghana", "capital": "Acra", "latlng": [5.6037, -0.1870], "url": "https://gh.contraentregaco.com" },
-    { "pais": "Granada", "capital": "Saint George", "latlng": [12.0561, -61.7486], "url": "https://gd.contraentregaco.com" },
-    { "pais": "Grecia", "capital": "Atenas", "latlng": [37.9838, 23.7275], "url": "https://gr.contraentregaco.com" },
-    { "pais": "Guatemala", "capital": "Ciudad de Guatemala", "latlng": [14.6349, -90.5069], "url": "https://gt.contraentregaco.com" },
-    { "pais": "Guinea", "capital": "Conakri", "latlng": [9.6412, -13.5784], "url": "https://gn.contraentregaco.com" },
-    { "pais": "Guinea-Bisáu", "capital": "Bisáu", "latlng": [11.8636, -15.5846], "url": "https://gw.contraentregaco.com" },
-    { "pais": "Guinea Ecuatorial", "capital": "Malabo", "latlng": [3.7504, 8.7371], "url": "https://gq.contraentregaco.com" },
-    { "pais": "Guyana", "capital": "Georgetown", "latlng": [6.8013, -58.1551], "url": "https://gy.contraentregaco.com" },
-    { "pais": "Haití", "capital": "Puerto Príncipe", "latlng": [18.5944, -72.3074], "url": "https://ht.contraentregaco.com" },
-    { "pais": "Honduras", "capital": "Tegucigalpa", "latlng": [14.0723, -87.1921], "url": "https://hn.contraentregaco.com" },
-    { "pais": "Hungría", "capital": "Budapest", "latlng": [47.4979, 19.0402], "url": "https://hu.contraentregaco.com" },
-    { "pais": "India", "capital": "Nueva Delhi", "latlng": [28.6139, 77.2090], "url": "https://in.contraentregaco.com" },
-    { "pais": "Indonesia", "capital": "Yakarta", "latlng": [-6.2088, 106.8456], "url": "https://id.contraentregaco.com" },
-    { "pais": "Irak", "capital": "Bagdad", "latlng": [33.3152, 44.3661], "url": "https://iq.contraentregaco.com" },
-    { "pais": "Irán", "capital": "Teherán", "latlng": [35.6892, 51.3890], "url": "https://ir.contraentregaco.com" },
-    { "pais": "Irlanda", "capital": "Dublín", "latlng": [53.3498, -6.2603], "url": "https://ie.contraentregaco.com" },
-    { "pais": "Islandia", "capital": "Reikiavik", "latlng": [64.1466, -21.9426], "url": "https://is.contraentregaco.com" },
-    { "pais": "Islas Marshall", "capital": "Majuro", "latlng": [7.0897, 171.3803], "url": "https://mh.contraentregaco.com" },
-    { "pais": "Islas Salomón", "capital": "Honiara", "latlng": [-9.4456, 159.9729], "url": "https://sb.contraentregaco.com" },
-    { "pais": "Israel", "capital": "Jerusalén", "latlng": [31.7683, 35.2137], "url": "https://il.contraentregaco.com" },
-    { "pais": "Italia", "capital": "Roma", "latlng": [41.9028, 12.4964], "url": "https://it.contraentregaco.com" },
-    { "pais": "Jamaica", "capital": "Kingston", "latlng": [17.9714, -76.7922], "url": "https://jm.contraentregaco.com" },
-    { "pais": "Japón", "capital": "Tokio", "latlng": [35.6895, 139.6917], "url": "https://jp.contraentregaco.com" },
-    { "pais": "Jordania", "capital": "Amán", "latlng": [31.9539, 35.9106], "url": "https://jo.contraentregaco.com" },
-    { "pais": "Kazajistán", "capital": "Astaná", "latlng": [51.1605, 71.4704], "url": "https://kz.contraentregaco.com" },
-    { "pais": "Kenia", "capital": "Nairobi", "latlng": [-1.2864, 36.8172], "url": "https://ke.contraentregaco.com" },
-    { "pais": "Kirguistán", "capital": "Biskek", "latlng": [42.8746, 74.5698], "url": "https://kg.contraentregaco.com" },
-    { "pais": "Kiribati", "capital": "Tarawa Sur", "latlng": [1.3282, 172.9750], "url": "https://ki.contraentregaco.com" },
-    { "pais": "Kuwait", "capital": "Kuwait City", "latlng": [29.3759, 47.9774], "url": "https://kw.contraentregaco.com" },
-    { "pais": "Laos", "capital": "Vientián", "latlng": [17.9757, 102.6331], "url": "https://la.contraentregaco.com" },
-    { "pais": "Lesoto", "capital": "Maseru", "latlng": [-29.3101, 27.4784], "url": "https://ls.contraentregaco.com" },
-    { "pais": "Letonia", "capital": "Riga", "latlng": [56.9496, 24.1052], "url": "https://lv.contraentregaco.com" },
-    { "pais": "Líbano", "capital": "Beirut", "latlng": [33.8938, 35.5018], "url": "https://lb.contraentregaco.com" },
-    { "pais": "Liberia", "capital": "Monrovia", "latlng": [6.2907, -10.7605], "url": "https://lr.contraentregaco.com" },
-    { "pais": "Libia", "capital": "Trípoli", "latlng": [32.8872, 13.1913], "url": "https://ly.contraentregaco.com" },
-    { "pais": "Liechtenstein", "capital": "Vaduz", "latlng": [47.1410, 9.5209], "url": "https://li.contraentregaco.com" },
-    { "pais": "Lituania", "capital": "Vilna", "latlng": [54.6872, 25.2797], "url": "https://lt.contraentregaco.com" },
-    { "pais": "Luxemburgo", "capital": "Luxemburgo", "latlng": [49.6116, 6.1319], "url": "https://lu.contraentregaco.com" },
-    { "pais": "Macedonia del Norte", "capital": "Skopie", "latlng": [41.9973, 21.4280], "url": "https://mk.contraentregaco.com" },
-    { "pais": "Madagascar", "capital": "Antananarivo", "latlng": [-18.8792, 47.5079], "url": "https://mg.contraentregaco.com" },
-    { "pais": "Malasia", "capital": "Kuala Lumpur", "latlng": [3.1390, 101.6869], "url": "https://my.contraentregaco.com" },
-    { "pais": "Malaui", "capital": "Lilongüe", "latlng": [-13.9626, 33.7741], "url": "https://mw.contraentregaco.com" },
-    { "pais": "Maldivas", "capital": "Malé", "latlng": [4.1755, 73.5093], "url": "https://mv.contraentregaco.com" },
-    { "pais": "Malí", "capital": "Bamako", "latlng": [12.6392, -8.0029], "url": "https://ml.contraentregaco.com" },
-    { "pais": "Malta", "capital": "La Valeta", "latlng": [35.8989, 14.5146], "url": "https://mt.contraentregaco.com" },
-    { "pais": "Marruecos", "capital": "Rabat", "latlng": [33.9716, -6.8498], "url": "https://ma.contraentregaco.com" },
-    { "pais": "Mauricio", "capital": "Port Louis", "latlng": [-20.1609, 57.5012], "url": "https://mu.contraentregaco.com" },
-    { "pais": "Mauritania", "capital": "Nuakchot", "latlng": [18.0731, -15.9582], "url": "https://mr.contraentregaco.com" },
-    { "pais": "México", "capital": "Ciudad de México", "latlng": [19.4326, -99.1332], "url": "https://mx.contraentregaco.com" },
-    { "pais": "Micronesia", "capital": "Palikir", "latlng": [6.9147, 158.1610], "url": "https://fm.contraentregaco.com" },
-    { "pais": "Moldavia", "capital": "Chisináu", "latlng": [47.0105, 28.8638], "url": "https://md.contraentregaco.com" },
-    { "pais": "Mónaco", "capital": "Mónaco", "latlng": [43.7384, 7.4246], "url": "https://mc.contraentregaco.com" },
-    { "pais": "Mongolia", "capital": "Ulán Bator", "latlng": [47.8864, 106.9057], "url": "https://mn.contraentregaco.com" },
-    { "pais": "Montenegro", "capital": "Podgorica", "latlng": [42.4304, 19.2594], "url": "https://me.contraentregaco.com" },
-    { "pais": "Mozambique", "capital": "Maputo", "latlng": [-25.9653, 32.5892], "url": "https://mz.contraentregaco.com" },
-    { "pais": "Namibia", "capital": "Windhoek", "latlng": [-22.5609, 17.0658], "url": "https://na.contraentregaco.com" },
-    { "pais": "Nauru", "capital": "Yaren", "latlng": [-0.5467, 166.9209], "url": "https://nr.contraentregaco.com" },
-    { "pais": "Nepal", "capital": "Katmandú", "latlng": [27.7172, 85.3240], "url": "https://np.contraentregaco.com" },
-    { "pais": "Nicaragua", "capital": "Managua", "latlng": [12.1364, -86.2514], "url": "https://ni.contraentregaco.com" },
-    { "pais": "Níger", "capital": "Niamey", "latlng": [13.5116, 2.1254], "url": "https://ne.contraentregaco.com" },
-    { "pais": "Nigeria", "capital": "Abuja", "latlng": [9.0579, 7.4951], "url": "https://ng.contraentregaco.com" },
-    { "pais": "Noruega", "capital": "Oslo", "latlng": [59.9139, 10.7522], "url": "https://no.contraentregaco.com" },
-    { "pais": "Nueva Zelanda", "capital": "Wellington", "latlng": [-41.2865, 174.7762], "url": "https://nz.contraentregaco.com" },
-    { "pais": "Omán", "capital": "Mascate", "latlng": [23.5859, 58.4059], "url": "https://om.contraentregaco.com" },
-    { "pais": "Países Bajos", "capital": "Ámsterdam", "latlng": [52.3676, 4.9041], "url": "https://nl.contraentregaco.com" },
-    { "pais": "Pakistán", "capital": "Islamabad", "latlng": [33.6844, 73.0479], "url": "https://pk.contraentregaco.com" },
-    { "pais": "Palaos", "capital": "Melekeok", "latlng": [7.5004, 134.6243], "url": "https://pw.contraentregaco.com" },
-    { "pais": "Panamá", "capital": "Ciudad de Panamá", "latlng": [8.9943, -79.5188], "url": "https://pa.contraentregaco.com" },
-    { "pais": "Papúa Nueva Guinea", "capital": "Puerto Moresby", "latlng": [-9.4438, 147.1803], "url": "https://pg.contraentregaco.com" },
-    { "pais": "Paraguay", "capital": "Asunción", "latlng": [-25.2637, -57.5759], "url": "https://py.contraentregaco.com" },
-    { "pais": "Perú", "capital": "Lima", "latlng": [-12.0464, -77.0428], "url": "https://pe.contraentregaco.com" },
-    { "pais": "Polonia", "capital": "Varsovia", "latlng": [52.2297, 21.0122], "url": "https://pl.contraentregaco.com" },
-    { "pais": "Portugal", "capital": "Lisboa", "latlng": [38.7223, -9.1393], "url": "https://pt.contraentregaco.com" },
-    { "pais": "Puerto Rico", "capital": "San Juan", "latlng": [18.4220, -66.0720], "url": "https://pr.contraentregaco.com" },
-    { "pais": "Reino Unido", "capital": "Londres", "latlng": [51.5074, -0.1278], "url": "https://uk.contraentregaco.com" },
-    { "pais": "República Centroafricana", "capital": "Bangui", "latlng": [4.3947, 18.5582], "url": "https://cf.contraentregaco.com" },
-    { "pais": "República Checa", "capital": "Praga", "latlng": [50.0755, 14.4378], "url": "https://cz.contraentregaco.com" },
-    { "pais": "República del Congo", "capital": "Brazzaville", "latlng": [-4.2634, 15.2429], "url": "https://cg.contraentregaco.com" },
-    { "pais": "República Democrática del Congo", "capital": "Kinsasa", "latlng": [-4.3224, 15.3070], "url": "https://cd.contraentregaco.com" },
-    { "pais": "República Dominicana", "capital": "Santo Domingo", "latlng": [18.4861, -69.9312], "url": "https://do.contraentregaco.com" },
-    { "pais": "Ruanda", "capital": "Kigali", "latlng": [-1.9441, 30.0619], "url": "https://rw.contraentregaco.com" },
-    { "pais": "Rumanía", "capital": "Bucarest", "latlng": [44.4268, 26.1025], "url": "https://ro.contraentregaco.com" },
-    { "pais": "Rusia", "capital": "Moscú", "latlng": [55.7558, 37.6173], "url": "https://ru.contraentregaco.com" },
-    { "pais": "Samoa", "capital": "Apia", "latlng": [-13.8333, -171.7667], "url": "https://ws.contraentregaco.com" },
-    { "pais": "San Cristóbal y Nieves", "capital": "Basseterre", "latlng": [17.3026, -62.7177], "url": "https://kn.contraentregaco.com" },
-    { "pais": "San Marino", "capital": "San Marino", "latlng": [43.9424, 12.4578], "url": "https://sm.contraentregaco.com" },
-    { "pais": "San Vicente y las Granadinas", "capital": "Kingstown", "latlng": [13.1600, -61.2240], "url": "https://vc.contraentregaco.com" },
-    { "pais": "Santa Lucía", "capital": "Castries", "latlng": [14.0101, -60.9875], "url": "https://lc.contraentregaco.com" },
-    { "pais": "Santo Tomé y Príncipe", "capital": "Santo Tomé", "latlng": [0.3302, 6.7333], "url": "https://st.contraentregaco.com" },
-    { "pais": "Senegal", "capital": "Dakar", "latlng": [14.7167, -17.4677], "url": "https://sn.contraentregaco.com" },
-    { "pais": "Serbia", "capital": "Belgrado", "latlng": [44.7866, 20.4489], "url": "https://rs.contraentregaco.com" },
-    { "pais": "Seychelles", "capital": "Victoria", "latlng": [-4.6203, 55.4513], "url": "https://sc.contraentregaco.com" },
-    { "pais": "Sierra Leona", "capital": "Freetown", "latlng": [8.4840, -13.2299], "url": "https://sl.contraentregaco.com" },
-    { "pais": "Singapur", "capital": "Singapur", "latlng": [1.3521, 103.8198], "url": "https://sg.contraentregaco.com" },
-    { "pais": "Siria", "capital": "Damasco", "latlng": [33.5138, 36.2765], "url": "https://sy.contraentregaco.com" },
-    { "pais": "Somalia", "capital": "Mogadiscio", "latlng": [2.0469, 45.3182], "url": "https://so.contraentregaco.com" },
-    { "pais": "Sri Lanka", "capital": "Sri Jayawardenapura Kotte", "latlng": [6.9271, 79.8612], "url": "https://lk.contraentregaco.com" },
-    { "pais": "Sudáfrica", "capital": "Pretoria", "latlng": [-25.7479, 28.2293], "url": "https://za.contraentregaco.com" },
-    { "pais": "Sudán", "capital": "Jartum", "latlng": [15.5007, 32.5599], "url": "https://sd.contraentregaco.com" },
-    { "pais": "Sudán del Sur", "capital": "Yuba", "latlng": [4.8594, 31.5713], "url": "https://ss.contraentregaco.com" },
-    { "pais": "Suecia", "capital": "Estocolmo", "latlng": [59.3293, 18.0686], "url": "https://se.contraentregaco.com" },
-    { "pais": "Suiza", "capital": "Berna", "latlng": [46.9480, 7.4474], "url": "https://ch.contraentregaco.com" },
-    { "pais": "Surinam", "capital": "Paramaribo", "latlng": [5.8520, -55.2038], "url": "https://sr.contraentregaco.com" },
-    { "pais": "Tailandia", "capital": "Bangkok", "latlng": [13.7563, 100.5018], "url": "https://th.contraentregaco.com" },
-    { "pais": "Tanzania", "capital": "Dodoma", "latlng": [-6.1630, 35.7516], "url": "https://tz.contraentregaco.com" },
-    { "pais": "Tayikistán", "capital": "Dusambé", "latlng": [38.5598, 68.7870], "url": "https://tj.contraentregaco.com" },
-    { "pais": "Timor Oriental", "capital": "Dili", "latlng": [-8.5569, 125.5603], "url": "https://tl.contraentregaco.com" },
-    { "pais": "Togo", "capital": "Lomé", "latlng": [6.1725, 1.2314], "url": "https://tg.contraentregaco.com" },
-    { "pais": "Tonga", "capital": "Nukualofa", "latlng": [-21.1393, -175.2049], "url": "https://to.contraentregaco.com" },
-    { "pais": "Trinidad y Tobago", "capital": "Puerto España", "latlng": [10.6549, -61.5019], "url": "https://tt.contraentregaco.com" },
-    { "pais": "Túnez", "capital": "Túnez", "latlng": [36.8065, 10.1815], "url": "https://tn.contraentregaco.com" },
-    { "pais": "Turkmenistán", "capital": "Asjabad", "latlng": [37.9601, 58.3261], "url": "https://tm.contraentregaco.com" },
-    { "pais": "Turquía", "capital": "Ankara", "latlng": [39.9334, 32.8597], "url": "https://tr.contraentregaco.com" },
-    { "pais": "Tuvalu", "capital": "Funafuti", "latlng": [-8.5207, 179.1968], "url": "https://tv.contraentregaco.com" },
-    { "pais": "Ucrania", "capital": "Kiev", "latlng": [50.4501, 30.5234], "url": "https://ua.contraentregaco.com" },
-    { "pais": "Uganda", "capital": "Kampala", "latlng": [0.3476, 32.5825], "url": "https://ug.contraentregaco.com" },
-    { "pais": "Uruguay", "capital": "Montevideo", "latlng": [-34.9011, -56.1645], "url": "https://uy.contraentregaco.com" },
-    { "pais": "Uzbekistán", "capital": "Taskent", "latlng": [41.2995, 69.2401], "url": "https://uz.contraentregaco.com" },
-    { "pais": "Vanuatu", "capital": "Port Vila", "latlng": [-17.7333, 168.3273], "url": "https://vu.contraentregaco.com" },
-    { "pais": "Vaticano", "capital": "Ciudad del Vaticano", "latlng": [41.9029, 12.4534], "url": "https://va.contraentregaco.com" },
-    { "pais": "Venezuela", "capital": "Caracas", "latlng": [10.4806, -66.9036], "url": "https://ve.contraentregaco.com" },
-    { "pais": "Vietnam", "capital": "Hanói", "latlng": [21.0278, 105.8342], "url": "https://vn.contraentregaco.com" },
-    { "pais": "Yemen", "capital": "Saná", "latlng": [15.3694, 44.1910], "url": "https://ye.contraentregaco.com" },
-    { "pais": "Yibuti", "capital": "Yibuti", "latlng": [11.5721, 43.1456], "url": "https://dj.contraentregaco.com" },
-    { "pais": "Zambia", "capital": "Lusaka", "latlng": [-15.3875, 28.3228], "url": "https://zm.contraentregaco.com" },
-    { "pais": "Zimbabue", "capital": "Harare", "latlng": [-17.8252, 31.0335], "url": "https://zw.contraentregaco.com" }
-];
-
-        // Generar marcadores
-        capitales.forEach((c) => {
-            L.marker(c.latlng)
-            .bindPopup(`<b>${c.pais}</b><br>Capital: ${c.capital}<br><a href="${c.url}" target="_blank">Contraentrega</a>`)
-            .addTo(map);
+        // Establecer límites del mapa para Colombia
+        map.setMaxBounds(colombiaBounds); // Limita el desplazamiento a Colombia
+        map.on('drag', () => {
+            if (!colombiaBounds.contains(map.getCenter())) {
+                map.panInsideBounds(colombiaBounds, { animate: true });
+            }
         });
 
-        // Configuraciones adicionales
-        map.setMaxBounds([[-90, -180], [90, 180]]);
-        window.addEventListener('resize', () => map.invalidateSize());
+        // Ejemplo de marcadores en Colombia
+        const markers = [
+            {
+                name: "Bogotá",
+                latlng: [4.7110, -74.0721], // Coordenadas de Bogotá
+                url: "https://www.example.com/bogota" // Enlace de redirección
+            },
+            {
+                name: "Medellín",
+                latlng: [6.2442, -75.5812], // Coordenadas de Medellín
+                url: "https://www.example.com/medellin" // Enlace de redirección
+            },
+            {
+                name: "Cali",
+                latlng: [3.4516, -76.5320], // Coordenadas de Cali
+                url: "https://www.example.com/cali" // Enlace de redirección
+            },
+            // Añade más marcadores aquí
+        ];
+
+        // Añadir marcadores al mapa
+        markers.forEach(marker => {
+            const { name, latlng, url } = marker;
+            L.marker(latlng)
+                .addTo(map)
+                .bindPopup(`<b>${name}</b><br><a href="${url}" target="_blank">Más información</a>`)
+                .on('click', () => {
+                    window.open(url, '_blank'); // Abrir enlace en una nueva pestaña
+                });
+        });
+
+        // Asegurar que el mapa se redimensione correctamente
+        window.addEventListener('resize', () => {
+            map.invalidateSize();
+        });
     </script>
 </body>
 </html>
