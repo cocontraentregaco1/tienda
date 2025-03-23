@@ -68,9 +68,9 @@
                 latlng: [3.4516, -76.5320], // Coordenadas de Cali
                 url: "https://www.example.com/cali" // Enlace de redirección
             }, {
-                name: "Punto Contraentrega: Montebello Cali, Valle Del Cauca",
-                latlng: [3.4843, -76.5444], // Coordenadas
-                url: "https://montebellocali1.contraentregaco.com" // Enlace de redirección
+                name: "Montebello sector los tanques",
+                latlng: [3.4843, -76.5445], // Coordenadas de Cali
+                url: "https://www.example.com/cali" // Enlace de redirección
             },
         ];
 
@@ -79,7 +79,7 @@
             const { name, latlng, url } = marker;
             L.marker(latlng)
                 .addTo(map)
-                .bindPopup(`<b>${name}</b><br><a href="${url}" target="_blank">Más información</a>`)
+                .bindPopup(`<b>${name}</b><br><a href="${url}" target="_blank">Punto Contraentrega</a>`)
                 .on('click', () => {
                     window.open(url, '_blank'); // Abrir enlace en una nueva pestaña
                 });
