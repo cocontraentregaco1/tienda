@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contraentrega | Socio Logístico</title>
+    <title>Licencia Socio Logístico | Contraentrega</title>
     <style>
         /* Reset minimalista */
         :root {
@@ -46,7 +46,6 @@
         h1 { font-size: 2.5rem; }
         h2 { font-size: 2rem; }
         h3 { font-size: 1.5rem; }
-        h4 { font-size: 1.25rem; }
         
         p, li {
             color: var(--gray-4);
@@ -165,54 +164,28 @@
             font-size: 1rem;
         }
         
-        /* Dashboard */
-        .dashboard {
-            display: none;
+        /* Lista de beneficios */
+        .benefits-list {
+            list-style: none;
         }
         
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: var(--space-md);
-            margin-bottom: var(--space-xl);
+        .benefits-list li {
+            position: relative;
+            padding-left: var(--space-lg);
+            margin-bottom: var(--space-md);
         }
         
-        .stat-card {
-            padding: var(--space-md);
-            border: var(--border);
-            border-radius: var(--radius);
-        }
-        
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 600;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: var(--space-xl);
-        }
-        
-        th, td {
-            padding: var(--space-sm) var(--space-md);
-            text-align: left;
-            border-bottom: var(--border);
-        }
-        
-        th {
-            background: var(--gray-1);
-            font-weight: 600;
+        .benefits-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
         }
         
         /* Responsive */
         @media (max-width: 768px) {
             .grid-cols-3 {
                 grid-template-columns: 1fr;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr 1fr;
             }
             
             h1 {
@@ -223,16 +196,6 @@
                 font-size: 1.75rem;
             }
         }
-        
-        @media (max-width: 480px) {
-            .stats {
-                grid-template-columns: 1fr;
-            }
-            
-            .section {
-                padding: var(--space-lg) 0;
-            }
-        }
     </style>
 </head>
 <body>
@@ -241,7 +204,7 @@
         <div class="container header-container">
             <h4>Contraentrega</h4>
             <nav>
-                <a href="#registro" class="btn">Registro</a>
+                <a href="#registro" class="btn">Comprar Licencia</a>
             </nav>
         </div>
     </header>
@@ -250,9 +213,9 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content text-center">
-                <h1>Red de Socios Logísticos</h1>
-                <p class="mb-lg">Únase a nuestra red y genere ingresos adicionales con cada transacción</p>
-                <a href="#registro" class="btn">Registrarse</a>
+                <h1>Licencia de Socio Logístico</h1>
+                <p class="mb-lg">$60,000 COP anuales - Sin costos ocultos</p>
+                <a href="#registro" class="btn">Comprar ahora</a>
             </div>
         </div>
     </section>
@@ -260,22 +223,85 @@
     <!-- Beneficios -->
     <section class="section section-border" id="beneficios">
         <div class="container">
-            <h2 class="text-center">Ventajas para Socios</h2>
+            <h2 class="text-center">¿Qué incluye su licencia?</h2>
             
             <div class="grid grid-cols-3">
                 <div class="card">
                     <h3>Plataforma Digital</h3>
-                    <p>Sistema de gestión profesional incluido sin costos adicionales.</p>
+                    <ul class="benefits-list">
+                        <li>Sistema de gestión profesional</li>
+                        <li>Dashboard de operaciones</li>
+                        <li>Inventario en tiempo real</li>
+                        <li>Soporte técnico incluido</li>
+                    </ul>
                 </div>
                 
                 <div class="card">
                     <h3>Modelo de Comisiones</h3>
-                    <p>5% en conversiones cripto, 2% en transacciones logísticas, 1% por referidos.</p>
+                    <ul class="benefits-list">
+                        <li>5% en conversiones cripto</li>
+                        <li>2% en transacciones logísticas</li>
+                        <li>1% por referidos</li>
+                        <li>Bonos por volumen</li>
+                    </ul>
                 </div>
                 
                 <div class="card">
-                    <h3>Red Global</h3>
-                    <p>Visibilidad en nuestro directorio internacional de puntos de servicio.</p>
+                    <h3>Ventajas Exclusivas</h3>
+                    <ul class="benefits-list">
+                        <li>Listado en directorio global</li>
+                        <li>Descuentos en envíos</li>
+                        <li>Capacitaciones mensuales</li>
+                        <li>Material promocional</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cómo funciona -->
+    <section class="section section-border">
+        <div class="container">
+            <h2 class="text-center">Cómo funciona</h2>
+            
+            <div class="grid grid-cols-3">
+                <div class="card text-center">
+                    <h3>1. Compra tu licencia</h3>
+                    <p>Pago anual único de $60,000 COP</p>
+                </div>
+                
+                <div class="card text-center">
+                    <h3>2. Configuración inicial</h3>
+                    <p>Te ayudamos a activar tu cuenta</p>
+                </div>
+                
+                <div class="card text-center">
+                    <h3>3. Comienza a operar</h3>
+                    <p>Recibe clientes y genera ingresos</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section class="section section-border">
+        <div class="container">
+            <h2 class="text-center">Socios que recomiendan</h2>
+            
+            <div class="grid grid-cols-3">
+                <div class="card">
+                    <p>"En 3 meses recuperé la inversión y ahora es ingreso pasivo."</p>
+                    <p><strong>Carlos M.</strong>, Bogotá</p>
+                </div>
+                
+                <div class="card">
+                    <p>"La plataforma es fácil de usar y las comisiones llegan a tiempo."</p>
+                    <p><strong>María L.</strong>, Medellín</p>
+                </div>
+                
+                <div class="card">
+                    <p>"Los descuentos en envíos me ahorran más que el costo de la licencia."</p>
+                    <p><strong>Juan P.</strong>, Cali</p>
                 </div>
             </div>
         </div>
@@ -285,8 +311,8 @@
     <section class="section" id="registro">
         <div class="container">
             <div style="max-width: 600px; margin: 0 auto;">
-                <h2 class="text-center">Registro de Socio</h2>
-                <p class="text-center mb-lg">$60,000 COP anuales - Sin costos ocultos</p>
+                <h2 class="text-center">Comprar Licencia Anual</h2>
+                <p class="text-center mb-lg">$60,000 COP - Pago único</p>
                 
                 <div class="card">
                     <form id="registrationForm">
@@ -306,138 +332,49 @@
                         </div>
                         
                         <div class="form-group">
-                            <label class="form-label">Dirección del punto</label>
-                            <input type="text" class="form-control" required>
+                            <label class="form-label">Método de pago</label>
+                            <select class="form-control" required>
+                                <option value="">Seleccionar...</option>
+                                <option value="nequi">Nequi</option>
+                                <option value="daviplata">Daviplata</option>
+                                <option value="bancolombia">Bancolombia</option>
+                                <option value="efectivo">Efectivo</option>
+                            </select>
                         </div>
                         
-                        <button type="submit" class="btn btn-block">Completar registro</button>
+                        <button type="submit" class="btn btn-block">Pagar $60,000 COP</button>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Dashboard CRM -->
-    <section class="section dashboard" id="dashboard">
-        <div class="container">
-            <h2>Panel de Control</h2>
-            <p>Gestión completa de su actividad como socio</p>
-            
-            <div class="stats">
-                <div class="stat-card">
-                    <h4>Ganancias</h4>
-                    <div class="stat-value">$1,250,000</div>
-                    <p>Total acumulado</p>
-                </div>
-                
-                <div class="stat-card">
-                    <h4>Transacciones</h4>
-                    <div class="stat-value">28</div>
-                    <p>Realizadas</p>
-                </div>
-                
-                <div class="stat-card">
-                    <h4>Clientes</h4>
-                    <div class="stat-value">15</div>
-                    <p>Atendidos</p>
-                </div>
-                
-                <div class="stat-card">
-                    <h4>Pendientes</h4>
-                    <div class="stat-value">$325,000</div>
-                    <p>Por liquidar</p>
-                </div>
-            </div>
-            
-            <h3>Historial Reciente</h3>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Servicio</th>
-                        <th>Cliente</th>
-                        <th>Comisión</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>15/03/2024</td>
-                        <td>Conversión</td>
-                        <td>Juan Pérez</td>
-                        <td>$22,500</td>
-                    </tr>
-                    <tr>
-                        <td>14/03/2024</td>
-                        <td>Envío</td>
-                        <td>Tienda XYZ</td>
-                        <td>$2,400</td>
-                    </tr>
-                    <tr>
-                        <td>14/03/2024</td>
-                        <td>Conversión</td>
-                        <td>María Gómez</td>
-                        <td>$39,000</td>
-                    </tr>
-                    <tr>
-                        <td>13/03/2024</td>
-                        <td>Referido</td>
-                        <td>Carlos Rojas</td>
-                        <td>$5,000</td>
-                    </tr>
-                </tbody>
-            </table>
+    <!-- Footer -->
+    <footer class="section" style="background: var(--gray-1);">
+        <div class="container text-center">
+            <p>¿Preguntas? <a href="mailto:soporte@contraentrega.co">soporte@contraentrega.co</a></p>
+            <p>+57 321 534 0988</p>
+            <p class="mt-lg">© 2024 Contraentrega - Todos los derechos reservados</p>
         </div>
-    </section>
+    </footer>
 
     <script>
-        // Sistema de registro y dashboard
+        // Validación básica del formulario
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Validación básica
             const email = this.querySelector('input[type="email"]').value;
             if (!email.includes('@') || !email.includes('.')) {
                 alert('Por favor ingrese un correo electrónico válido');
                 return;
             }
             
-            // Mostrar dashboard
-            document.querySelector('.dashboard').style.display = 'block';
-            document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+            // Simular procesamiento de pago
+            alert('Redirigiendo a pasarela de pago...');
             
-            // En producción, enviar datos al servidor:
-            // const formData = new FormData(this);
-            // fetch('/api/register', {
-            //     method: 'POST',
-            //     body: formData
-            // })
-            // .then(response => response.json())
-            // .then(data => {
-            //     // Manejar respuesta
-            // })
-            // .catch(error => {
-            //     console.error('Error:', error);
-            // });
-            
-            // Limpiar formulario (opcional)
-            this.reset();
+            // En producción, redirigir a pasarela de pago real
+            // window.location.href = 'https://pasareladepago.com?amount=60000';
         });
-        
-        // Ejemplo de integración con CRM (simulado)
-        function integrateWithCRM(formData) {
-            // En un caso real, esto conectaría con HubSpot, Salesforce, etc.
-            console.log('Enviando datos al CRM:', {
-                name: formData.get('name'),
-                email: formData.get('email'),
-                phone: formData.get('phone'),
-                address: formData.get('address'),
-                plan: 'standard',
-                source: 'web'
-            });
-            
-            // Retornar ID de contacto simulado
-            return { contactId: '12345' };
-        }
     </script>
 </body>
 </html>
