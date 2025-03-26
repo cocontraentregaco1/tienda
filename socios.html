@@ -3,1402 +3,441 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Conviértete en Socio Logístico de Contraentrega Colombia y accede a la red más avanzada con múltiples fuentes de ingreso">
-    <meta name="keywords" content="socio logístico, contraentrega, red de puntos, ingresos pasivos, logística colombia">
-    <meta property="og:title" content="Plataforma Integral para Socios Logísticos">
-    <meta property="og:description" content="Únete a la red logística más innovadora de Colombia con tecnología de punta">
-    <meta property="og:image" content="https://contraentrega.co/img/og-image.jpg">
-    <meta property="og:url" content="https://contraentrega.co/socios">
-    <meta name="twitter:card" content="summary_large_image">
-    <title>Socio Logístico Contraentrega | Plataforma Profesional</title>
-    
-    <!-- Preload de recursos críticos -->
-    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" as="style">
-    <link rel="preload" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" as="style">
-    <link rel="preload" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" as="style">
-    
-    <!-- Fuentes -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Estilos principales -->
+    <title>Contraentrega | Socio Logístico</title>
     <style>
-        /* Variables de diseño */
+        /* Reset minimalista */
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #10b981;
-            --accent: #f59e0b;
-            --dark: #1e293b;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --light-gray: #e2e8f0;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --error: #ef4444;
-            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-            --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
-            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            --radius-sm: 0.25rem;
-            --radius: 0.5rem;
-            --radius-md: 0.75rem;
-            --radius-lg: 1rem;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --black: #000;
+            --white: #fff;
+            --gray-1: #f9f9f9;
+            --gray-2: #eee;
+            --gray-3: #ddd;
+            --gray-4: #777;
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 32px;
+            --space-xl: 64px;
+            --radius: 4px;
+            --border: 1px solid var(--gray-2);
         }
-
-        /* Reset y estilos base */
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
+        
+        * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
-
-        html {
-            scroll-behavior: smooth;
-            font-size: 16px;
-        }
-
+        
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            color: var(--dark);
-            background-color: var(--light);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.5;
+            color: var(--black);
+            background: var(--white);
             -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            overflow-x: hidden;
         }
-
-        img {
-            max-width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        a {
-            text-decoration: none;
-            color: inherit;
-        }
-
-        button {
-            cursor: pointer;
-            font-family: inherit;
-            border: none;
-            background: none;
-        }
-
-        ul, ol {
-            list-style: none;
-        }
-
+        
         /* Tipografía */
         h1, h2, h3, h4, h5, h6 {
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
+            font-weight: 600;
+            line-height: 1.25;
+            margin-bottom: var(--space-md);
         }
-
-        h1 {
-            font-size: 2.5rem;
+        
+        h1 { font-size: 2.5rem; }
+        h2 { font-size: 2rem; }
+        h3 { font-size: 1.5rem; }
+        h4 { font-size: 1.25rem; }
+        
+        p, li {
+            color: var(--gray-4);
+            margin-bottom: var(--space-md);
         }
-
-        h2 {
-            font-size: 2rem;
+        
+        a {
+            color: inherit;
+            text-decoration: none;
         }
-
-        h3 {
-            font-size: 1.75rem;
-        }
-
-        h4 {
-            font-size: 1.5rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-            color: var(--gray);
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .text-primary {
-            color: var(--primary);
-        }
-
-        .text-secondary {
-            color: var(--secondary);
-        }
-
-        .text-accent {
-            color: var(--accent);
-        }
-
+        
         /* Layout */
         .container {
             width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 1.5rem;
+            padding: 0 var(--space-md);
         }
-
+        
         .section {
-            padding: 5rem 0;
+            padding: var(--space-xl) 0;
         }
-
-        .section-title {
-            position: relative;
-            display: inline-block;
-            margin-bottom: 3rem;
-            font-size: 2rem;
+        
+        .section-border {
+            border-bottom: var(--border);
         }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -0.75rem;
-            left: 0;
-            width: 50%;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-
-        .grid {
-            display: grid;
-            gap: 2rem;
-        }
-
-        .grid-cols-2 {
-            grid-template-columns: repeat(2, 1fr);
-        }
-
-        .grid-cols-3 {
-            grid-template-columns: repeat(3, 1fr);
-        }
-
-        .flex {
-            display: flex;
-        }
-
-        .items-center {
-            align-items: center;
-        }
-
-        .justify-between {
-            justify-content: space-between;
-        }
-
+        
         /* Componentes */
         .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.75rem 1.5rem;
-            border-radius: var(--radius);
-            font-weight: 600;
-            transition: var(--transition);
-            white-space: nowrap;
-        }
-
-        .btn-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .btn-primary:hover {
-            background-color: var(--primary-dark);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-secondary {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .btn-secondary:hover {
-            opacity: 0.9;
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-outline {
-            background-color: transparent;
-            color: var(--primary);
-            border: 2px solid var(--primary);
-        }
-
-        .btn-outline:hover {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .card {
-            background-color: white;
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .badge {
             display: inline-block;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-size: 0.875rem;
-            font-weight: 600;
+            padding: var(--space-sm) var(--space-md);
+            background: var(--black);
+            color: var(--white);
+            border: none;
+            border-radius: var(--radius);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s ease;
         }
-
-        .badge-primary {
-            background-color: var(--primary);
-            color: white;
-        }
-
-        .badge-secondary {
-            background-color: var(--secondary);
-            color: white;
-        }
-
-        .badge-accent {
-            background-color: var(--accent);
-            color: white;
-        }
-
-        /* Hero section */
-        .hero {
-            position: relative;
-            padding: 8rem 0;
-            background: linear-gradient(135deg, rgba(37, 99, 235, 0.9), rgba(16, 185, 129, 0.9)), 
-                        url('https://images.unsplash.com/photo-1556740714-a8395b3bf30f') center/cover;
-            color: white;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            bottom: -100px;
-            left: 0;
-            width: 100%;
-            height: 200px;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="%23f8fafc"></path><path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="%23f8fafc"></path><path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="%23f8fafc"></path></svg>');
-            background-size: cover;
-            background-repeat: no-repeat;
-            z-index: 1;
-        }
-
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .hero-title {
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
-            line-height: 1.2;
-        }
-
-        .hero-subtitle {
-            font-size: 1.25rem;
-            margin-bottom: 2.5rem;
+        
+        .btn:hover {
             opacity: 0.9;
         }
-
-        .hero-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
-        }
-
-        /* Stats section */
-        .stats {
-            position: relative;
-            margin-top: -4rem;
-            z-index: 10;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-        }
-
-        .stat-card {
-            background-color: white;
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-        }
-
-        .stat-number {
-            font-size: 2.5rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: var(--gray);
-            font-size: 1rem;
-        }
-
-        /* Features section */
-        .features {
-            background-color: var(--light);
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background-color: white;
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 1.5rem;
-            background-color: rgba(37, 99, 235, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .feature-icon svg {
-            width: 40px;
-            height: 40px;
-            color: var(--primary);
-        }
-
-        .feature-title {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-description {
-            color: var(--gray);
-        }
-
-        /* How it works */
-        .how-it-works {
-            position: relative;
-        }
-
-        .steps {
-            display: flex;
-            flex-direction: column;
-            gap: 2rem;
-            position: relative;
-        }
-
-        .step {
-            display: flex;
-            gap: 2rem;
-            position: relative;
-            z-index: 1;
-        }
-
-        .step-number {
-            flex-shrink: 0;
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background-color: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-        }
-
-        .step-content {
-            background-color: white;
-            border-radius: var(--radius-md);
-            padding: 1.5rem;
-            box-shadow: var(--shadow);
-            flex-grow: 1;
-        }
-
-        .step-title {
-            font-size: 1.25rem;
-            margin-bottom: 0.5rem;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            background-color: var(--light);
-        }
-
-        .testimonial-slider {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .testimonial-card {
-            background-color: white;
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            margin: 0 1rem;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            object-fit: cover;
-        }
-
-        .author-info h4 {
-            margin-bottom: 0.25rem;
-            font-size: 1rem;
-        }
-
-        .author-info p {
-            color: var(--gray);
-            font-size: 0.875rem;
-            margin-bottom: 0;
-        }
-
-        /* Pricing */
-        .pricing-plans {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 2rem;
-        }
-
-        .pricing-card {
-            background-color: white;
-            border-radius: var(--radius-md);
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .pricing-card.featured {
-            border: 2px solid var(--primary);
-            position: relative;
-            transform: scale(1.05);
-        }
-
-        .pricing-card.featured::before {
-            content: 'Recomendado';
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: var(--primary);
-            color: white;
-            padding: 0.25rem 1rem;
-            border-radius: 9999px;
-            font-size: 0.75rem;
-            font-weight: 600;
-        }
-
-        .pricing-name {
-            font-size: 1.25rem;
-            margin-bottom: 1rem;
-        }
-
-        .pricing-price {
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .pricing-price span {
-            font-size: 1rem;
-            font-weight: 400;
-            color: var(--gray);
-        }
-
-        .pricing-features {
-            margin-bottom: 2rem;
-        }
-
-        .pricing-feature {
-            margin-bottom: 0.5rem;
-            color: var(--gray);
-        }
-
-        /* CTA */
-        .cta {
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            color: white;
-            text-align: center;
-            padding: 5rem 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-title {
-            font-size: 2rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .cta-subtitle {
-            max-width: 600px;
-            margin: 0 auto 2rem;
-            opacity: 0.9;
-        }
-
-        /* Formulario */
-        .form-container {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: white;
-            border-radius: var(--radius-md);
-            padding: 3rem;
-            box-shadow: var(--shadow-lg);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-label {
+        
+        .btn-block {
             display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-control {
             width: 100%;
-            padding: 0.75rem 1rem;
-            border: 1px solid var(--light-gray);
+        }
+        
+        .card {
+            background: var(--white);
+            border: var(--border);
             border-radius: var(--radius);
-            font-family: inherit;
-            transition: var(--transition);
+            padding: var(--space-lg);
+            margin-bottom: var(--space-lg);
         }
-
-        .form-control:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        
+        .text-center {
+            text-align: center;
         }
-
-        .form-select {
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
-            background-position: right 0.75rem center;
-            background-repeat: no-repeat;
-            background-size: 1.5em 1.5em;
-            padding-right: 2.5rem;
+        
+        /* Header */
+        header {
+            padding: var(--space-md) 0;
+            border-bottom: var(--border);
+            position: sticky;
+            top: 0;
+            background: var(--white);
+            z-index: 100;
         }
-
-        .form-textarea {
-            min-height: 120px;
-            resize: vertical;
-        }
-
-        .form-check {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .form-check-input {
-            width: 1rem;
-            height: 1rem;
-        }
-
-        .form-check-label {
-            font-size: 0.875rem;
-            color: var(--gray);
-        }
-
-        /* Footer */
-        .footer {
-            background-color: var(--dark);
-            color: white;
-            padding: 4rem 0 2rem;
-        }
-
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 2rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-logo {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: inline-block;
-        }
-
-        .footer-description {
-            color: var(--light-gray);
-            margin-bottom: 1.5rem;
-        }
-
-        .footer-title {
-            font-size: 1.125rem;
-            margin-bottom: 1.5rem;
-            color: white;
-        }
-
-        .footer-links {
-            display: flex;
-            flex-direction: column;
-            gap: 0.75rem;
-        }
-
-        .footer-link {
-            color: var(--light-gray);
-            transition: var(--transition);
-        }
-
-        .footer-link:hover {
-            color: white;
-        }
-
-        .footer-bottom {
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 2rem;
+        
+        .header-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
-
-        .footer-copyright {
-            color: var(--light-gray);
-            font-size: 0.875rem;
+        
+        /* Hero */
+        .hero {
+            padding: var(--space-xl) 0;
+            background: var(--gray-1);
+            border-bottom: var(--border);
         }
-
-        .footer-social {
-            display: flex;
-            gap: 1rem;
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
         }
-
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
+        
+        /* Grid */
+        .grid {
+            display: grid;
+            gap: var(--space-lg);
         }
-
-        .social-link:hover {
-            background-color: var(--primary);
+        
+        .grid-cols-3 {
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         }
-
+        
+        /* Formulario */
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-xs);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: var(--space-sm);
+            border: var(--border);
+            border-radius: var(--radius);
+            font-size: 1rem;
+        }
+        
+        /* Dashboard */
+        .dashboard {
+            display: none;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-md);
+            margin-bottom: var(--space-xl);
+        }
+        
+        .stat-card {
+            padding: var(--space-md);
+            border: var(--border);
+            border-radius: var(--radius);
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: var(--space-xl);
+        }
+        
+        th, td {
+            padding: var(--space-sm) var(--space-md);
+            text-align: left;
+            border-bottom: var(--border);
+        }
+        
+        th {
+            background: var(--gray-1);
+            font-weight: 600;
+        }
+        
         /* Responsive */
-        @media (max-width: 1024px) {
-            .hero-title {
-                font-size: 2.5rem;
-            }
-            
-            .stats-grid,
-            .features-grid,
-            .pricing-plans,
-            .footer-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
         @media (max-width: 768px) {
-            .section {
-                padding: 3rem 0;
-            }
-            
-            .hero {
-                padding: 6rem 0;
-            }
-            
-            .hero-title {
-                font-size: 2rem;
-            }
-            
-            .hero-subtitle {
-                font-size: 1rem;
-            }
-            
-            .hero-buttons {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            .btn {
-                width: 100%;
-            }
-            
-            .step {
-                flex-direction: column;
-            }
-            
-            .step-number {
-                margin-bottom: 1rem;
-            }
-        }
-
-        @media (max-width: 640px) {
-            .stats-grid,
-            .features-grid,
-            .pricing-plans,
-            .footer-grid {
+            .grid-cols-3 {
                 grid-template-columns: 1fr;
             }
             
-            .section-title {
-                font-size: 1.5rem;
+            .stats {
+                grid-template-columns: 1fr 1fr;
             }
             
-            .form-container {
-                padding: 2rem 1rem;
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.75rem;
             }
         }
-
-        /* Animaciones */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .animate-fadeIn {
-            animation: fadeIn 0.6s ease-out forwards;
-        }
-
-        .delay-100 {
-            animation-delay: 0.1s;
-        }
-
-        .delay-200 {
-            animation-delay: 0.2s;
-        }
-
-        .delay-300 {
-            animation-delay: 0.3s;
-        }
-
-        /* Utilidades */
-        .mt-1 { margin-top: 0.25rem; }
-        .mt-2 { margin-top: 0.5rem; }
-        .mt-3 { margin-top: 0.75rem; }
-        .mt-4 { margin-top: 1rem; }
-        .mt-5 { margin-top: 1.25rem; }
-        .mt-6 { margin-top: 1.5rem; }
-        .mt-8 { margin-top: 2rem; }
-        .mt-10 { margin-top: 2.5rem; }
-        .mt-12 { margin-top: 3rem; }
-
-        .mb-1 { margin-bottom: 0.25rem; }
-        .mb-2 { margin-bottom: 0.5rem; }
-        .mb-3 { margin-bottom: 0.75rem; }
-        .mb-4 { margin-bottom: 1rem; }
-        .mb-5 { margin-bottom: 1.25rem; }
-        .mb-6 { margin-bottom: 1.5rem; }
-        .mb-8 { margin-bottom: 2rem; }
-        .mb-10 { margin-bottom: 2.5rem; }
-        .mb-12 { margin-bottom: 3rem; }
-
-        .py-8 { padding-top: 2rem; padding-bottom: 2rem; }
-        .py-12 { padding-top: 3rem; padding-bottom: 3rem; }
-        .py-16 { padding-top: 4rem; padding-bottom: 4rem; }
-
-        .hidden {
-            display: none;
+        
+        @media (max-width: 480px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .section {
+                padding: var(--space-lg) 0;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Header -->
-    <header class="header">
-        <div class="container flex items-center justify-between py-6">
-            <a href="/" class="logo text-2xl font-bold text-primary">Contraentrega</a>
-            <nav class="hidden md:flex gap-8">
-                <a href="#beneficios" class="font-medium hover:text-primary transition">Beneficios</a>
-                <a href="#como-funciona" class="font-medium hover:text-primary transition">Cómo funciona</a>
-                <a href="#testimonios" class="font-medium hover:text-primary transition">Testimonios</a>
-                <a href="#precios" class="font-medium hover:text-primary transition">Precios</a>
-                <a href="#faq" class="font-medium hover:text-primary transition">FAQ</a>
+    <header>
+        <div class="container header-container">
+            <h4>Contraentrega</h4>
+            <nav>
+                <a href="#registro" class="btn">Registro</a>
             </nav>
-            <a href="#registro" class="btn btn-primary hidden md:inline-flex">Registrarse</a>
-            <button class="md:hidden" id="menu-toggle">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="3" y1="12" x2="21" y2="12"></line>
-                    <line x1="3" y1="6" x2="21" y2="6"></line>
-                    <line x1="3" y1="18" x2="21" y2="18"></line>
-                </svg>
-            </button>
         </div>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
-        <div class="hero-content animate-fadeIn">
-            <h1 class="hero-title">Convierte tu negocio en un centro logístico digital</h1>
-            <p class="hero-subtitle">Únete a la red más avanzada de Colombia y accede a múltiples fuentes de ingreso con nuestra plataforma tecnológica</p>
-            <div class="hero-buttons">
-                <a href="#registro" class="btn btn-secondary">Registrarme ahora</a>
-                <a href="#beneficios" class="btn btn-outline">Ver beneficios</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats">
         <div class="container">
-            <div class="stats-grid">
-                <div class="stat-card animate-fadeIn delay-100">
-                    <div class="stat-number">1,500+</div>
-                    <div class="stat-label">Socios activos</div>
-                </div>
-                <div class="stat-card animate-fadeIn delay-200">
-                    <div class="stat-number">$2.5B</div>
-                    <div class="stat-label">En transacciones</div>
-                </div>
-                <div class="stat-card animate-fadeIn delay-300">
-                    <div class="stat-number">98%</div>
-                    <div class="stat-label">Satisfacción</div>
-                </div>
-                <div class="stat-card animate-fadeIn delay-300">
-                    <div class="stat-number">24/7</div>
-                    <div class="stat-label">Soporte técnico</div>
-                </div>
+            <div class="hero-content text-center">
+                <h1>Red de Socios Logísticos</h1>
+                <p class="mb-lg">Únase a nuestra red y genere ingresos adicionales con cada transacción</p>
+                <a href="#registro" class="btn">Registrarse</a>
             </div>
         </div>
     </section>
 
     <!-- Beneficios -->
-    <section class="section features" id="beneficios">
+    <section class="section section-border" id="beneficios">
         <div class="container">
-            <h2 class="section-title">Beneficios exclusivos</h2>
-            <div class="features-grid">
-                <div class="feature-card animate-fadeIn">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
-                            <line x1="8" y1="21" x2="16" y2="21"></line>
-                            <line x1="12" y1="17" x2="12" y2="21"></line>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Plataforma digital profesional</h3>
-                    <p class="feature-description">
-                        Sitio web personalizado con tu marca, sistema de inventario en tiempo real y dashboard de gestión avanzado.
-                    </p>
-                </div>
-                <div class="feature-card animate-fadeIn delay-100">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <circle cx="12" cy="12" r="10"></circle>
-                            <line x1="2" y1="12" x2="22" y2="12"></line>
-                            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Visibilidad global</h3>
-                    <p class="feature-description">
-                        Aparece en nuestro mapa mundial de puntos y recibe pedidos de toda Latinoamérica las 24/7.
-                    </p>
-                </div>
-                <div class="feature-card animate-fadeIn delay-200">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Múltiples fuentes de ingreso</h3>
-                    <p class="feature-description">
-                        5% en conversión cripto, 2% en transacciones logísticas y 1% residual por tu red de referidos.
-                    </p>
-                </div>
-                <div class="feature-card animate-fadeIn">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-                            <polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline>
-                            <line x1="12" y1="22.08" x2="12" y2="12"></line>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Red logística global</h3>
-                    <p class="feature-description">
-                        Accede a descuentos exclusivos en fletes nacionales e internacionales con nuestras alianzas estratégicas.
-                    </p>
-                </div>
-                <div class="feature-card animate-fadeIn delay-100">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                            <circle cx="9" cy="7" r="4"></circle>
-                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Capacitación continua</h3>
-                    <p class="feature-description">
-                        Acceso a cursos, webinars y material exclusivo para maximizar tus ganancias como socio.
-                    </p>
-                </div>
-                <div class="feature-card animate-fadeIn delay-200">
-                    <div class="feature-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
-                        </svg>
-                    </div>
-                    <h3 class="feature-title">Soporte prioritario</h3>
-                    <p class="feature-description">
-                        Asistencia técnica dedicada y resolución rápida de incidencias para que tu negocio no pare.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Cómo funciona -->
-    <section class="section how-it-works" id="como-funciona">
-        <div class="container">
-            <h2 class="section-title">Cómo funciona</h2>
-            <div class="steps">
-                <div class="step animate-fadeIn">
-                    <div class="step-number">1</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Registro y pago</h3>
-                        <p>Completa el formulario de registro y realiza el pago anual de $60,000 COP para activar tu licencia.</p>
-                    </div>
-                </div>
-                <div class="step animate-fadeIn delay-100">
-                    <div class="step-number">2</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Configuración inicial</h3>
-                        <p>Nuestro equipo te ayudará a configurar tu perfil, plataforma digital y capacitación inicial.</p>
-                    </div>
-                </div>
-                <div class="step animate-fadeIn delay-200">
-                    <div class="step-number">3</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Activación en la red</h3>
-                        <p>Tu punto aparecerá en nuestro mapa global y comenzarás a recibir solicitudes de clientes.</p>
-                    </div>
-                </div>
-                <div class="step animate-fadeIn delay-300">
-                    <div class="step-number">4</div>
-                    <div class="step-content">
-                        <h3 class="step-title">Generación de ingresos</h3>
-                        <p>Comienza a ganar con las múltiples fuentes de ingreso disponibles en la plataforma.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonios -->
-    <section class="section testimonials" id="testimonios">
-        <div class="container">
-            <h2 class="section-title">Casos de éxito</h2>
-            <div class="testimonial-slider">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">
-                        "En solo 3 meses logré aumentar mis ingresos en un 40% gracias a las comisiones por cambio de criptomonedas y los descuentos en logística. La plataforma es muy fácil de usar y el soporte siempre está disponible."
-                    </p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="María Gómez" class="author-avatar">
-                        <div class="author-info">
-                            <h4>María Gómez</h4>
-                            <p>Punto logístico, Medellín</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">
-                        "La visibilidad que me dio aparecer en el mapa global de Contraentrega multiplicó mis clientes. Ahora atiendo pedidos de todo el país sin necesidad de invertir en publicidad."
-                    </p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Carlos Rojas" class="author-avatar">
-                        <div class="author-info">
-                            <h4>Carlos Rojas</h4>
-                            <p>Punto logístico, Cali</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">
-                        "Como pequeño comerciante, no podía permitirme un sistema de inventario profesional. La plataforma incluida en la licencia resolvió ese problema y me permitió organizar mejor mi negocio."
-                    </p>
-                    <div class="testimonial-author">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Ana Torres" class="author-avatar">
-                        <div class="author-info">
-                            <h4>Ana Torres</h4>
-                            <p>Tienda de barrio, Bogotá</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Precios -->
-    <section class="section" id="precios">
-        <div class="container">
-            <h2 class="section-title">Plan de Socios</h2>
-            <div class="pricing-plans">
-                <div class="pricing-card animate-fadeIn">
-                    <h3 class="pricing-name">Básico</h3>
-                    <div class="pricing-price">$0 <span>/mes</span></div>
-                    <ul class="pricing-features">
-                        <li class="pricing-feature">Acceso básico a la plataforma</li>
-                        <li class="pricing-feature">Listado en mapa local</li>
-                        <li class="pricing-feature">Soporte por correo</li>
-                        <li class="pricing-feature">Comisión del 3% en transacciones</li>
-                    </ul>
-                    <button class="btn btn-outline w-full">Actual plan</button>
-                </div>
-                <div class="pricing-card featured animate-fadeIn delay-100">
-                    <h3 class="pricing-name">Profesional</h3>
-                    <div class="pricing-price">$60,000 <span>/año</span></div>
-                    <ul class="pricing-features">
-                        <li class="pricing-feature">Plataforma digital completa</li>
-                        <li class="pricing-feature">Listado en mapa global</li>
-                        <li class="pricing-feature">Soporte prioritario 24/7</li>
-                        <li class="pricing-feature">Comisión del 5% en transacciones</li>
-                        <li class="pricing-feature">Acceso a descuentos logísticos</li>
-                        <li class="pricing-feature">Capacitaciones exclusivas</li>
-                    </ul>
-                    <button class="btn btn-primary w-full">Actualizar ahora</button>
-                </div>
-                <div class="pricing-card animate-fadeIn delay-200">
-                    <h3 class="pricing-name">Empresarial</h3>
-                    <div class="pricing-price">$250,000 <span>/año</span></div>
-                    <ul class="pricing-features">
-                        <li class="pricing-feature">Todo en Profesional +</li>
-                        <li class="pricing-feature">Hasta 5 usuarios</li>
-                        <li class="pricing-feature">API de integración</li>
-                        <li class="pricing-feature">Reportes personalizados</li>
-                        <li class="pricing-feature">Asesoría estratégica</li>
-                    </ul>
-                    <button class="btn btn-outline w-full">Contactar ventas</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="cta" id="registro">
-        <div class="container">
-            <h2 class="cta-title">¿Listo para unirte a nuestra red?</h2>
-            <p class="cta-subtitle">
-                Regístrate ahora y comienza a disfrutar de todos los beneficios de ser socio logístico Contraentrega por solo $60,000 COP al año.
-            </p>
-            <a href="#formulario" class="btn btn-secondary">Registrarme ahora</a>
-        </div>
-    </section>
-
-    <!-- Formulario de registro -->
-    <section class="section" id="formulario">
-        <div class="container">
-            <div class="form-container">
-                <h2 class="section-title text-center">Formulario de Registro</h2>
-                <form id="registrationForm">
-                    <div class="grid grid-cols-2 gap-6">
-                        <div class="form-group">
-                            <label for="nombre" class="form-label">Nombre completo</label>
-                            <input type="text" id="nombre" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="tipo" class="form-label">Tipo de socio</label>
-                            <select id="tipo" class="form-control form-select" required>
-                                <option value="">Seleccionar...</option>
-                                <option value="individual">Persona natural</option>
-                                <option value="empresa">Empresa</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="email" class="form-label">Correo electrónico</label>
-                            <input type="email" id="email" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="tel" id="telefono" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="direccion" class="form-label">Dirección del punto</label>
-                            <input type="text" id="direccion" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="ciudad" class="form-label">Ciudad</label>
-                            <input type="text" id="ciudad" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="horario" class="form-label">Horario de atención</label>
-                            <input type="text" id="horario" class="form-control" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="negocio" class="form-label">Tipo de negocio</label>
-                            <input type="text" id="negocio" class="form-control" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-6">
-                        <label for="metodo-pago" class="form-label">Método de pago</label>
-                        <select id="metodo-pago" class="form-control form-select" required>
-                            <option value="">Seleccionar método...</option>
-                            <option value="bancolombia">Bancolombia QR</option>
-                            <option value="efectivo">Efectivo en punto autorizado</option>
-                            <option value="transferencia">Transferencia bancaria</option>
-                            <option value="nequi">Nequi</option>
-                            <option value="daviplata">Daviplata</option>
-                        </select>
-                    </div>
-
-                    <div id="qr-container" class="hidden mt-4 text-center">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://contraentrega.co/pago/12345" alt="QR de pago" class="mx-auto">
-                        <p class="mt-2">Escanea este código QR para realizar el pago de $60,000 COP</p>
-                    </div>
-
-                    <div id="efectivo-container" class="hidden mt-4">
-                        <p>Acude a cualquier punto autorizado con el siguiente código:</p>
-                        <div class="bg-gray-100 p-4 rounded-md mt-2">
-                            <code class="font-bold">CONTRA-REG-2024</code>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-6">
-                        <div class="form-check">
-                            <input type="checkbox" id="terminos" class="form-check-input" required>
-                            <label for="terminos" class="form-check-label">Acepto los términos y condiciones y política de privacidad</label>
-                        </div>
-                    </div>
-
-                    <div class="form-group mt-6">
-                        <button type="submit" class="btn btn-primary w-full">Completar registro</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section class="section" id="faq">
-        <div class="container">
-            <h2 class="section-title">Preguntas frecuentes</h2>
-            <div class="grid gap-6">
+            <h2 class="text-center">Ventajas para Socios</h2>
+            
+            <div class="grid grid-cols-3">
                 <div class="card">
-                    <h3 class="text-lg font-bold mb-2">¿Qué incluye exactamente la licencia anual?</h3>
-                    <p class="text-gray-600">
-                        La licencia anual de $60,000 COP incluye: plataforma digital profesional con tu marca, sistema de inventario en tiempo real, listado en nuestro mapa global, soporte técnico prioritario, acceso a descuentos logísticos, capacitaciones continuas y la posibilidad de ganar comisiones por múltiples servicios.
-                    </p>
+                    <h3>Plataforma Digital</h3>
+                    <p>Sistema de gestión profesional incluido sin costos adicionales.</p>
                 </div>
+                
                 <div class="card">
-                    <h3 class="text-lg font-bold mb-2">¿Cómo genero ingresos con esta plataforma?</h3>
-                    <p class="text-gray-600">
-                        Puedes ganar dinero de varias formas: 5% de comisión por conversión de criptomonedas a COP, 2% por transacciones logísticas que proceses, 1% residual por clientes que refieras, bonos por cumplimiento de metas y ahorros significativos en tus propios envíos gracias a nuestros descuentos con transportadoras aliadas.
-                    </p>
+                    <h3>Modelo de Comisiones</h3>
+                    <p>5% en conversiones cripto, 2% en transacciones logísticas, 1% por referidos.</p>
                 </div>
+                
                 <div class="card">
-                    <h3 class="text-lg font-bold mb-2">¿Hay algún costo adicional aparte de los $60,000 anuales?</h3>
-                    <p class="text-gray-600">
-                        No, el costo es único y no tenemos comisiones ocultas. Los $60,000 COP cubren todo el primer año de licencia. El único pago adicional sería si decides contratar servicios premium opcionales como dominios personalizados o funciones avanzadas de inventario.
-                    </p>
-                </div>
-                <div class="card">
-                    <h3 class="text-lg font-bold mb-2">¿Qué requisitos necesito para ser socio?</h3>
-                    <p class="text-gray-600">
-                        Los requisitos básicos son: tener un local comercial o espacio adecuado para atender clientes, conexión a internet, dispositivo móvil o computadora, y documentos de identidad válidos. No necesitas experiencia previa en logística o tecnología, ya que te capacitaremos en todo lo necesario.
-                    </p>
-                </div>
-                <div class="card">
-                    <h3 class="text-lg font-bold mb-2">¿Cómo recibo mis comisiones?</h3>
-                    <p class="text-gray-600">
-                        Las comisiones se liquidan semanalmente y puedes recibirlas directamente en tu cuenta bancaria, Nequi, Daviplata o en efectivo en nuestros puntos autorizados. También puedes optar por acumularlas como crédito para pagar servicios logísticos.
-                    </p>
+                    <h3>Red Global</h3>
+                    <p>Visibilidad en nuestro directorio internacional de puntos de servicio.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
+    <!-- Registro -->
+    <section class="section" id="registro">
         <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <a href="/" class="footer-logo">Contraentrega</a>
-                    <p class="footer-description">
-                        La red logística más innovadora de Colombia, conectando negocios y facilitando el comercio a través de tecnología de punta.
-                    </p>
-                    <div class="footer-social">
-                        <a href="#" class="social-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
-                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
-                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
-                            </svg>
-                        </a>
-                        <a href="#" class="social-link">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path>
-                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon>
-                            </svg>
-                        </a>
-                    </div>
-                </div>
-                <div>
-                    <h3 class="footer-title">Enlaces rápidos</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Inicio</a></li>
-                        <li><a href="#beneficios" class="footer-link">Beneficios</a></li>
-                        <li><a href="#como-funciona" class="footer-link">Cómo funciona</a></li>
-                        <li><a href="#precios" class="footer-link">Precios</a></li>
-                        <li><a href="#faq" class="footer-link">FAQ</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="footer-title">Legal</h3>
-                    <ul class="footer-links">
-                        <li><a href="#" class="footer-link">Términos y condiciones</a></li>
-                        <li><a href="#" class="footer-link">Política de privacidad</a></li>
-                        <li><a href="#" class="footer-link">Contrato de socio</a></li>
-                        <li><a href="#" class="footer-link">Protección de datos</a></li>
-                    </ul>
-                </div>
-                <div>
-                    <h3 class="footer-title">Contacto</h3>
-                    <ul class="footer-links">
-                        <li><a href="tel:+573215340988" class="footer-link">+57 321 534 0988</a></li>
-                        <li><a href="mailto:info@contraentrega.co" class="footer-link">info@contraentrega.co</a></li>
-                        <li><a href="https://goo.gl/maps/ejemplo" class="footer-link">Calle 123 #45-67, Bogotá</a></li>
-                        <li><a href="#" class="footer-link">Soporte 24/7</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p class="footer-copyright">© 2024 Contraentrega Colombia. Todos los derechos reservados.</p>
-                <div class="flex gap-4">
-                    <img src="https://via.placeholder.com/80x30?text=Secure" alt="Pagos seguros" class="h-8">
-                    <img src="https://via.placeholder.com/80x30?text=SSL" alt="SSL" class="h-8">
+            <div style="max-width: 600px; margin: 0 auto;">
+                <h2 class="text-center">Registro de Socio</h2>
+                <p class="text-center mb-lg">$60,000 COP anuales - Sin costos ocultos</p>
+                
+                <div class="card">
+                    <form id="registrationForm">
+                        <div class="form-group">
+                            <label class="form-label">Nombre completo</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Correo electrónico</label>
+                            <input type="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Teléfono</label>
+                            <input type="tel" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="form-label">Dirección del punto</label>
+                            <input type="text" class="form-control" required>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-block">Completar registro</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </footer>
+    </section>
 
-    <!-- Scripts -->
+    <!-- Dashboard CRM -->
+    <section class="section dashboard" id="dashboard">
+        <div class="container">
+            <h2>Panel de Control</h2>
+            <p>Gestión completa de su actividad como socio</p>
+            
+            <div class="stats">
+                <div class="stat-card">
+                    <h4>Ganancias</h4>
+                    <div class="stat-value">$1,250,000</div>
+                    <p>Total acumulado</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Transacciones</h4>
+                    <div class="stat-value">28</div>
+                    <p>Realizadas</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Clientes</h4>
+                    <div class="stat-value">15</div>
+                    <p>Atendidos</p>
+                </div>
+                
+                <div class="stat-card">
+                    <h4>Pendientes</h4>
+                    <div class="stat-value">$325,000</div>
+                    <p>Por liquidar</p>
+                </div>
+            </div>
+            
+            <h3>Historial Reciente</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Fecha</th>
+                        <th>Servicio</th>
+                        <th>Cliente</th>
+                        <th>Comisión</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>15/03/2024</td>
+                        <td>Conversión</td>
+                        <td>Juan Pérez</td>
+                        <td>$22,500</td>
+                    </tr>
+                    <tr>
+                        <td>14/03/2024</td>
+                        <td>Envío</td>
+                        <td>Tienda XYZ</td>
+                        <td>$2,400</td>
+                    </tr>
+                    <tr>
+                        <td>14/03/2024</td>
+                        <td>Conversión</td>
+                        <td>María Gómez</td>
+                        <td>$39,000</td>
+                    </tr>
+                    <tr>
+                        <td>13/03/2024</td>
+                        <td>Referido</td>
+                        <td>Carlos Rojas</td>
+                        <td>$5,000</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     <script>
-        // Menu toggle para móviles
-        document.getElementById('menu-toggle').addEventListener('click', function() {
-            const nav = document.querySelector('nav');
-            nav.classList.toggle('hidden');
-        });
-
-        // Mostrar/ocultar métodos de pago
-        document.getElementById('metodo-pago').addEventListener('change', function() {
-            const qrContainer = document.getElementById('qr-container');
-            const efectivoContainer = document.getElementById('efectivo-container');
-            
-            qrContainer.classList.add('hidden');
-            efectivoContainer.classList.add('hidden');
-            
-            if (this.value === 'bancolombia') {
-                qrContainer.classList.remove('hidden');
-            } else if (this.value === 'efectivo') {
-                efectivoContainer.classList.remove('hidden');
-            }
-        });
-
-        // Form submission
+        // Sistema de registro y dashboard
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            // Validación
-            const terminos = document.getElementById('terminos');
-            if (!terminos.checked) {
-                alert('Debes aceptar los términos y condiciones');
+            // Validación básica
+            const email = this.querySelector('input[type="email"]').value;
+            if (!email.includes('@') || !email.includes('.')) {
+                alert('Por favor ingrese un correo electrónico válido');
                 return;
             }
             
-            // Simular envío
-            alert('Registro enviado correctamente. Te contactaremos en breve para completar el proceso.');
+            // Mostrar dashboard
+            document.querySelector('.dashboard').style.display = 'block';
+            document.getElementById('dashboard').scrollIntoView({ behavior: 'smooth' });
+            
+            // En producción, enviar datos al servidor:
+            // const formData = new FormData(this);
+            // fetch('/api/register', {
+            //     method: 'POST',
+            //     body: formData
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     // Manejar respuesta
+            // })
+            // .catch(error => {
+            //     console.error('Error:', error);
+            // });
+            
+            // Limpiar formulario (opcional)
             this.reset();
-            
-            // Scroll to top
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
         });
-
-        // Smooth scrolling para enlaces
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-                
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
+        
+        // Ejemplo de integración con CRM (simulado)
+        function integrateWithCRM(formData) {
+            // En un caso real, esto conectaría con HubSpot, Salesforce, etc.
+            console.log('Enviando datos al CRM:', {
+                name: formData.get('name'),
+                email: formData.get('email'),
+                phone: formData.get('phone'),
+                address: formData.get('address'),
+                plan: 'standard',
+                source: 'web'
             });
-        });
-
-        // Animaciones al hacer scroll
-        const animateOnScroll = function() {
-            const elements = document.querySelectorAll('.animate-fadeIn');
             
-            elements.forEach(element => {
-                const elementPosition = element.getBoundingClientRect().top;
-                const screenPosition = window.innerHeight / 1.3;
-                
-                if (elementPosition < screenPosition) {
-                    element.style.opacity = '1';
-                    element.style.transform = 'translateY(0)';
-                }
-            });
-        };
-
-        // Inicializar animaciones
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
+            // Retornar ID de contacto simulado
+            return { contactId: '12345' };
+        }
     </script>
 </body>
 </html>
