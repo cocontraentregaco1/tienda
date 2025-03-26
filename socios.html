@@ -95,6 +95,11 @@
             width: 100%;
         }
         
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+        }
+        
         .card {
             background: var(--white);
             border: var(--border);
@@ -105,6 +110,17 @@
         
         .text-center {
             text-align: center;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .payment-instructions {
+            background: var(--gray-1);
+            padding: var(--space-md);
+            border-radius: var(--radius);
+            margin-bottom: var(--space-md);
         }
         
         /* Header */
@@ -318,22 +334,22 @@
                     <form id="registrationForm">
                         <div class="form-group">
                             <label class="form-label">Nombre completo</label>
-                            <input type="text" class="form-control" required>
+                            <input type="text" class="form-control" id="fullName" required>
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" required>
+                            <input type="email" class="form-control" id="email" required>
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">Teléfono</label>
-                            <input type="tel" class="form-control" required>
+                            <input type="tel" class="form-control" id="phone" required>
                         </div>
                         
                         <div class="form-group">
                             <label class="form-label">Método de pago</label>
-                            <select class="form-control" required>
+                            <select class="form-control" id="paymentMethod" required>
                                 <option value="">Seleccionar...</option>
                                 <option value="nequi">Nequi</option>
                                 <option value="daviplata">Daviplata</option>
@@ -342,8 +358,59 @@
                             </select>
                         </div>
                         
-                        <button type="submit" class="btn btn-block">Pagar $60,000 COP</button>
+                        <button type="submit" class="btn btn-block">Continuar con el pago</button>
                     </form>
+                </div>
+                
+                <!-- Instrucciones de pago (ocultas inicialmente) -->
+                <div class="card hidden" id="paymentInstructions">
+                    <h3 class="text-center">Instrucciones de pago</h3>
+                    
+                    <div id="nequiInstructions" class="payment-instructions hidden">
+                        <h4>Pago por Nequi</h4>
+                        <p>1. Abre la aplicación Nequi</p>
+                        <p>2. Selecciona "Pagar"</p>
+                        <p>3. Ingresa el número: <strong>3215340988</strong></p>
+                        <p>4. Monto: <strong>$60,000 COP</strong></p>
+                        <p>5. Referencia: <strong id="nequiReference">SOCIO-<span id="nequiRefNumber"></span></strong></p>
+                        <p>6. Confirma el pago</p>
+                    </div>
+                    
+                    <div id="daviplataInstructions" class="payment-instructions hidden">
+                        <h4>Pago por Daviplata</h4>
+                        <p>1. Abre la aplicación Daviplata</p>
+                        <p>2. Selecciona "Transferir"</p>
+                        <p>3. Ingresa el número: <strong>3215340988</strong></p>
+                        <p>4. Monto: <strong>$60,000 COP</strong></p>
+                        <p>5. Referencia: <strong id="daviplataReference">SOCIO-<span id="daviplataRefNumber"></span></strong></p>
+                        <p>6. Confirma el pago</p>
+                    </div>
+                    
+                    <div id="bancolombiaInstructions" class="payment-instructions hidden">
+                        <h4>Pago por Bancolombia</h4>
+                        <p>1. Ingresa a tu app o portal Bancolombia</p>
+                        <p>2. Selecciona "Transferencias"</p>
+                        <p>3. Cuenta de ahorros #: <strong>1234567890</strong></p>
+                        <p>4. Monto: <strong>$60,000 COP</strong></p>
+                        <p>5. Referencia: <strong id="bancolombiaReference">SOCIO-<span id="bancolombiaRefNumber"></span></strong></p>
+                        <p>6. Confirma la transferencia</p>
+                    </div>
+                    
+                    <div id="efectivoInstructions" class="payment-instructions hidden">
+                        <h4>Pago en Efectivo</h4>
+                        <p>1. Acércate a uno de nuestros puntos autorizados</p>
+                        <p>2. Entrega el monto de: <strong>$60,000 COP</strong></p>
+                        <p>3. Menciona tu código de referencia: <strong id="efectivoReference">SOCIO-<span id="efectivoRefNumber"></span></strong></p>
+                        <p>4. Guarda el comprobante de pago</p>
+                    </div>
+                    
+                    <div class="form-group">
+                        <p class="text-center">Una vez realizado el pago, tu licencia se activará automáticamente.</p>
+                        <p class="text-center">¿Deseas enviar tu comprobante por WhatsApp?</p>
+                        <a id="whatsappLink" href="#" class="btn btn-block btn-whatsapp" target="_blank">
+                            Enviar comprobante por WhatsApp
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -359,21 +426,63 @@
     </footer>
 
     <script>
-        // Validación básica del formulario
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
-            const email = this.querySelector('input[type="email"]').value;
+            // Validar formulario
+            const email = document.getElementById('email').value;
             if (!email.includes('@') || !email.includes('.')) {
                 alert('Por favor ingrese un correo electrónico válido');
                 return;
             }
             
-            // Simular procesamiento de pago
-            alert('Redirigiendo a pasarela de pago...');
+            // Obtener datos del formulario
+            const fullName = document.getElementById('fullName').value;
+            const phone = document.getElementById('phone').value;
+            const paymentMethod = document.getElementById('paymentMethod').value;
             
-            // En producción, redirigir a pasarela de pago real
-            // window.location.href = 'https://pasareladepago.com?amount=60000';
+            // Generar número de referencia aleatorio
+            const refNumber = Math.floor(1000 + Math.random() * 9000);
+            
+            // Ocultar formulario y mostrar instrucciones
+            document.getElementById('registrationForm').classList.add('hidden');
+            document.getElementById('paymentInstructions').classList.remove('hidden');
+            
+            // Mostrar instrucciones según método de pago
+            document.querySelectorAll('.payment-instructions').forEach(el => {
+                el.classList.add('hidden');
+            });
+            
+            document.getElementById(`${paymentMethod}Instructions`).classList.remove('hidden');
+            
+            // Actualizar números de referencia
+            document.querySelectorAll('#nequiRefNumber, #daviplataRefNumber, #bancolombiaRefNumber, #efectivoRefNumber').forEach(el => {
+                el.textContent = refNumber;
+            });
+            
+            // Configurar enlace de WhatsApp
+            const whatsappMessage = `Hola, acabo de realizar el pago de mi licencia Socio Logístico.\n\n` +
+                                  `*Nombre:* ${fullName}\n` +
+                                  `*Teléfono:* ${phone}\n` +
+                                  `*Método de pago:* ${paymentMethod}\n` +
+                                  `*Referencia:* SOCIO-${refNumber}\n` +
+                                  `*Monto:* $60,000 COP`;
+            
+            const encodedMessage = encodeURIComponent(whatsappMessage);
+            document.getElementById('whatsappLink').href = `https://wa.me/573215340988?text=${encodedMessage}`;
+            
+            // Guardar datos en localStorage (simulación)
+            const paymentData = {
+                fullName,
+                email,
+                phone,
+                paymentMethod,
+                reference: `SOCIO-${refNumber}`,
+                amount: 60000,
+                date: new Date().toISOString()
+            };
+            
+            localStorage.setItem('lastPayment', JSON.stringify(paymentData));
         });
     </script>
 </body>
