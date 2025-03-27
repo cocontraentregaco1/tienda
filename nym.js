@@ -83,6 +83,13 @@ async function handleRequest(request) {
     })
   }
 
+  if (url.pathname === '/inventario.html') {
+    const html = generateInventoryHTML()
+    return new Response(html, {
+      headers: { 'Content-Type': 'text/html; charset=utf-8' }
+    })
+  }
+
   if (url.pathname === '/acuerdo.html') {
     const html = generateLegalAgreementHTML()
     return new Response(html, {
@@ -140,25 +147,18 @@ function generateLegalAgreementHTML() {
 <body>
   <div class="container">
     <h1>Acuerdo de Términos y Condiciones</h1>
-    
     <h2>1. Términos Generales</h2>
     <p>Al utilizar nuestros servicios, usted acepta cumplir con estos términos y condiciones.</p>
-    
     <h2>2. Política de Pagos</h2>
     <p>Aceptamos pagos en efectivo (COP) y a través de la red Lightning. Los precios están en pesos colombianos (COP).</p>
-    
     <h2>3. Entregas</h2>
     <p>Ofrecemos recogida en nuestro punto físico y entregas a domicilio con costo adicional.</p>
-    
     <h2>4. Devoluciones</h2>
     <p>Las devoluciones se manejan caso por caso. Contacte a nuestro servicio al cliente.</p>
-    
     <h2>5. Privacidad</h2>
     <p>Respetamos su privacidad. La información personal solo se usará para procesar su pedido.</p>
-    
     <h2>6. Limitación de Responsabilidad</h2>
     <p>No nos hacemos responsables por daños indirectos resultantes del uso de nuestros servicios.</p>
-    
     <a href="/" class="back-button">Volver a la tienda</a>
   </div>
 </body>
@@ -350,31 +350,25 @@ function generateRechargeHTML() {
 
     <div class="card" id="formSection">
       <div class="card-title">Recargar Saldo Lightning</div>
-      
       <div class="form-group">
         <label for="lightningAddress">Dirección Lightning</label>
         <input type="text" id="lightningAddress" placeholder="lnbc1p... o usuario@nodeln.com" required>
       </div>
-      
       <div class="form-group">
         <label for="amount">Cantidad en COP a recibir (sin comisión)</label>
         <input type="number" id="amount" min="20000" step="1000" placeholder="Ej: 50000" required>
       </div>
-      
       <div class="form-group">
         <label for="email">Correo electrónico</label>
         <input type="email" id="email" placeholder="tu@email.com" required>
       </div>
-      
       <button class="btn" onclick="createOrder()">Crear Orden de Recarga</button>
     </div>
 
     <div class="card" id="paymentSection" style="display: none;">
       <div class="card-title">Pagar Recarga</div>
-      
       <div class="timer" id="countdown">01:00</div>
       <div class="status-badge status-pending">PENDIENTE</div>
-      
       <div class="payment-details">
         <div class="detail-row">
           <span class="detail-label">Recibirás:</span>
@@ -393,12 +387,10 @@ function generateRechargeHTML() {
           <span class="detail-value" id="referenceCode">RECH-123456</span>
         </div>
       </div>
-      
       <div class="qr-container">
         <div class="qr-code" id="qrCode"></div>
         <p>Escanea el código QR para pagar</p>
       </div>
-      
       <div class="payment-details">
         <div class="detail-row">
           <span class="detail-label">Banco:</span>
@@ -417,12 +409,10 @@ function generateRechargeHTML() {
           <span class="detail-value">Contraentrega CO</span>
         </div>
       </div>
-      
       <p style="margin-top: 20px; font-size: 0.9rem; color: #848e9c;">
         ⚠️ Debes realizar el pago exacto en los próximos <strong>60 segundos</strong>.
         Incluye la referencia en la transferencia.
       </p>
-      
       <a href="https://wa.me/573215340988?text=Hola%20quiero%20confirmar%20mi%20recarga%20con%20referencia%20" id="whatsappLink" class="whatsapp-btn">
         Confirmar pago por WhatsApp
       </a>
@@ -431,7 +421,7 @@ function generateRechargeHTML() {
 
   <script>
     let countdownInterval;
-    const exchangeRate = 1500; // 1 SAT = 1.5 COP (ejemplo)
+    const exchangeRate = 1500;
     
     function createOrder() {
       const lightningAddress = document.getElementById('lightningAddress').value;
@@ -443,36 +433,29 @@ function generateRechargeHTML() {
         return;
       }
       
-      // Calcular montos
       const amountNum = parseFloat(amount);
-      const fee = amountNum * 0.05; // 5% de comisión
+      const fee = amountNum * 0.05;
       const total = amountNum + fee;
       const sats = Math.floor(amountNum / (exchangeRate / 1000));
       
-      // Generar referencia
       const reference = 'RECH-' + Date.now().toString().slice(-6);
       
-      // Mostrar sección de pago
       document.getElementById('formSection').style.display = 'none';
       document.getElementById('paymentSection').style.display = 'block';
       
-      // Actualizar detalles
       document.getElementById('receiveAmount').textContent = sats.toLocaleString() + ' sats';
       document.getElementById('feeAmount').textContent = fee.toLocaleString() + ' COP';
       document.getElementById('totalAmount').textContent = total.toLocaleString() + ' COP';
       document.getElementById('referenceCode').textContent = reference;
       
-      // Actualizar enlace de WhatsApp
       const whatsappLink = document.getElementById('whatsappLink');
       whatsappLink.href = \`https://wa.me/573215340988?text=Hola%20quiero%20confirmar%20mi%20recarga%20con%20referencia%20\${reference}\`;
       
-      // Generar QR (simulado)
       const qrCode = document.getElementById('qrCode');
       qrCode.innerHTML = '<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=' + 
         encodeURIComponent(\`Banco:Bancolombia\nCuenta:123-456789-00\nMonto:\${total}\nReferencia:\${reference}\`) + 
         '" alt="QR Code">';
       
-      // Iniciar temporizador
       startCountdown(60);
     }
     
@@ -499,19 +482,545 @@ function generateRechargeHTML() {
       document.getElementById('countdown').textContent = \`\${mins}:\${secs}\`;
     }
     
-    // Tipo de cambio aproximado (simulado)
     function updateExchangeRate() {
-      // En una implementación real, esto vendría de una API
       const rate = (1500 + Math.random() * 100 - 50).toFixed(2);
       document.getElementById('exchangeRate').textContent = \`1 SAT = \${rate} COP\`;
     }
     
-    // Actualizar tipo de cambio cada 30 segundos
     updateExchangeRate();
     setInterval(updateExchangeRate, 30000);
   </script>
 </body>
 </html>`
+}
+
+function generateInventoryHTML() {
+  return `<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Inventario | Contraentrega CO</title>
+  <style>
+    :root {
+      --primary: #2c3e50;
+      --secondary: #f8f9fa;
+      --dark: #343a40;
+      --light: #ffffff;
+      --success: #28a745;
+      --danger: #dc3545;
+      --warning: #ffc107;
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+    
+    body {
+      background-color: var(--secondary);
+      color: var(--dark);
+      line-height: 1.6;
+    }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 30px;
+      padding-bottom: 15px;
+      border-bottom: 1px solid #dee2e6;
+    }
+    
+    .logo {
+      font-weight: bold;
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+    
+    .back-btn {
+      margin-right: 15px;
+      color: var(--primary);
+      text-decoration: none;
+      font-size: 1.2rem;
+    }
+    
+    .card {
+      background-color: var(--light);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .card-title {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+      color: var(--primary);
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      color: #495057;
+    }
+    
+    input, select, textarea {
+      width: 100%;
+      padding: 12px 15px;
+      background-color: var(--light);
+      border: 1px solid #ced4da;
+      border-radius: 4px;
+      color: var(--dark);
+      font-size: 1rem;
+      transition: all 0.3s;
+    }
+    
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: var(--primary);
+      color: var(--light);
+      border: none;
+      border-radius: 4px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      margin-right: 10px;
+    }
+    
+    .btn:hover {
+      background-color: #1a252f;
+    }
+    
+    .btn-success {
+      background-color: var(--success);
+    }
+    
+    .btn-warning {
+      background-color: var(--warning);
+      color: #000;
+    }
+    
+    .btn-danger {
+      background-color: var(--danger);
+    }
+    
+    .btn:disabled {
+      background-color: #6c757d;
+      cursor: not-allowed;
+    }
+    
+    .alert {
+      padding: 12px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+      font-size: 0.9rem;
+    }
+    
+    .alert-info {
+      background-color: #e7f5ff;
+      border-left: 3px solid #4dabf7;
+      color: #1864ab;
+    }
+    
+    .alert-success {
+      background-color: #ebfbee;
+      border-left: 3px solid #40c057;
+      color: #2b8a3e;
+    }
+    
+    .alert-danger {
+      background-color: #fff5f5;
+      border-left: 3px solid #fa5252;
+      color: #c92a2a;
+    }
+    
+    .product-item {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 15px;
+      align-items: center;
+      padding: 15px;
+      border: 1px solid #eee;
+      border-radius: 5px;
+    }
+    
+    .product-item input {
+      flex: 1;
+      padding: 8px 12px;
+    }
+    
+    .product-image-preview {
+      width: 60px;
+      height: 60px;
+      object-fit: cover;
+      border-radius: 4px;
+    }
+    
+    .add-item-btn {
+      background-color: var(--success);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    
+    .remove-item-btn {
+      background-color: var(--danger);
+      color: white;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    .login-form {
+      max-width: 400px;
+      margin: 50px auto;
+    }
+    
+    .user-info {
+      margin-left: auto;
+      font-size: 0.9rem;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .product-actions {
+      display: flex;
+      gap: 5px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <a href="/" class="back-btn">←</a>
+      <div class="logo">Gestión de Inventario</div>
+      <div class="user-info" id="userInfo"></div>
+    </div>
+
+    <div id="loginSection" class="card login-form">
+      <h2>Iniciar Sesión</h2>
+      <div class="form-group">
+        <label for="username">Usuario</label>
+        <input type="text" id="username" required>
+      </div>
+      <div class="form-group">
+        <label for="password">Contraseña</label>
+        <input type="password" id="password" required>
+      </div>
+      <button class="btn" onclick="login()">Ingresar</button>
+      <div id="loginError" class="alert alert-danger hidden">Credenciales incorrectas</div>
+    </div>
+
+    <div id="inventorySection" class="hidden">
+      <div class="alert alert-info">
+        ⚠️ Todos los cambios serán verificados antes de aplicarse al inventario.
+      </div>
+
+      <div class="card">
+        <div class="card-title">Agregar Nuevo Producto</div>
+        <form id="newProductForm">
+          <div class="form-group">
+            <label for="newSku">SKU (Código único)</label>
+            <input type="text" id="newSku" required>
+          </div>
+          <div class="form-group">
+            <label for="newName">Nombre del Producto</label>
+            <input type="text" id="newName" required>
+          </div>
+          <div class="form-group">
+            <label for="newPrice">Precio (COP)</label>
+            <input type="number" id="newPrice" min="1000" step="100" required>
+          </div>
+          <div class="form-group">
+            <label for="newInventory">Inventario Inicial</label>
+            <input type="number" id="newInventory" min="0" required>
+          </div>
+          <div class="form-group">
+            <label for="newImage">URL de la Imagen</label>
+            <input type="url" id="newImage" placeholder="https://ejemplo.com/imagen.jpg">
+            <small>Dejar vacío para usar imagen predeterminada</small>
+          </div>
+          <button type="button" class="btn btn-success" onclick="addNewProduct()">Agregar Producto</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Ajustar Productos Existente</div>
+        <div id="productList"></div>
+        <button type="button" class="btn" onclick="submitInventoryChanges()">Enviar Cambios</button>
+      </div>
+      
+      <div id="successAlert" class="alert alert-success hidden">
+        ✅ Cambios enviados correctamente. Se procesarán en las próximas horas.
+      </div>
+      
+      <div id="errorAlert" class="alert alert-danger hidden">
+        ❌ Error al enviar los cambios. Por favor intenta nuevamente.
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Credenciales (en un entorno real, esto debería manejarse del lado del servidor)
+    const users = {
+      'admin': { password: 'admin123', role: 'admin' },
+      'encargado': { password: 'contra123', role: 'manager' }
+    };
+    
+    let currentUser = null;
+    let products = [];
+    let changes = [];
+    
+    // Función para iniciar sesión
+    function login() {
+      const username = document.getElementById('username').value;
+      const password = document.getElementById('password').value;
+      
+      if (users[username] && users[username].password === password) {
+        currentUser = {
+          username,
+          role: users[username].role
+        };
+        
+        document.getElementById('loginSection').classList.add('hidden');
+        document.getElementById('inventorySection').classList.remove('hidden');
+        document.getElementById('userInfo').textContent = 'Usuario: ' + username + ' (' + users[username].role + ')';
+        document.getElementById('loginError').classList.add('hidden');
+        
+        // Cargar productos
+        loadProducts();
+      } else {
+        document.getElementById('loginError').classList.remove('hidden');
+      }
+    }
+    
+    // Función para cargar productos
+    async function loadProducts() {
+      try {
+        const response = await fetch('/api/products');
+        products = await response.json();
+        renderProductList();
+      } catch (error) {
+        console.error('Error cargando productos:', error);
+        alert('Error al cargar los productos');
+      }
+    }
+    
+    // Función para renderizar la lista de productos
+    function renderProductList() {
+      const container = document.getElementById('productList');
+      container.innerHTML = '';
+      
+      products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.className = 'product-item';
+        
+        let deleteButton = '';
+        if (currentUser.role === 'admin') {
+          deleteButton = '<button class="btn btn-danger" onclick="deleteProduct(' + product.id + ')">Eliminar</button>';
+        }
+        
+        productDiv.innerHTML = [
+          '<img src="' + (product.image || 'https://via.placeholder.com/300') + '" class="product-image-preview">',
+          '<input type="text" value="' + product.sku + '" data-field="sku" data-id="' + product.id + '" placeholder="SKU">',
+          '<input type="text" value="' + product.name + '" data-field="name" data-id="' + product.id + '" placeholder="Nombre">',
+          '<input type="number" value="' + product.price + '" data-field="price" data-id="' + product.id + '" placeholder="Precio" min="1000" step="100">',
+          '<input type="number" value="' + product.inventory + '" data-field="inventory" data-id="' + product.id + '" placeholder="Inventario" min="0">',
+          '<input type="text" value="' + (product.image || '') + '" data-field="image" data-id="' + product.id + '" placeholder="URL Imagen">',
+          '<div class="product-actions">',
+          deleteButton,
+          '</div>'
+        ].join('');
+        
+        // Agregar event listeners para detectar cambios
+        productDiv.querySelectorAll('input').forEach(input => {
+          input.addEventListener('change', handleProductChange);
+        });
+        
+        container.appendChild(productDiv);
+      });
+    }
+    
+    // Función para manejar cambios en productos
+    function handleProductChange(e) {
+      const field = e.target.dataset.field;
+      const id = parseInt(e.target.dataset.id);
+      const value = field === 'price' || field === 'inventory' ? parseInt(e.target.value) : e.target.value;
+      
+      // Buscar si ya existe un cambio para este producto
+      const existingChangeIndex = changes.findIndex(c => c.id === id);
+      
+      if (existingChangeIndex >= 0) {
+        // Actualizar cambio existente
+        changes[existingChangeIndex].changes[field] = value;
+      } else {
+        // Crear nuevo cambio
+        const originalProduct = products.find(p => p.id === id);
+        changes.push({
+          id,
+          original: {
+            sku: originalProduct.sku,
+            name: originalProduct.name,
+            price: originalProduct.price,
+            inventory: originalProduct.inventory,
+            image: originalProduct.image
+          },
+          changes: {
+            [field]: value
+          }
+        });
+      }
+    }
+    
+    // Función para agregar nuevo producto
+    function addNewProduct() {
+      const sku = document.getElementById('newSku').value;
+      const name = document.getElementById('newName').value;
+      const price = parseInt(document.getElementById('newPrice').value);
+      const inventory = parseInt(document.getElementById('newInventory').value);
+      const image = document.getElementById('newImage').value || 'https://via.placeholder.com/300';
+      
+      if (!sku || !name || !price || isNaN(inventory)) {
+        alert('Por favor completa todos los campos requeridos');
+        return;
+      }
+      
+      // Agregar a la lista de cambios como nuevo producto
+      changes.push({
+        id: -Date.now(), // ID temporal para nuevos productos
+        isNew: true,
+        changes: {
+          sku,
+          name,
+          price,
+          inventory,
+          image
+        }
+      });
+      
+      // Limpiar formulario
+      document.getElementById('newProductForm').reset();
+      
+      // Mostrar confirmación
+      alert('Producto agregado a la lista de cambios. No olvides enviar los cambios.');
+    }
+    
+    // Función para eliminar producto (solo admin)
+    function deleteProduct(id) {
+      if (confirm('¿Estás seguro de querer eliminar este producto?')) {
+        const existingChangeIndex = changes.findIndex(c => c.id === id);
+        
+        if (existingChangeIndex >= 0) {
+          // Si ya había cambios, marcamos para eliminación
+          changes[existingChangeIndex].delete = true;
+        } else {
+          // Agregar cambio de eliminación
+          const product = products.find(p => p.id === id);
+          changes.push({
+            id,
+            delete: true,
+            original: {
+              sku: product.sku,
+              name: product.name,
+              price: product.price,
+              inventory: product.inventory,
+              image: product.image
+            }
+          });
+        }
+        
+        // Actualizar vista
+        const productElement = document.querySelector('.product-item input[data-id="' + id + '"]')?.closest('.product-item');
+        if (productElement) {
+          productElement.style.opacity = '0.5';
+          productElement.style.backgroundColor = '#ffecec';
+        }
+      }
+    }
+    
+    // Función para enviar cambios
+    async function submitInventoryChanges() {
+      if (changes.length === 0) {
+        alert('No hay cambios para enviar');
+        return;
+      }
+      
+      if (!confirm('¿Estás seguro de querer enviar estos cambios?')) {
+        return;
+      }
+      
+      try {
+        const formData = {
+          _replyto: 'inventario@contraentregaco.com',
+          _subject: 'Ajuste de Inventario - ' + new Date().toLocaleDateString(),
+          manager: currentUser.username,
+          role: currentUser.role,
+          changes: JSON.stringify(changes),
+          submissionDate: new Date().toISOString()
+        };
+        
+        const response = await fetch('${FORMSPREE_ENDPOINT}', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          body: new URLSearchParams(formData)
+        });
+        
+        if (response.ok) {
+          document.getElementById('successAlert').classList.remove('hidden');
+          document.getElementById('errorAlert').classList.add('hidden');
+          changes = [];
+          setTimeout(() => {
+            document.getElementById('successAlert').classList.add('hidden');
+          }, 5000);
+        } else {
+          throw new Error('Error en la respuesta del servidor');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('errorAlert').classList.remove('hidden');
+        document.getElementById('successAlert').classList.add('hidden');
+      }
+    }
+    
+    // Cargar productos si ya está logueado (al recargar la página)
+    if (window.location.hash === '#inventory') {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('inventorySection').classList.remove('hidden');
+      loadProducts();
+    }
+  </script>
+</body>
+</html>`;
 }
 
 async function generateHTML() {
@@ -673,6 +1182,7 @@ async function generateHTML() {
     <footer>
       <div>
         <a href="/acuerdo.html" style="color: #007bff;">Acuerdo de Términos</a>
+        <a href="/inventario.html" class="recharge-button">Ajustar Inventario</a>
         <a href="/recargar.html" class="recharge-button">Recargar Saldo Lightning</a>
       </div>
       <p>Contraentrega © Todos los derechos reservados</p>
