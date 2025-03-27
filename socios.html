@@ -225,6 +225,49 @@
             color: var(--primary);
         }
         
+        /* Términos y condiciones */
+        .terms-container {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            background: var(--gray-1);
+            border-radius: var(--radius);
+            margin-top: var(--space-md);
+        }
+        
+        .terms-container.show {
+            max-height: 500px;
+            overflow-y: auto;
+            padding: var(--space-md);
+            margin-bottom: var(--space-md);
+            border: var(--border);
+        }
+        
+        .terms-content {
+            padding: var(--space-md) 0;
+        }
+        
+        .terms-content h4 {
+            margin-top: var(--space-lg);
+            margin-bottom: var(--space-sm);
+        }
+        
+        .terms-toggle {
+            color: var(--primary);
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: var(--space-md);
+        }
+        
+        .terms-toggle:hover {
+            text-decoration: underline;
+        }
+        
+        .terms-checkbox {
+            margin-right: var(--space-sm);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
             .grid-cols-3 {
@@ -403,6 +446,13 @@
                             </select>
                         </div>
                         
+                        <div class="form-group" id="termsCheckboxContainer" style="display: none;">
+                            <label>
+                                <input type="checkbox" class="terms-checkbox" id="acceptTerms" required>
+                                Acepto los <a href="#terminos" class="terms-toggle">Términos y Condiciones</a>
+                            </label>
+                        </div>
+                        
                         <button type="submit" class="btn btn-block">Continuar con el pago</button>
                     </form>
                 </div>
@@ -487,18 +537,96 @@
 
     <!-- Footer -->
     <footer class="section" style="background: var(--gray-1);">
-        <div class="container text-center">
-            <p>¿Tienes dudas? Contáctanos:</p>
-            <p><a href="mailto:info@contraentregaco.com">info@contraentregaco.com</a></p>
-            <p>+57 321 534 0988</p>
-            <div class="mt-lg">
-                <a href="#registro" class="btn">Quiero mi licencia ahora</a>
+        <div class="container">
+            <div class="text-center">
+                <p>¿Tienes dudas? Contáctanos:</p>
+                <p><a href="mailto:info@contraentregaco.com">info@contraentregaco.com</a></p>
+                <p>+57 321 534 0988</p>
+                <div class="mt-lg">
+                    <a href="#registro" class="btn">Quiero mi licencia ahora</a>
+                </div>
             </div>
-            <p class="mt-lg">© Contraentrega - Todos los derechos reservados</p>
+            
+            <!-- Términos y condiciones -->
+            <div class="mt-xl">
+                <a href="#terminos" class="terms-toggle" id="termsToggle">Ver Términos y Condiciones</a>
+                <div class="terms-container" id="termsContainer">
+                    <div class="terms-content" id="terminos">
+                        <h3 class="text-center">Términos y Condiciones - Licencia Socio Logístico</h3>
+                        
+                        <h4>1. Aceptación de los Términos</h4>
+                        <p>Al adquirir la Licencia Socio Logístico de Contraentrega, usted acepta automáticamente estos términos y condiciones en su totalidad.</p>
+                        
+                        <h4>2. Licencia Vitalicia</h4>
+                        <p>2.1 La licencia tiene un costo único de $100,000 COP y no requiere pagos recurrentes.</p>
+                        <p>2.2 La licencia es personal e intransferible.</p>
+                        <p>2.3 Contraentrega se reserva el derecho de revocar la licencia en caso de incumplimiento de estos términos.</p>
+                        
+                        <h4>3. Beneficios</h4>
+                        <p>3.1 Ajustes de inventario gratuitos todos los viernes.</p>
+                        <p>3.2 Ajustes adicionales tienen un costo de $500 COP por archivo (sin límite de tamaño).</p>
+                        <p>3.3 Acceso a la plataforma digital con todas sus funcionalidades.</p>
+                        
+                        <h4>4. Modelo de Ganancias</h4>
+                        <p>4.1 Las ganancias por entregas, recepción y almacenamiento están sujetas a disponibilidad y demanda.</p>
+                        <p>4.2 Los porcentajes de comisión pueden variar según promociones temporales.</p>
+                        <p>4.3 Los pagos se realizan semanalmente a la billetera virtual del socio.</p>
+                        
+                        <h4>5. Responsabilidades del Socio</h4>
+                        <p>5.1 Mantener información veraz y actualizada en la plataforma.</p>
+                        <p>5.2 Cumplir con los estándares de servicio establecidos por Contraentrega.</p>
+                        <p>5.3 Reportar cualquier irregularidad en un plazo máximo de 24 horas.</p>
+                        
+                        <h4>6. Modificaciones</h4>
+                        <p>6.1 Contraentrega podrá actualizar estos términos con previo aviso de 30 días.</p>
+                        <p>6.2 Las modificaciones no afectarán el carácter vitalicio de la licencia.</p>
+                        
+                        <h4>7. Limitación de Responsabilidad</h4>
+                        <p>7.1 Contraentrega no garantiza ingresos mínimos.</p>
+                        <p>7.2 El socio es responsable de sus declaraciones fiscales y tributarias.</p>
+                        
+                        <h4>8. Privacidad</h4>
+                        <p>8.1 Los datos personales serán tratados conforme a nuestra política de privacidad.</p>
+                        <p>8.2 El socio autoriza el uso de su información para fines operativos.</p>
+                        
+                        <h4>9. Ley Aplicable</h4>
+                        <p>9.1 Estos términos se rigen por las leyes de la República de Colombia.</p>
+                        <p>9.2 Cualquier disputa será resuelta en los tribunales de Bogotá.</p>
+                        
+                        <p class="text-center mt-lg">Fecha de última actualización: 28 de marzo de 2025</p>
+                    </div>
+                </div>
+            </div>
+            
+            <p class="text-center mt-lg">© Contraentrega - Todos los derechos reservados</p>
         </div>
     </footer>
 
     <script>
+        // Toggle términos y condiciones
+        document.getElementById('termsToggle').addEventListener('click', function(e) {
+            e.preventDefault();
+            const termsContainer = document.getElementById('termsContainer');
+            termsContainer.classList.toggle('show');
+            
+            // Scroll suave al contenedor
+            if (termsContainer.classList.contains('show')) {
+                setTimeout(() => {
+                    termsContainer.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+            }
+        });
+        
+        // Mostrar checkbox de términos al seleccionar método de pago
+        document.getElementById('paymentMethod').addEventListener('change', function() {
+            const termsCheckbox = document.getElementById('termsCheckboxContainer');
+            if (this.value !== '') {
+                termsCheckbox.style.display = 'block';
+            } else {
+                termsCheckbox.style.display = 'none';
+            }
+        });
+
         document.getElementById('registrationForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -506,6 +634,13 @@
             const email = document.getElementById('email').value;
             if (!email.includes('@') || !email.includes('.')) {
                 alert('Por favor ingrese un correo electrónico válido');
+                return;
+            }
+            
+            // Validar términos y condiciones
+            const acceptTerms = document.getElementById('acceptTerms');
+            if (acceptTerms && !acceptTerms.checked) {
+                alert('Debe aceptar los términos y condiciones para continuar');
                 return;
             }
             
@@ -539,7 +674,8 @@
                                   `*Teléfono:* ${phone}\n` +
                                   `*Método de pago:* ${paymentMethod}\n` +
                                   `*Referencia:* SOCIO-${refNumber}\n` +
-                                  `*Monto:* $100,000 COP`;
+                                  `*Monto:* $100,000 COP\n` +
+                                  `*Acepté Términos y Condiciones*`;
             
             const encodedMessage = encodeURIComponent(whatsappMessage);
             document.getElementById('whatsappLink').href = `https://wa.me/573215340988?text=${encodedMessage}`;
@@ -553,7 +689,8 @@
                 reference: `SOCIO-${refNumber}`,
                 amount: 100000,
                 date: new Date().toISOString(),
-                licenseType: "VITALICIA"
+                licenseType: "VITALICIA",
+                acceptedTerms: true
             };
             
             localStorage.setItem('lastPayment', JSON.stringify(paymentData));
